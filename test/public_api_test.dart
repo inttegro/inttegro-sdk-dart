@@ -107,5 +107,44 @@ void main() {
     expect(intent.merchant?.organizationName, 'Tea House Ltd');
     expect(intent.product?.dimensions?.digital?.bytes, 1024);
     expect(intent.usage.order?.id, 'or_123');
+    expect(intent.isActive, isTrue);
+    expect(intent.isSingleUse, isTrue);
+    expect(intent.usedOrderId, 'or_123');
+  });
+
+  test('resources answer protocol questions', () {
+    final payment = Payment.fromJson({
+      'amount': {'currency': 'ghs', 'value': 1000},
+      'id': 'py_123',
+      'initiated_at': '2026-09-09T12:00:00Z',
+      'next_action': {'type': 'redirect'},
+      'statement_descriptor': 'INTTEGRO',
+      'status': 'requires_action',
+    });
+    expect(payment.requiresAction, isTrue);
+    expect(payment.isTerminal, isFalse);
+    expect(payment.requiredAction?.type, PaymentNextActionType.redirect);
+
+    final product = Product.fromJson({
+      'active': true,
+      'created_at': '2026-09-09T12:00:00Z',
+      'id': 'prod_123',
+      'name': 'Tea guide',
+      'published_at': '2026-09-09T12:00:00Z',
+      'type': 'digital',
+    });
+    expect(product.isPublished, isTrue);
+    expect(product.wasEverPublished, isTrue);
+
+    final method = PaymentMethod.fromJson({
+      'active': true,
+      'created_at': '2026-09-09T12:00:00Z',
+      'customer_id': 'cu_123',
+      'id': 'pm_123',
+      'type': 'mobile_money',
+      'verified_at': '2026-09-09T12:00:00Z',
+    });
+    expect(method.isVerified, isTrue);
+    expect(method.isReusable, isTrue);
   });
 }
