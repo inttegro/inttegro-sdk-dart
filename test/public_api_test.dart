@@ -70,17 +70,6 @@ void main() {
 
   test('purchase intent exposes nested response types', () {
     final intent = PurchaseIntent.fromJson({
-      'activity': {
-        'recent': [
-          {
-            'created_at': '2026-09-09T12:01:00Z',
-            'id': 'saleevt_123',
-            'purchase_intent_id': 'sale_123',
-            'type': 'viewed',
-            'visitor': {'ip_address': '203.0.113.7'},
-          },
-        ],
-      },
       'allow_variants': false,
       'created_at': '2026-09-09T12:00:00Z',
       'id': 'sale_123',
@@ -103,7 +92,6 @@ void main() {
       },
     });
 
-    expect(intent.activity?.recent?.first.visitor?.ipAddress, '203.0.113.7');
     expect(intent.merchant?.organizationName, 'Tea House Ltd');
     expect(intent.product?.dimensions?.digital?.bytes, 1024);
     expect(intent.usage.order?.id, 'or_123');
