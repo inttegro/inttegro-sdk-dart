@@ -140,31 +140,22 @@ final class FileMetadata implements _InttegroValue {
   Map<String, String> toJson() => Map.of(_values);
 }
 
-/// Immutable payout destinations keyed by currency or configured route.
+/// Financial accounts configured to receive payouts in supported currencies.
 final class PayoutDestinations implements _InttegroValue {
-  final Map<String, String> _values;
+  /// Financial account that receives Ghana cedi payouts.
+  final String? ghs;
 
-  PayoutDestinations([Map<String, String> values = const {}])
-      : _values = Map.unmodifiable(values);
+  const PayoutDestinations({this.ghs});
 
-  factory PayoutDestinations.fromJson(Object? json) => PayoutDestinations(
-        (json as Map).cast<String, Object?>().map(
-              (key, value) => MapEntry(key, value as String),
-            ),
-      );
-
-  Map<String, String> get values => Map.unmodifiable(_values);
-  String? operator [](String key) => _values[key];
-  PayoutDestinations set(String key, String value) =>
-      PayoutDestinations({..._values, key: value});
-
-  PayoutDestinations remove(String key) {
-    final next = Map<String, String>.of(_values)..remove(key);
-    return PayoutDestinations(next);
+  factory PayoutDestinations.fromJson(Object? json) {
+    final values = (json as Map).cast<String, Object?>();
+    return PayoutDestinations(ghs: values['ghs'] as String?);
   }
 
   @override
-  Map<String, String> toJson() => Map.of(_values);
+  Map<String, Object?> toJson() => {
+        if (ghs != null) 'ghs': ghs,
+      };
 }
 
 /// Immutable message headers keyed by header name.
