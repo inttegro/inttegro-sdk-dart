@@ -36,6 +36,17 @@ DateTime _decodeDateTime(Object? value) {
   return decoded;
 }
 
+void _expectExactKeys(
+  Map<String, Object?> value,
+  Set<String> expected,
+  String name,
+) {
+  if (value.length != expected.length ||
+      value.keys.any((key) => !expected.contains(key))) {
+    throw FormatException('Invalid $name shape');
+  }
+}
+
 /// A typed `AppCredentialOwner` value used by the Inttegro API.
 final class AppCredentialOwner implements _InttegroValue {
   final String value;
@@ -1580,6 +1591,260 @@ final class ProductDetailsInputCatalogProductWithPriceReferenceInput
 typedef RefundReasonInput = RefundReason;
 
 typedef RefundReasonValue = RefundReason;
+
+/// Immutable destination snapshot for a refund.
+sealed class RefundSettlement implements _InttegroValue {
+  const RefundSettlement();
+
+  factory RefundSettlement.fromJson(Object? json) {
+    final value = (json as Map).cast<String, Object?>();
+    return switch (value["type"]) {
+      "offline" => RefundOfflineSettlement.fromJson(value),
+      "payment_method" => RefundPaymentMethodSettlement.fromJson(value),
+      _ => throw const FormatException("Unsupported refund settlement type"),
+    };
+  }
+}
+
+/// Settlement for an order paid outside Inttegro.
+final class RefundOfflineSettlement extends RefundSettlement {
+  const RefundOfflineSettlement();
+
+  factory RefundOfflineSettlement.fromJson(Map<String, Object?> json) {
+    _expectExactKeys(json, const {"type"}, "offline refund settlement");
+    if (json["type"] != "offline") {
+      throw const FormatException("Invalid offline refund settlement");
+    }
+    return const RefundOfflineSettlement();
+  }
+
+  String get type => "offline";
+
+  @override
+  Map<String, Object?> toJson() => const {"type": "offline"};
+}
+
+/// Settlement returned to the original payment method.
+final class RefundPaymentMethodSettlement extends RefundSettlement {
+  final RefundSettlementPaymentMethod paymentMethod;
+  const RefundPaymentMethodSettlement({required this.paymentMethod});
+
+  factory RefundPaymentMethodSettlement.fromJson(
+    Map<String, Object?> json,
+  ) {
+    _expectExactKeys(
+      json,
+      const {"type", "payment_method"},
+      "payment-method refund settlement",
+    );
+    if (json["type"] != "payment_method") {
+      throw const FormatException("Invalid payment-method refund settlement");
+    }
+    return RefundPaymentMethodSettlement(
+      paymentMethod: RefundSettlementPaymentMethod.fromJson(
+        json["payment_method"],
+      ),
+    );
+  }
+
+  String get type => "payment_method";
+
+  @override
+  Map<String, Object?> toJson() => {
+        "type": type,
+        "payment_method": _encodeValue(paymentMethod),
+      };
+}
+
+/// Caller-safe original payment-method snapshot for a refund.
+sealed class RefundSettlementPaymentMethod implements _InttegroValue {
+  const RefundSettlementPaymentMethod();
+
+  factory RefundSettlementPaymentMethod.fromJson(Object? json) {
+    final value = (json as Map).cast<String, Object?>();
+    return switch (value["type"]) {
+      "mobile_money" =>
+        RefundSettlementMobileMoneyPaymentMethod.fromJson(value),
+      "bank_account" =>
+        RefundSettlementBankAccountPaymentMethod.fromJson(value),
+      _ => throw const FormatException(
+          "Unsupported refund settlement payment-method type",
+        ),
+    };
+  }
+
+  String get id;
+  String get type;
+}
+
+final class RefundSettlementMobileMoneyPaymentMethod
+    extends RefundSettlementPaymentMethod {
+  @override
+  final String id;
+  final RefundSettlementMobileMoney mobileMoney;
+  const RefundSettlementMobileMoneyPaymentMethod({
+    required this.id,
+    required this.mobileMoney,
+  });
+
+  factory RefundSettlementMobileMoneyPaymentMethod.fromJson(
+    Map<String, Object?> json,
+  ) {
+    _expectExactKeys(
+      json,
+      const {"id", "type", "mobile_money"},
+      "mobile-money refund settlement",
+    );
+    if (json["type"] != "mobile_money") {
+      throw const FormatException("Invalid mobile-money refund settlement");
+    }
+    return RefundSettlementMobileMoneyPaymentMethod(
+      id: json["id"] as String,
+      mobileMoney: RefundSettlementMobileMoney.fromJson(
+        (json["mobile_money"] as Map).cast<String, Object?>(),
+      ),
+    );
+  }
+
+  @override
+  String get type => "mobile_money";
+
+  @override
+  Map<String, Object?> toJson() => {
+        "id": id,
+        "type": type,
+        "mobile_money": _encodeValue(mobileMoney),
+      };
+}
+
+final class RefundSettlementMobileMoney implements _InttegroValue {
+  final MobileMoneyNetwork network;
+  final String accountNumber;
+  final String last4;
+  const RefundSettlementMobileMoney({
+    required this.network,
+    required this.accountNumber,
+    required this.last4,
+  });
+
+  factory RefundSettlementMobileMoney.fromJson(Map<String, Object?> json) {
+    _expectExactKeys(
+      json,
+      const {"account_number", "last4", "network"},
+      "refund settlement mobile-money details",
+    );
+    return RefundSettlementMobileMoney(
+      network: MobileMoneyNetwork.fromJson(json["network"]),
+      accountNumber: json["account_number"] as String,
+      last4: json["last4"] as String,
+    );
+  }
+
+  @override
+  Map<String, Object?> toJson() => {
+        "network": _encodeValue(network),
+        "account_number": accountNumber,
+        "last4": last4,
+      };
+}
+
+final class RefundSettlementBankAccountPaymentMethod
+    extends RefundSettlementPaymentMethod {
+  @override
+  final String id;
+  final RefundSettlementBankAccount bankAccount;
+  const RefundSettlementBankAccountPaymentMethod({
+    required this.id,
+    required this.bankAccount,
+  });
+
+  factory RefundSettlementBankAccountPaymentMethod.fromJson(
+    Map<String, Object?> json,
+  ) {
+    _expectExactKeys(
+      json,
+      const {"id", "type", "bank_account"},
+      "bank-account refund settlement",
+    );
+    if (json["type"] != "bank_account") {
+      throw const FormatException("Invalid bank-account refund settlement");
+    }
+    return RefundSettlementBankAccountPaymentMethod(
+      id: json["id"] as String,
+      bankAccount: RefundSettlementBankAccount.fromJson(
+        (json["bank_account"] as Map).cast<String, Object?>(),
+      ),
+    );
+  }
+
+  @override
+  String get type => "bank_account";
+
+  @override
+  Map<String, Object?> toJson() => {
+        "id": id,
+        "type": type,
+        "bank_account": _encodeValue(bankAccount),
+      };
+}
+
+final class RefundSettlementBankAccount implements _InttegroValue {
+  final RefundSettlementGhanaBankAccount ghanaBankAccount;
+  const RefundSettlementBankAccount({required this.ghanaBankAccount});
+
+  String get type => "ghana_bank_account";
+
+  factory RefundSettlementBankAccount.fromJson(Map<String, Object?> json) {
+    _expectExactKeys(
+      json,
+      const {"type", "ghana_bank_account"},
+      "refund settlement bank-account details",
+    );
+    if (json["type"] != "ghana_bank_account") {
+      throw const FormatException("Unsupported refund bank-account type");
+    }
+    return RefundSettlementBankAccount(
+      ghanaBankAccount: RefundSettlementGhanaBankAccount.fromJson(
+        (json["ghana_bank_account"] as Map).cast<String, Object?>(),
+      ),
+    );
+  }
+
+  @override
+  Map<String, Object?> toJson() => {
+        "type": type,
+        "ghana_bank_account": _encodeValue(ghanaBankAccount),
+      };
+}
+
+final class RefundSettlementGhanaBankAccount implements _InttegroValue {
+  final String accountNumber;
+  final String last4;
+  const RefundSettlementGhanaBankAccount({
+    required this.accountNumber,
+    required this.last4,
+  });
+
+  factory RefundSettlementGhanaBankAccount.fromJson(
+    Map<String, Object?> json,
+  ) {
+    _expectExactKeys(
+      json,
+      const {"account_number", "last4"},
+      "refund settlement Ghana bank-account details",
+    );
+    return RefundSettlementGhanaBankAccount(
+      accountNumber: json["account_number"] as String,
+      last4: json["last4"] as String,
+    );
+  }
+
+  @override
+  Map<String, Object?> toJson() => {
+        "account_number": accountNumber,
+        "last4": last4,
+      };
+}
 
 sealed class ReviewUploadRequestAttemptRequest implements _InttegroValue {
   const ReviewUploadRequestAttemptRequest();
@@ -13310,6 +13575,7 @@ final class Refund implements _InttegroValue {
   final RefundReason reason;
   final String? reasonDetails;
   final String? reference;
+  final RefundSettlement settlement;
   final RefundStatus status;
   final DateTime? succeededAt;
   final Amount total;
@@ -13325,6 +13591,7 @@ final class Refund implements _InttegroValue {
     required this.reason,
     this.reasonDetails,
     this.reference,
+    required this.settlement,
     required this.status,
     this.succeededAt,
     required this.total,
@@ -13357,6 +13624,7 @@ final class Refund implements _InttegroValue {
             : json["reason_details"] as String,
         reference:
             json["reference"] == null ? null : json["reference"] as String,
+        settlement: RefundSettlement.fromJson(json["settlement"]),
         status: RefundStatus.fromJson(json["status"]),
         succeededAt: json["succeeded_at"] == null
             ? null
@@ -13377,6 +13645,7 @@ final class Refund implements _InttegroValue {
         if (reasonDetails != null)
           "reason_details": _encodeValue(reasonDetails),
         if (reference != null) "reference": _encodeValue(reference),
+        "settlement": _encodeValue(settlement),
         "status": _encodeValue(status),
         if (succeededAt != null) "succeeded_at": _encodeValue(succeededAt),
         "total": _encodeValue(total),

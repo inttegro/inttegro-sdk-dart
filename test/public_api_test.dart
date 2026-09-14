@@ -112,6 +112,48 @@ void main() {
     expect(settings.toJson()['destinations'], {'ghs': 'fa_123'});
   });
 
+  test('refund settlement is discriminated and contains masked details', () {
+    final refund = Refund.fromJson({
+      'created_at': '2026-09-09T12:00:00Z',
+      'id': 'rf_123',
+      'line_items': <Object?>[],
+      'order_id': 'or_123',
+      'reason': 'requested_by_customer',
+      'settlement': {
+        'type': 'payment_method',
+        'payment_method': {
+          'id': 'pm_123',
+          'type': 'bank_account',
+          'bank_account': {
+            'type': 'ghana_bank_account',
+            'ghana_bank_account': {
+              'account_number': '****1234',
+              'last4': '1234',
+            },
+          },
+        },
+      },
+      'status': 'pending',
+      'total': {'currency': 'ghs', 'value': 100},
+    });
+
+    final settlement = refund.settlement as RefundPaymentMethodSettlement;
+    final method =
+        settlement.paymentMethod as RefundSettlementBankAccountPaymentMethod;
+    expect(method.bankAccount.ghanaBankAccount.accountNumber, '****1234');
+    expect(
+      () => RefundSettlement.fromJson({
+        'type': 'offline',
+        'payment_method': {'id': 'pm_123'},
+      }),
+      throwsFormatException,
+    );
+    expect(
+      () => RefundSettlement.fromJson({'type': 'payment_method'}),
+      throwsA(anything),
+    );
+  });
+
   test('resources answer protocol questions', () {
     final payment = Payment.fromJson({
       'amount': {'currency': 'ghs', 'value': 1000},
