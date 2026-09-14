@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0
+
+- Breaking: replaced payout maps and generic payloads with named request,
+  response, settings, page, error, and destination models.
+- Made `ghs` the explicit supported payout-destination field and exposed payout
+  timestamps as `DateTime` values.
+- Added fluent resource semantics and removed server-internal purchase-intent
+  activity response models.
+
 ## 0.2.5
 
 - Aligned the automated publish job with Dart's official OIDC workflow so the setup action's credential remains registered for publication.
