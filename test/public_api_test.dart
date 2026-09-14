@@ -100,6 +100,18 @@ void main() {
     expect(intent.usedOrderId, 'or_123');
   });
 
+  test('payout settings expose known destinations statically', () {
+    final settings = PayoutSettingsMutation.fromJson({
+      'destinations': {'ghs': 'fa_123'},
+      'fx_enabled': true,
+      'id': 'settings_123',
+    });
+
+    expect(settings.destinations?.ghs, 'fa_123');
+    expect(settings.fxEnabled, isTrue);
+    expect(settings.toJson()['destinations'], {'ghs': 'fa_123'});
+  });
+
   test('resources answer protocol questions', () {
     final payment = Payment.fromJson({
       'amount': {'currency': 'ghs', 'value': 1000},
