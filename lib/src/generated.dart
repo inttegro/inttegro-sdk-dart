@@ -1003,28 +1003,6 @@ final class ProductType implements _InttegroValue {
   String toString() => value;
 }
 
-/// A typed `PurchaseIntentActivityType` value used by the Inttegro API.
-final class PurchaseIntentActivityType implements _InttegroValue {
-  final String value;
-  const PurchaseIntentActivityType(this.value);
-  factory PurchaseIntentActivityType.fromJson(Object? json) =>
-      PurchaseIntentActivityType(json as String);
-  static const expiredViewed = PurchaseIntentActivityType("expired_viewed");
-  static const orderCreated = PurchaseIntentActivityType("order_created");
-  static const paymentFailed = PurchaseIntentActivityType("payment_failed");
-  static const paymentStarted = PurchaseIntentActivityType("payment_started");
-  static const viewed = PurchaseIntentActivityType("viewed");
-  @override
-  String toJson() => value;
-  @override
-  bool operator ==(Object other) =>
-      other is PurchaseIntentActivityType && other.value == value;
-  @override
-  int get hashCode => value.hashCode;
-  @override
-  String toString() => value;
-}
-
 /// A typed `PurchaseIntentStatus` value used by the Inttegro API.
 final class PurchaseIntentStatus implements _InttegroValue {
   final String value;
@@ -11600,14 +11578,22 @@ final class PayoutSettingsLookupScheduleAgingSpec implements _InttegroValue {
 /// Typed Inttegro domain value.
 final class PayoutSettingsMutation implements _InttegroValue {
   final PayoutDestinations? destinations;
+  final bool? fxEnabled;
   final String? id;
   final PayoutSettingsMutationSchedule? schedule;
-  const PayoutSettingsMutation({this.destinations, this.id, this.schedule});
+  const PayoutSettingsMutation({
+    this.destinations,
+    this.fxEnabled,
+    this.id,
+    this.schedule,
+  });
   factory PayoutSettingsMutation.fromJson(Map<String, Object?> json) =>
       PayoutSettingsMutation(
         destinations: json["destinations"] == null
             ? null
             : PayoutDestinations.fromJson(json["destinations"]),
+        fxEnabled:
+            json["fx_enabled"] == null ? null : json["fx_enabled"] as bool,
         id: json["id"] == null ? null : json["id"] as String,
         schedule: json["schedule"] == null
             ? null
@@ -11618,6 +11604,7 @@ final class PayoutSettingsMutation implements _InttegroValue {
   @override
   Map<String, Object?> toJson() => {
         if (destinations != null) "destinations": _encodeValue(destinations),
+        if (fxEnabled != null) "fx_enabled": _encodeValue(fxEnabled),
         if (id != null) "id": _encodeValue(id),
         if (schedule != null) "schedule": _encodeValue(schedule),
       };
@@ -12747,7 +12734,6 @@ final class PublicFileStorage implements _InttegroValue {
 
 /// Typed Inttegro domain value.
 final class PurchaseIntent implements _InttegroValue {
-  final PurchaseIntentActivityLog? activity;
   final bool allowVariants;
   final DateTime createdAt;
   final DateTime? expiresAt;
@@ -12762,7 +12748,6 @@ final class PurchaseIntent implements _InttegroValue {
   final PurchaseIntentUsage usage;
   final PurchaseIntentVariantSet? variantSet;
   const PurchaseIntent({
-    this.activity,
     required this.allowVariants,
     required this.createdAt,
     this.expiresAt,
@@ -12778,11 +12763,6 @@ final class PurchaseIntent implements _InttegroValue {
     this.variantSet,
   });
   factory PurchaseIntent.fromJson(Map<String, Object?> json) => PurchaseIntent(
-        activity: json["activity"] == null
-            ? null
-            : PurchaseIntentActivityLog.fromJson(
-                (json["activity"] as Map).cast<String, Object?>(),
-              ),
         allowVariants: json["allow_variants"] as bool,
         createdAt: _decodeDateTime(json["created_at"]),
         expiresAt: json["expires_at"] == null
@@ -12825,7 +12805,6 @@ final class PurchaseIntent implements _InttegroValue {
       );
   @override
   Map<String, Object?> toJson() => {
-        if (activity != null) "activity": _encodeValue(activity),
         "allow_variants": _encodeValue(allowVariants),
         "created_at": _encodeValue(createdAt),
         if (expiresAt != null) "expires_at": _encodeValue(expiresAt),
@@ -12839,226 +12818,6 @@ final class PurchaseIntent implements _InttegroValue {
         if (updatedAt != null) "updated_at": _encodeValue(updatedAt),
         "usage": _encodeValue(usage),
         if (variantSet != null) "variant_set": _encodeValue(variantSet),
-      };
-}
-
-/// Typed Inttegro domain value.
-final class PurchaseIntentActivityLog implements _InttegroValue {
-  final List<PurchaseIntentActivity>? recent;
-  const PurchaseIntentActivityLog({this.recent});
-  factory PurchaseIntentActivityLog.fromJson(Map<String, Object?> json) =>
-      PurchaseIntentActivityLog(
-        recent: json["recent"] == null
-            ? null
-            : (json["recent"] as List)
-                .map(
-                  (item) => PurchaseIntentActivity.fromJson(
-                    (item as Map).cast<String, Object?>(),
-                  ),
-                )
-                .toList(),
-      );
-  @override
-  Map<String, Object?> toJson() => {
-        if (recent != null) "recent": _encodeValue(recent),
-      };
-}
-
-/// Typed Inttegro domain value.
-final class PurchaseIntentActivity implements _InttegroValue {
-  final Amount? amount;
-  final PurchaseIntentActivityAttribution? attribution;
-  final DateTime createdAt;
-  final String? errorCode;
-  final String id;
-  final String? orderId;
-  final String? paymentId;
-  final String? productId;
-  final String purchaseIntentId;
-  final int? quantity;
-  final String? source;
-  final PurchaseIntentActivityType type;
-  final String? variantProductId;
-  final PurchaseIntentActivityVisitor? visitor;
-  const PurchaseIntentActivity({
-    this.amount,
-    this.attribution,
-    required this.createdAt,
-    this.errorCode,
-    required this.id,
-    this.orderId,
-    this.paymentId,
-    this.productId,
-    required this.purchaseIntentId,
-    this.quantity,
-    this.source,
-    required this.type,
-    this.variantProductId,
-    this.visitor,
-  });
-  factory PurchaseIntentActivity.fromJson(Map<String, Object?> json) =>
-      PurchaseIntentActivity(
-        amount: json["amount"] == null
-            ? null
-            : Amount.fromJson((json["amount"] as Map).cast<String, Object?>()),
-        attribution: json["attribution"] == null
-            ? null
-            : PurchaseIntentActivityAttribution.fromJson(
-                (json["attribution"] as Map).cast<String, Object?>(),
-              ),
-        createdAt: _decodeDateTime(json["created_at"]),
-        errorCode:
-            json["error_code"] == null ? null : json["error_code"] as String,
-        id: json["id"] as String,
-        orderId: json["order_id"] == null ? null : json["order_id"] as String,
-        paymentId:
-            json["payment_id"] == null ? null : json["payment_id"] as String,
-        productId:
-            json["product_id"] == null ? null : json["product_id"] as String,
-        purchaseIntentId: json["purchase_intent_id"] as String,
-        quantity:
-            json["quantity"] == null ? null : (json["quantity"] as num).toInt(),
-        source: json["source"] == null ? null : json["source"] as String,
-        type: PurchaseIntentActivityType.fromJson(json["type"]),
-        variantProductId: json["variant_product_id"] == null
-            ? null
-            : json["variant_product_id"] as String,
-        visitor: json["visitor"] == null
-            ? null
-            : PurchaseIntentActivityVisitor.fromJson(
-                (json["visitor"] as Map).cast<String, Object?>(),
-              ),
-      );
-  @override
-  Map<String, Object?> toJson() => {
-        if (amount != null) "amount": _encodeValue(amount),
-        if (attribution != null) "attribution": _encodeValue(attribution),
-        "created_at": _encodeValue(createdAt),
-        if (errorCode != null) "error_code": _encodeValue(errorCode),
-        "id": _encodeValue(id),
-        if (orderId != null) "order_id": _encodeValue(orderId),
-        if (paymentId != null) "payment_id": _encodeValue(paymentId),
-        if (productId != null) "product_id": _encodeValue(productId),
-        "purchase_intent_id": _encodeValue(purchaseIntentId),
-        if (quantity != null) "quantity": _encodeValue(quantity),
-        if (source != null) "source": _encodeValue(source),
-        "type": _encodeValue(type),
-        if (variantProductId != null)
-          "variant_product_id": _encodeValue(variantProductId),
-        if (visitor != null) "visitor": _encodeValue(visitor),
-      };
-}
-
-/// Typed Inttegro domain value.
-final class PurchaseIntentActivityAttribution implements _InttegroValue {
-  final String? campaign;
-  final String? channel;
-  final String? content;
-  final String? landingUrl;
-  final String? medium;
-  final String? referrer;
-  final String? referrerHost;
-  final String? source;
-  final String? term;
-  const PurchaseIntentActivityAttribution({
-    this.campaign,
-    this.channel,
-    this.content,
-    this.landingUrl,
-    this.medium,
-    this.referrer,
-    this.referrerHost,
-    this.source,
-    this.term,
-  });
-  factory PurchaseIntentActivityAttribution.fromJson(
-    Map<String, Object?> json,
-  ) =>
-      PurchaseIntentActivityAttribution(
-        campaign: json["campaign"] == null ? null : json["campaign"] as String,
-        channel: json["channel"] == null ? null : json["channel"] as String,
-        content: json["content"] == null ? null : json["content"] as String,
-        landingUrl:
-            json["landing_url"] == null ? null : json["landing_url"] as String,
-        medium: json["medium"] == null ? null : json["medium"] as String,
-        referrer: json["referrer"] == null ? null : json["referrer"] as String,
-        referrerHost: json["referrer_host"] == null
-            ? null
-            : json["referrer_host"] as String,
-        source: json["source"] == null ? null : json["source"] as String,
-        term: json["term"] == null ? null : json["term"] as String,
-      );
-  @override
-  Map<String, Object?> toJson() => {
-        if (campaign != null) "campaign": _encodeValue(campaign),
-        if (channel != null) "channel": _encodeValue(channel),
-        if (content != null) "content": _encodeValue(content),
-        if (landingUrl != null) "landing_url": _encodeValue(landingUrl),
-        if (medium != null) "medium": _encodeValue(medium),
-        if (referrer != null) "referrer": _encodeValue(referrer),
-        if (referrerHost != null) "referrer_host": _encodeValue(referrerHost),
-        if (source != null) "source": _encodeValue(source),
-        if (term != null) "term": _encodeValue(term),
-      };
-}
-
-/// Typed Inttegro domain value.
-final class PurchaseIntentActivityVisitor implements _InttegroValue {
-  final String? browser;
-  final String? city;
-  final String? country;
-  final String? device;
-  final String? ipAddress;
-  final String? os;
-  final String? region;
-  final String? sessionId;
-  final String? timezone;
-  final String? userAgent;
-  final String? visitorId;
-  const PurchaseIntentActivityVisitor({
-    this.browser,
-    this.city,
-    this.country,
-    this.device,
-    this.ipAddress,
-    this.os,
-    this.region,
-    this.sessionId,
-    this.timezone,
-    this.userAgent,
-    this.visitorId,
-  });
-  factory PurchaseIntentActivityVisitor.fromJson(Map<String, Object?> json) =>
-      PurchaseIntentActivityVisitor(
-        browser: json["browser"] == null ? null : json["browser"] as String,
-        city: json["city"] == null ? null : json["city"] as String,
-        country: json["country"] == null ? null : json["country"] as String,
-        device: json["device"] == null ? null : json["device"] as String,
-        ipAddress:
-            json["ip_address"] == null ? null : json["ip_address"] as String,
-        os: json["os"] == null ? null : json["os"] as String,
-        region: json["region"] == null ? null : json["region"] as String,
-        sessionId:
-            json["session_id"] == null ? null : json["session_id"] as String,
-        timezone: json["timezone"] == null ? null : json["timezone"] as String,
-        userAgent:
-            json["user_agent"] == null ? null : json["user_agent"] as String,
-        visitorId:
-            json["visitor_id"] == null ? null : json["visitor_id"] as String,
-      );
-  @override
-  Map<String, Object?> toJson() => {
-        if (browser != null) "browser": _encodeValue(browser),
-        if (city != null) "city": _encodeValue(city),
-        if (country != null) "country": _encodeValue(country),
-        if (device != null) "device": _encodeValue(device),
-        if (ipAddress != null) "ip_address": _encodeValue(ipAddress),
-        if (os != null) "os": _encodeValue(os),
-        if (region != null) "region": _encodeValue(region),
-        if (sessionId != null) "session_id": _encodeValue(sessionId),
-        if (timezone != null) "timezone": _encodeValue(timezone),
-        if (userAgent != null) "user_agent": _encodeValue(userAgent),
-        if (visitorId != null) "visitor_id": _encodeValue(visitorId),
       };
 }
 
