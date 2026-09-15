@@ -10409,6 +10409,7 @@ final class PaymentMethod implements _InttegroValue {
   final String customerId;
   final bool? ephemeral;
   final DateTime? expiresOn;
+  final String fingerprint;
   final String id;
   final PaymentMethodMobileMoney? mobileMoney;
   final PaymentMethodOwner? owner;
@@ -10426,6 +10427,7 @@ final class PaymentMethod implements _InttegroValue {
     required this.customerId,
     this.ephemeral,
     this.expiresOn,
+    required this.fingerprint,
     required this.id,
     this.mobileMoney,
     this.owner,
@@ -10458,6 +10460,7 @@ final class PaymentMethod implements _InttegroValue {
         expiresOn: json["expires_on"] == null
             ? null
             : _decodeDateTime(json["expires_on"]),
+        fingerprint: json["fingerprint"] as String,
         id: json["id"] as String,
         mobileMoney: json["mobile_money"] == null
             ? null
@@ -10495,6 +10498,7 @@ final class PaymentMethod implements _InttegroValue {
         "customer_id": _encodeValue(customerId),
         if (ephemeral != null) "ephemeral": _encodeValue(ephemeral),
         if (expiresOn != null) "expires_on": _encodeValue(expiresOn),
+        "fingerprint": _encodeValue(fingerprint),
         "id": _encodeValue(id),
         if (mobileMoney != null) "mobile_money": _encodeValue(mobileMoney),
         if (owner != null) "owner": _encodeValue(owner),
