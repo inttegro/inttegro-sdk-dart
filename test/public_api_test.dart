@@ -116,7 +116,23 @@ void main() {
     final refund = Refund.fromJson({
       'created_at': '2026-09-09T12:00:00Z',
       'id': 'rf_123',
-      'line_items': <Object?>[],
+      'line_items': [
+        {
+          'id': 'rli_123',
+          'order_line_item_id': 'oli_123',
+          'order_line_item': {
+            'id': 'oli_123',
+            'type': 'product',
+            'quantity': 2,
+            'product': {
+              'id': 'prod_123',
+              'name': 'Premium subscription',
+            },
+          },
+          'original_amount_paid': {'currency': 'ghs', 'value': 200},
+          'refund_amount': {'currency': 'ghs', 'value': 100},
+        },
+      ],
       'order_id': 'or_123',
       'reason': 'requested_by_customer',
       'settlement': {
@@ -141,6 +157,10 @@ void main() {
     final method =
         settlement.paymentMethod as RefundSettlementBankAccountPaymentMethod;
     expect(method.bankAccount.ghanaBankAccount.accountNumber, '****1234');
+    final lineItem =
+        refund.lineItems.single.orderLineItem as RefundOrderProductLineItem;
+    expect(lineItem.quantity, 2);
+    expect(lineItem.product.id, 'prod_123');
     expect(
       () => RefundSettlement.fromJson({
         'type': 'offline',

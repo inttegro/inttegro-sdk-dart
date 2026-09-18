@@ -1846,6 +1846,179 @@ final class RefundSettlementGhanaBankAccount implements _InttegroValue {
       };
 }
 
+/// Immutable order-line snapshot attached to a refund.
+sealed class RefundOrderLineItem implements _InttegroValue {
+  const RefundOrderLineItem();
+
+  factory RefundOrderLineItem.fromJson(Object? json) {
+    final value = (json as Map).cast<String, Object?>();
+    return switch (value["type"]) {
+      "product" => RefundOrderProductLineItem.fromJson(value),
+      "fee" => RefundOrderFeeLineItem.fromJson(value),
+      "shipping" => RefundOrderShippingLineItem.fromJson(value),
+      _ => throw const FormatException("Unsupported refund order line item type"),
+    };
+  }
+
+  String get id;
+  String get type;
+}
+
+final class RefundOrderProductLineItem extends RefundOrderLineItem {
+  @override
+  final String id;
+  final int quantity;
+  final RefundOrderLineItemProduct product;
+  const RefundOrderProductLineItem({
+    required this.id,
+    required this.quantity,
+    required this.product,
+  });
+
+  factory RefundOrderProductLineItem.fromJson(Map<String, Object?> json) {
+    _expectExactKeys(
+      json,
+      const {"id", "type", "quantity", "product"},
+      "product refund order line item",
+    );
+    if (json["type"] != "product") {
+      throw const FormatException("Invalid product refund order line item");
+    }
+    return RefundOrderProductLineItem(
+      id: json["id"] as String,
+      quantity: (json["quantity"] as num).toInt(),
+      product: RefundOrderLineItemProduct.fromJson(
+        (json["product"] as Map).cast<String, Object?>(),
+      ),
+    );
+  }
+
+  @override
+  String get type => "product";
+
+  @override
+  Map<String, Object?> toJson() => {
+        "id": id,
+        "type": type,
+        "quantity": quantity,
+        "product": _encodeValue(product),
+      };
+}
+
+final class RefundOrderLineItemProduct implements _InttegroValue {
+  final String? id;
+  final String name;
+  const RefundOrderLineItemProduct({this.id, required this.name});
+
+  factory RefundOrderLineItemProduct.fromJson(Map<String, Object?> json) {
+    _expectExactKeys(
+      json,
+      json.containsKey("id") ? const {"id", "name"} : const {"name"},
+      "refund order line item product",
+    );
+    return RefundOrderLineItemProduct(
+      id: json["id"] as String?,
+      name: json["name"] as String,
+    );
+  }
+
+  @override
+  Map<String, Object?> toJson() => {
+        if (id != null) "id": id,
+        "name": name,
+      };
+}
+
+final class RefundOrderFeeLineItem extends RefundOrderLineItem {
+  @override
+  final String id;
+  final RefundOrderLineItemAdjustment fee;
+  const RefundOrderFeeLineItem({required this.id, required this.fee});
+
+  factory RefundOrderFeeLineItem.fromJson(Map<String, Object?> json) {
+    _expectExactKeys(
+      json,
+      const {"id", "type", "fee"},
+      "fee refund order line item",
+    );
+    if (json["type"] != "fee") {
+      throw const FormatException("Invalid fee refund order line item");
+    }
+    return RefundOrderFeeLineItem(
+      id: json["id"] as String,
+      fee: RefundOrderLineItemAdjustment.fromJson(
+        (json["fee"] as Map).cast<String, Object?>(),
+      ),
+    );
+  }
+
+  @override
+  String get type => "fee";
+
+  @override
+  Map<String, Object?> toJson() => {
+        "id": id,
+        "type": type,
+        "fee": _encodeValue(fee),
+      };
+}
+
+final class RefundOrderShippingLineItem extends RefundOrderLineItem {
+  @override
+  final String id;
+  final RefundOrderLineItemAdjustment shipping;
+  const RefundOrderShippingLineItem({required this.id, required this.shipping});
+
+  factory RefundOrderShippingLineItem.fromJson(Map<String, Object?> json) {
+    _expectExactKeys(
+      json,
+      const {"id", "type", "shipping"},
+      "shipping refund order line item",
+    );
+    if (json["type"] != "shipping") {
+      throw const FormatException("Invalid shipping refund order line item");
+    }
+    return RefundOrderShippingLineItem(
+      id: json["id"] as String,
+      shipping: RefundOrderLineItemAdjustment.fromJson(
+        (json["shipping"] as Map).cast<String, Object?>(),
+      ),
+    );
+  }
+
+  @override
+  String get type => "shipping";
+
+  @override
+  Map<String, Object?> toJson() => {
+        "id": id,
+        "type": type,
+        "shipping": _encodeValue(shipping),
+      };
+}
+
+final class RefundOrderLineItemAdjustment implements _InttegroValue {
+  final String? label;
+  final String? description;
+  const RefundOrderLineItemAdjustment({this.label, this.description});
+
+  factory RefundOrderLineItemAdjustment.fromJson(Map<String, Object?> json) {
+    if (json.keys.any((key) => key != "label" && key != "description")) {
+      throw const FormatException("Invalid refund order line item adjustment");
+    }
+    return RefundOrderLineItemAdjustment(
+      label: json["label"] as String?,
+      description: json["description"] as String?,
+    );
+  }
+
+  @override
+  Map<String, Object?> toJson() => {
+        if (label != null) "label": label,
+        if (description != null) "description": description,
+      };
+}
+
 sealed class ReviewUploadRequestAttemptRequest implements _InttegroValue {
   const ReviewUploadRequestAttemptRequest();
   factory ReviewUploadRequestAttemptRequest.fromJson(Object? json) {
@@ -13659,7 +13832,9 @@ final class Refund implements _InttegroValue {
 /// Typed Inttegro domain value.
 final class RefundLineItem implements _InttegroValue {
   final String id;
+  @Deprecated('Use orderLineItem.id.')
   final String orderLineItemId;
+  final RefundOrderLineItem? orderLineItem;
   final Amount originalAmountPaid;
   final RefundReason? reason;
   final String? reasonDetails;
@@ -13667,6 +13842,7 @@ final class RefundLineItem implements _InttegroValue {
   const RefundLineItem({
     required this.id,
     required this.orderLineItemId,
+    this.orderLineItem,
     required this.originalAmountPaid,
     this.reason,
     this.reasonDetails,
@@ -13675,6 +13851,9 @@ final class RefundLineItem implements _InttegroValue {
   factory RefundLineItem.fromJson(Map<String, Object?> json) => RefundLineItem(
         id: json["id"] as String,
         orderLineItemId: json["order_line_item_id"] as String,
+        orderLineItem: json["order_line_item"] == null
+            ? null
+            : RefundOrderLineItem.fromJson(json["order_line_item"]),
         originalAmountPaid: Amount.fromJson(
           (json["original_amount_paid"] as Map).cast<String, Object?>(),
         ),
@@ -13692,6 +13871,8 @@ final class RefundLineItem implements _InttegroValue {
   Map<String, Object?> toJson() => {
         "id": _encodeValue(id),
         "order_line_item_id": _encodeValue(orderLineItemId),
+        if (orderLineItem != null)
+          "order_line_item": _encodeValue(orderLineItem),
         "original_amount_paid": _encodeValue(originalAmountPaid),
         if (reason != null) "reason": _encodeValue(reason),
         if (reasonDetails != null)
