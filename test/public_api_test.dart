@@ -13,6 +13,10 @@ void main() {
     client.close();
   });
 
+  test('OTP purposes preserve closed wire values', () {
+    expect(OTPPurpose.signIn.toJson(), 'sign_in');
+  });
+
   test('wire envelopes are unwrapped into domain values', () async {
     final httpClient = MockClient((request) async {
       expect(request.url.path, '/apps/lookup');

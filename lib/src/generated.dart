@@ -669,6 +669,37 @@ final class OTPAlphabetType implements _InttegroValue {
   String toString() => value;
 }
 
+/// A typed `OTPPurpose` value used by the Inttegro API.
+final class OTPPurpose implements _InttegroValue {
+  final String value;
+  const OTPPurpose(this.value);
+  factory OTPPurpose.fromJson(Object? json) => OTPPurpose(json as String);
+  static const accountCreation = OTPPurpose("account_creation");
+  static const accountRecovery = OTPPurpose("account_recovery");
+  static const emailVerification = OTPPurpose("email_verification");
+  static const financialAccountVerification =
+      OTPPurpose("financial_account_verification");
+  static const passwordReset = OTPPurpose("password_reset");
+  static const paymentConfirmation = OTPPurpose("payment_confirmation");
+  static const paymentMethodVerification =
+      OTPPurpose("payment_method_verification");
+  static const payoutConfirmation = OTPPurpose("payout_confirmation");
+  static const phoneVerification = OTPPurpose("phone_verification");
+  static const sensitiveAction = OTPPurpose("sensitive_action");
+  static const signIn = OTPPurpose("sign_in");
+  static const transactionConfirmation =
+      OTPPurpose("transaction_confirmation");
+  static const unspecified = OTPPurpose("unspecified");
+  @override
+  String toJson() => value;
+  @override
+  bool operator ==(Object other) => other is OTPPurpose && other.value == value;
+  @override
+  int get hashCode => value.hashCode;
+  @override
+  String toString() => value;
+}
+
 /// A typed `OTPStatus` value used by the Inttegro API.
 final class OTPStatus implements _InttegroValue {
   final String value;
@@ -7969,7 +8000,7 @@ final class GhanaBankAccount implements _InttegroValue {
 final class InitiateOTPRequest implements _InttegroValue {
   final bool? asyncDelivery;
   final String? messageTemplate;
-  final String? purpose;
+  final OTPPurpose purpose;
   final String? sender;
   final String? tokenAlphabet;
   final OTPAlphabetType? tokenAlphabetType;
@@ -7980,7 +8011,7 @@ final class InitiateOTPRequest implements _InttegroValue {
   const InitiateOTPRequest({
     this.asyncDelivery,
     this.messageTemplate,
-    this.purpose,
+    required this.purpose,
     this.sender,
     this.tokenAlphabet,
     this.tokenAlphabetType,
@@ -7997,7 +8028,7 @@ final class InitiateOTPRequest implements _InttegroValue {
         messageTemplate: json["message_template"] == null
             ? null
             : json["message_template"] as String,
-        purpose: json["purpose"] == null ? null : json["purpose"] as String,
+        purpose: OTPPurpose.fromJson(json["purpose"]),
         sender: json["sender"] == null ? null : json["sender"] as String,
         tokenAlphabet: json["token_alphabet"] == null
             ? null
@@ -8018,7 +8049,7 @@ final class InitiateOTPRequest implements _InttegroValue {
           "async_delivery": _encodeValue(asyncDelivery),
         if (messageTemplate != null)
           "message_template": _encodeValue(messageTemplate),
-        if (purpose != null) "purpose": _encodeValue(purpose),
+        "purpose": _encodeValue(purpose),
         if (sender != null) "sender": _encodeValue(sender),
         if (tokenAlphabet != null)
           "token_alphabet": _encodeValue(tokenAlphabet),
