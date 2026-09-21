@@ -11,5 +11,6 @@ part 'src/client.dart';
 part 'src/balance_snapshot.dart';
 part 'src/semantic_collections.dart';
 part 'src/generated.dart';
+part 'src/search.dart';
 part 'src/resources.dart';
 part 'src/resource_semantics.dart';

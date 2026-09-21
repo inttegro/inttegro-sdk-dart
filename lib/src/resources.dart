@@ -327,6 +327,23 @@ final class Customers {
     );
     return CustomerPage.fromJson((value as Map).cast<String, Object?>());
   }
+
+  /// Search customer profiles.
+  Future<ResourceSearchPage> search(
+    ResourceSearchRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/customers/search",
+      request.toJson(),
+      options,
+      "customers.search",
+      field: "search",
+      authenticated: true,
+    );
+    return ResourceSearchPage.fromJson((value as Map).cast<String, Object?>());
+  }
 }
 
 /// Operations for Inttegro file links.
@@ -574,6 +591,23 @@ final class FinancialAccounts {
     return FinancialAccountPage.fromJson(
       (value as Map).cast<String, Object?>(),
     );
+  }
+
+  /// Search financial accounts.
+  Future<ResourceSearchPage> search(
+    ResourceSearchRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/financial_accounts/search",
+      request.toJson(),
+      options,
+      "financial_accounts.search",
+      field: "search",
+      authenticated: true,
+    );
+    return ResourceSearchPage.fromJson((value as Map).cast<String, Object?>());
   }
 
   /// Connect a financial account
@@ -1162,6 +1196,23 @@ final class Orders {
     );
     return OrderPage.fromJson((value as Map).cast<String, Object?>());
   }
+
+  /// Search orders.
+  Future<ResourceSearchPage> search(
+    ResourceSearchRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/orders/search",
+      request.toJson(),
+      options,
+      "orders.search",
+      field: "search",
+      authenticated: true,
+    );
+    return ResourceSearchPage.fromJson((value as Map).cast<String, Object?>());
+  }
 }
 
 /// Operations for Inttegro otp.
@@ -1510,6 +1561,23 @@ final class Payouts {
     return PayoutPage.fromJson((value as Map).cast<String, Object?>());
   }
 
+  /// Search payouts.
+  Future<ResourceSearchPage> search(
+    ResourceSearchRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/payouts/search",
+      request.toJson(),
+      options,
+      "payouts.search",
+      field: "search",
+      authenticated: true,
+    );
+    return ResourceSearchPage.fromJson((value as Map).cast<String, Object?>());
+  }
+
   /// Cancel a scheduled payout
   Future<Payout> cancel(
     CancelPayoutRequest request, {
@@ -1792,6 +1860,23 @@ final class Products {
       authenticated: true,
     );
     return ProductPage.fromJson((value as Map).cast<String, Object?>());
+  }
+
+  /// Search products.
+  Future<ResourceSearchPage> search(
+    ResourceSearchRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/products/search",
+      request.toJson(),
+      options,
+      "products.search",
+      field: "search",
+      authenticated: true,
+    );
+    return ResourceSearchPage.fromJson((value as Map).cast<String, Object?>());
   }
 }
 

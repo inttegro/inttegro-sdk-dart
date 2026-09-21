@@ -39,6 +39,84 @@ void main() {
     client.close();
   });
 
+  test('resource search is typed and available on every supported resource',
+      () async {
+    final paths = <String>[];
+    final httpClient = MockClient((request) async {
+      paths.add(request.url.path);
+      expect(jsonDecode(request.body), {
+        'text': 'tea',
+        'sort': {'field': 'relevance', 'direction': 'desc'},
+        'page_size': 10,
+      });
+      return http.Response(
+        jsonEncode({
+          'search': {
+            'resource_types': ['product'],
+            'sort': {'field': 'relevance', 'direction': 'desc'},
+            'page_size': 10,
+            'result_count': 1,
+            'has_more': false,
+            'total': {'value': 1, 'relation': 'exact'},
+            'resource_totals': [
+              {
+                'resource_type': 'product',
+                'value': 1,
+                'relation': 'exact',
+              },
+            ],
+            'results': [
+              {
+                'resource': {'type': 'product', 'id': 'prod_123'},
+                'title': 'Tea guide',
+                'amount': {'currency': 'ghs', 'value': 5000},
+                'updated_at': '2026-09-21T12:00:00Z',
+              },
+            ],
+            'facets': [],
+            'next_cursor': null,
+            'freshness': {
+              'state': 'current',
+              'observed_at': '2026-09-21T12:00:01Z',
+              'resources': [],
+            },
+          },
+        }),
+        200,
+        headers: {'content-type': 'application/json'},
+      );
+    });
+    final client = Client(apiKey: 'sk_test_example', httpClient: httpClient);
+    const request = ResourceSearchRequest(
+      text: 'tea',
+      sort: ResourceSearchSort(
+        field: ResourceSearchSortField.relevance,
+        direction: ResourceSearchSortDirection.descending,
+      ),
+      pageSize: 10,
+    );
+
+    final pages = await Future.wait([
+      client.customers.search(request),
+      client.financialAccounts.search(request),
+      client.orders.search(request),
+      client.payouts.search(request),
+      client.products.search(request),
+    ]);
+
+    expect(paths, [
+      '/customers/search',
+      '/financial_accounts/search',
+      '/orders/search',
+      '/payouts/search',
+      '/products/search',
+    ]);
+    expect(pages.last.results.single.resource.id, 'prod_123');
+    expect(pages.last.results.single.amount?.value, 5000);
+    expect(pages.last.freshness.state, ResourceSearchFreshnessState.current);
+    client.close();
+  });
+
   test('semantic collections control custom-data mutation', () {
     final original = CustomData({'order': 'first'});
     final updated = original.set('order', 'second').set('campaign', 'summer');

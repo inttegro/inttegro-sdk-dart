@@ -1,6 +1,6 @@
 name: inttegro
 description: Official typed server-side Dart SDK for Inttegro.
-version: 0.3.0
+version: 0.4.0
 repository: https://github.com/inttegro/inttegro-sdk-dart
 homepage: https://studio.inttegro.com/sdks/dart
 documentation: https://pub.dev/documentation/inttegro/latest/
