@@ -687,8 +687,7 @@ final class OTPPurpose implements _InttegroValue {
   static const phoneVerification = OTPPurpose("phone_verification");
   static const sensitiveAction = OTPPurpose("sensitive_action");
   static const signIn = OTPPurpose("sign_in");
-  static const transactionConfirmation =
-      OTPPurpose("transaction_confirmation");
+  static const transactionConfirmation = OTPPurpose("transaction_confirmation");
   static const unspecified = OTPPurpose("unspecified");
   @override
   String toJson() => value;
@@ -1887,7 +1886,8 @@ sealed class RefundOrderLineItem implements _InttegroValue {
       "product" => RefundOrderProductLineItem.fromJson(value),
       "fee" => RefundOrderFeeLineItem.fromJson(value),
       "shipping" => RefundOrderShippingLineItem.fromJson(value),
-      _ => throw const FormatException("Unsupported refund order line item type"),
+      _ =>
+        throw const FormatException("Unsupported refund order line item type"),
     };
   }
 
