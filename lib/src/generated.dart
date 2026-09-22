@@ -143,6 +143,44 @@ final class BalanceTransactionType implements _InttegroValue {
   String toString() => value;
 }
 
+/// A typed `BalanceTransactionAllocationType` value used by the Inttegro API.
+final class BalanceTransactionAllocationType implements _InttegroValue {
+  final String value;
+  const BalanceTransactionAllocationType(this.value);
+  factory BalanceTransactionAllocationType.fromJson(Object? json) =>
+      BalanceTransactionAllocationType(json as String);
+  static const payout = BalanceTransactionAllocationType("payout");
+  static const refund = BalanceTransactionAllocationType("refund");
+  @override
+  String toJson() => value;
+  @override
+  bool operator ==(Object other) =>
+      other is BalanceTransactionAllocationType && other.value == value;
+  @override
+  int get hashCode => value.hashCode;
+  @override
+  String toString() => value;
+}
+
+/// A typed caller-visible allocation status.
+final class BalanceTransactionAllocationStatus implements _InttegroValue {
+  final String value;
+  const BalanceTransactionAllocationStatus(this.value);
+  factory BalanceTransactionAllocationStatus.fromJson(Object? json) =>
+      BalanceTransactionAllocationStatus(json as String);
+  static const pending = BalanceTransactionAllocationStatus("pending");
+  static const completed = BalanceTransactionAllocationStatus("completed");
+  @override
+  String toJson() => value;
+  @override
+  bool operator ==(Object other) =>
+      other is BalanceTransactionAllocationStatus && other.value == value;
+  @override
+  int get hashCode => value.hashCode;
+  @override
+  String toString() => value;
+}
+
 /// A typed `BankAccountType` value used by the Inttegro API.
 final class BankAccountType implements _InttegroValue {
   final String value;
@@ -2559,8 +2597,87 @@ final class ArchivePaymentMethodRequest implements _InttegroValue {
 }
 
 /// Typed Inttegro domain value.
+final class BalanceTransactionAllocationUse implements _InttegroValue {
+  final String id;
+  final BalanceTransactionAmount amount;
+  const BalanceTransactionAllocationUse({required this.id, required this.amount});
+  factory BalanceTransactionAllocationUse.fromJson(
+    Map<String, Object?> json,
+  ) =>
+      BalanceTransactionAllocationUse(
+	id: json["id"] as String,
+	amount: BalanceTransactionAmount.fromJson(
+	  (json["amount"] as Map).cast<String, Object?>(),
+	),
+      );
+  @override
+  Map<String, Object?> toJson() => {
+	"id": _encodeValue(id),
+	"amount": _encodeValue(amount),
+      };
+}
+
+/// Caller-safe allocation of part of a payment balance transaction.
+final class BalanceTransactionAllocation implements _InttegroValue {
+  final String id;
+  final BalanceTransactionAllocationType type;
+  final BalanceTransactionAllocationStatus status;
+  final BalanceTransactionAllocationUse? refund;
+  final BalanceTransactionAllocationUse? payout;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? completedAt;
+  const BalanceTransactionAllocation({
+    required this.id,
+    required this.type,
+    required this.status,
+    this.refund,
+    this.payout,
+    required this.createdAt,
+    required this.updatedAt,
+    this.completedAt,
+  });
+  factory BalanceTransactionAllocation.fromJson(Map<String, Object?> json) =>
+      BalanceTransactionAllocation(
+	id: json["id"] as String,
+	type: BalanceTransactionAllocationType.fromJson(json["type"]),
+	status: BalanceTransactionAllocationStatus.fromJson(json["status"]),
+	refund: json["refund"] == null
+	    ? null
+	    : BalanceTransactionAllocationUse.fromJson(
+		(json["refund"] as Map).cast<String, Object?>(),
+	      ),
+	payout: json["payout"] == null
+	    ? null
+	    : BalanceTransactionAllocationUse.fromJson(
+		(json["payout"] as Map).cast<String, Object?>(),
+	      ),
+	createdAt: _decodeDateTime(json["created_at"]),
+	updatedAt: _decodeDateTime(json["updated_at"]),
+	completedAt: json["completed_at"] == null
+	    ? null
+	    : _decodeDateTime(json["completed_at"]),
+      );
+  @override
+  Map<String, Object?> toJson() => {
+	"id": _encodeValue(id),
+	"type": _encodeValue(type),
+	"status": _encodeValue(status),
+	if (refund != null) "refund": _encodeValue(refund),
+	if (payout != null) "payout": _encodeValue(payout),
+	"created_at": _encodeValue(createdAt),
+	"updated_at": _encodeValue(updatedAt),
+	if (completedAt != null) "completed_at": _encodeValue(completedAt),
+      };
+}
+
+/// Typed Inttegro domain value.
 final class BalanceTransaction implements _InttegroValue {
   final BalanceTransactionAmount amount;
+  final List<BalanceTransactionAllocation>? allocations;
+  final BalanceTransactionAmount? availableAmount;
+  final BalanceTransactionAmount? pendingAmount;
+  final BalanceTransactionAmount? spentAmount;
   final DateTime? availableAt;
   final DateTime? claimedAt;
   final DateTime createdAt;
@@ -2574,6 +2691,10 @@ final class BalanceTransaction implements _InttegroValue {
   final BalanceTransactionType type;
   const BalanceTransaction({
     required this.amount,
+    this.allocations,
+    this.availableAmount,
+    this.pendingAmount,
+    this.spentAmount,
     this.availableAt,
     this.claimedAt,
     required this.createdAt,
@@ -2593,6 +2714,30 @@ final class BalanceTransaction implements _InttegroValue {
         amount: BalanceTransactionAmount.fromJson(
           (json["amount"] as Map).cast<String, Object?>(),
         ),
+	allocations: json["allocations"] == null
+	    ? null
+	    : (json["allocations"] as List)
+		.map(
+		  (item) => BalanceTransactionAllocation.fromJson(
+		    (item as Map).cast<String, Object?>(),
+		  ),
+		)
+		.toList(),
+	availableAmount: json["available_amount"] == null
+	    ? null
+	    : BalanceTransactionAmount.fromJson(
+		(json["available_amount"] as Map).cast<String, Object?>(),
+	      ),
+	pendingAmount: json["pending_amount"] == null
+	    ? null
+	    : BalanceTransactionAmount.fromJson(
+		(json["pending_amount"] as Map).cast<String, Object?>(),
+	      ),
+	spentAmount: json["spent_amount"] == null
+	    ? null
+	    : BalanceTransactionAmount.fromJson(
+		(json["spent_amount"] as Map).cast<String, Object?>(),
+	      ),
         availableAt: json["available_at"] == null
             ? null
             : _decodeDateTime(json["available_at"]),
@@ -2620,6 +2765,11 @@ final class BalanceTransaction implements _InttegroValue {
   @override
   Map<String, Object?> toJson() => {
         "amount": _encodeValue(amount),
+	if (allocations != null) "allocations": _encodeValue(allocations),
+	if (availableAmount != null)
+	  "available_amount": _encodeValue(availableAmount),
+	if (pendingAmount != null) "pending_amount": _encodeValue(pendingAmount),
+	if (spentAmount != null) "spent_amount": _encodeValue(spentAmount),
         if (availableAt != null) "available_at": _encodeValue(availableAt),
         if (claimedAt != null) "claimed_at": _encodeValue(claimedAt),
         "created_at": _encodeValue(createdAt),
