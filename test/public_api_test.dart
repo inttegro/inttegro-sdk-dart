@@ -150,6 +150,38 @@ void main() {
     );
   });
 
+  test('balance transaction exposes all public allocations', () {
+    final transaction = BalanceTransaction.fromJson({
+      'id': 'bt_1',
+      'type': 'payment',
+      'payment_id': 'py_1',
+      'order_id': 'or_1',
+      'amount': {'currency': 'ghs', 'value': 2500},
+      'available_amount': {'currency': 'ghs', 'value': 1500},
+      'pending_amount': {'currency': 'ghs', 'value': 1000},
+      'spent_amount': {'currency': 'ghs', 'value': 0},
+      'allocations': [
+        {
+          'id': 'bta_1',
+          'type': 'payout',
+          'status': 'pending',
+          'payout': {
+            'id': 'po_1',
+            'amount': {'currency': 'ghs', 'value': 1000},
+          },
+          'created_at': '2026-09-09T12:01:00Z',
+          'updated_at': '2026-09-09T12:01:00Z',
+        }
+      ],
+      'created_at': '2026-09-09T12:00:00Z',
+    });
+
+    expect(transaction.availableAmount?.value, 1500);
+    expect(transaction.allocations?.single.type,
+        BalanceTransactionAllocationType.payout);
+    expect(transaction.allocations?.single.payout?.id, 'po_1');
+  });
+
   test('purchase intent exposes nested response types', () {
     final intent = PurchaseIntent.fromJson({
       'allow_variants': false,
