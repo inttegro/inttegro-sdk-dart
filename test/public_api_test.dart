@@ -161,24 +161,24 @@ void main() {
       'pending_amount': {'currency': 'ghs', 'value': 1000},
       'spent_amount': {'currency': 'ghs', 'value': 0},
       'allocations': [
-	{
-	  'id': 'bta_1',
-	  'type': 'payout',
-	  'status': 'pending',
-	  'payout': {
-	    'id': 'po_1',
-	    'amount': {'currency': 'ghs', 'value': 1000},
-	  },
-	  'created_at': '2026-09-09T12:01:00Z',
-	  'updated_at': '2026-09-09T12:01:00Z',
-	}
+        {
+          'id': 'bta_1',
+          'type': 'payout',
+          'status': 'pending',
+          'payout': {
+            'id': 'po_1',
+            'amount': {'currency': 'ghs', 'value': 1000},
+          },
+          'created_at': '2026-09-09T12:01:00Z',
+          'updated_at': '2026-09-09T12:01:00Z',
+        }
       ],
       'created_at': '2026-09-09T12:00:00Z',
     });
 
     expect(transaction.availableAmount?.value, 1500);
     expect(transaction.allocations?.single.type,
-	BalanceTransactionAllocationType.payout);
+        BalanceTransactionAllocationType.payout);
     expect(transaction.allocations?.single.payout?.id, 'po_1');
   });
 
