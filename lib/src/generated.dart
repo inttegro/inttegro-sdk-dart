@@ -132,6 +132,7 @@ final class BalanceTransactionType implements _InttegroValue {
       BalanceTransactionType(json as String);
   static const payment = BalanceTransactionType("payment");
   static const refund = BalanceTransactionType("refund");
+  static const payout = BalanceTransactionType("payout");
   @override
   String toJson() => value;
   @override
@@ -2683,7 +2684,7 @@ final class BalanceTransaction implements _InttegroValue {
   final DateTime? claimedAt;
   final DateTime createdAt;
   final String id;
-  final String orderId;
+  final String? orderId;
   final DateTime? paidAt;
   final String? paymentId;
   final String? payoutId;
@@ -2700,7 +2701,7 @@ final class BalanceTransaction implements _InttegroValue {
     this.claimedAt,
     required this.createdAt,
     required this.id,
-    required this.orderId,
+    this.orderId,
     this.paidAt,
     this.paymentId,
     this.payoutId,
@@ -2747,7 +2748,7 @@ final class BalanceTransaction implements _InttegroValue {
             : _decodeDateTime(json["claimed_at"]),
         createdAt: _decodeDateTime(json["created_at"]),
         id: json["id"] as String,
-        orderId: json["order_id"] as String,
+        orderId: json["order_id"] == null ? null : json["order_id"] as String,
         paidAt:
             json["paid_at"] == null ? null : _decodeDateTime(json["paid_at"]),
         paymentId:
@@ -2776,7 +2777,7 @@ final class BalanceTransaction implements _InttegroValue {
         if (claimedAt != null) "claimed_at": _encodeValue(claimedAt),
         "created_at": _encodeValue(createdAt),
         "id": _encodeValue(id),
-        "order_id": _encodeValue(orderId),
+        if (orderId != null) "order_id": _encodeValue(orderId),
         if (paidAt != null) "paid_at": _encodeValue(paidAt),
         if (paymentId != null) "payment_id": _encodeValue(paymentId),
         if (payoutId != null) "payout_id": _encodeValue(payoutId),
@@ -11953,6 +11954,7 @@ final class PayoutBalanceTransaction implements _InttegroValue {
 /// Typed Inttegro domain value.
 final class Payout implements _InttegroValue {
   final Amount? amount;
+  final String? balanceTransactionId;
   final List<PayoutBalanceTransaction>? balanceTransactions;
   final DateTime? canceledAt;
   final CustomData? customData;
@@ -11976,6 +11978,7 @@ final class Payout implements _InttegroValue {
   final DateTime? succeededAt;
   const Payout({
     this.amount,
+    this.balanceTransactionId,
     this.balanceTransactions,
     this.canceledAt,
     this.customData,
@@ -12002,6 +12005,9 @@ final class Payout implements _InttegroValue {
         amount: json["amount"] == null
             ? null
             : Amount.fromJson((json["amount"] as Map).cast<String, Object?>()),
+        balanceTransactionId: json["balance_transaction_id"] == null
+            ? null
+            : json["balance_transaction_id"] as String,
         balanceTransactions: json["balance_transactions"] == null
             ? null
             : (json["balance_transactions"] as List)
@@ -12059,6 +12065,8 @@ final class Payout implements _InttegroValue {
   @override
   Map<String, Object?> toJson() => {
         if (amount != null) "amount": _encodeValue(amount),
+        if (balanceTransactionId != null)
+          "balance_transaction_id": _encodeValue(balanceTransactionId),
         if (balanceTransactions != null)
           "balance_transactions": _encodeValue(balanceTransactions),
         if (canceledAt != null) "canceled_at": _encodeValue(canceledAt),
