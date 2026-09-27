@@ -5588,6 +5588,7 @@ final class Customer implements _InttegroValue {
   final DateTime createdAt;
   final CustomData? customData;
   final String? emailAddress;
+  final String fingerprint;
   final bool guest;
   final String id;
   final String name;
@@ -5603,6 +5604,7 @@ final class Customer implements _InttegroValue {
     required this.createdAt,
     this.customData,
     this.emailAddress,
+    required this.fingerprint,
     required this.guest,
     required this.id,
     required this.name,
@@ -5627,6 +5629,7 @@ final class Customer implements _InttegroValue {
         emailAddress: json["email_address"] == null
             ? null
             : json["email_address"] as String,
+        fingerprint: json["fingerprint"] as String,
         guest: json["guest"] as bool,
         id: json["id"] as String,
         name: json["name"] as String,
@@ -5654,6 +5657,7 @@ final class Customer implements _InttegroValue {
         "created_at": _encodeValue(createdAt),
         if (customData != null) "custom_data": _encodeValue(customData),
         if (emailAddress != null) "email_address": _encodeValue(emailAddress),
+        "fingerprint": _encodeValue(fingerprint),
         "guest": _encodeValue(guest),
         "id": _encodeValue(id),
         "name": _encodeValue(name),

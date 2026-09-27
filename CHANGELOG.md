@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0
+
+- Added the required application-scoped customer fingerprint to typed customer
+  responses for possible duplicate-record detection.
+
 ## 0.5.0
 
 - Breaking: replaced payout `balanceTransactions` ID strings with typed

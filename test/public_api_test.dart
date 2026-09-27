@@ -6,6 +6,20 @@ import 'package:inttegro/inttegro.dart';
 import 'package:test/test.dart';
 
 void main() {
+  test('customer fingerprint is required and round trips', () {
+    final base = <String, Object?>{
+      'balance': <String, Object?>{},
+      'created_at': '2026-09-16T00:00:00Z',
+      'fingerprint': 'cfp_v1_app_buyer',
+      'guest': false,
+      'id': 'cu_123',
+      'name': 'Ama',
+    };
+    final customer = Customer.fromJson(base);
+    expect(customer.fingerprint, 'cfp_v1_app_buyer');
+    expect(customer.toJson()['fingerprint'], 'cfp_v1_app_buyer');
+  });
+
   test('client exposes typed resources', () {
     final client = Client(apiKey: 'sk_test_example');
     expect(client.orders, isA<Orders>());
