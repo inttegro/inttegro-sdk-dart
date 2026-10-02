@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.1
+
+- Added pub.dev topics and clearer GHS checkout and Ghana Mobile Money
+  positioning for developers evaluating the SDK.
+
 ## 0.6.0
 
 - Added the required application-scoped customer fingerprint to typed customer

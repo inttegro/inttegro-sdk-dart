@@ -1,9 +1,15 @@
 name: inttegro
-description: Official typed server-side Dart SDK for Inttegro.
-version: 0.6.0
+description: Typed Dart SDK for Inttegro GHS checkout and Ghana Mobile Money payments.
+version: 0.6.1
 repository: https://github.com/inttegro/inttegro-sdk-dart
 homepage: https://studio.inttegro.com/sdks/dart
 documentation: https://pub.dev/documentation/inttegro/latest/
+topics:
+  - payments
+  - checkout
+  - mobile-money
+  - ghana
+  - fintech
 
 environment:
   sdk: ">=3.3.0 <4.0.0"

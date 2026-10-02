@@ -1,7 +1,8 @@
 # Inttegro Dart SDK
 
-The official typed Dart client for server-side Inttegro integrations. This package
-does not depend on Flutter and is separate from the mobile payment-sheet SDK.
+Accept GHS payments and manage Ghana Mobile Money checkout, orders, refunds,
+and payouts with Inttegro's typed server-side Dart SDK. This package does not
+depend on Flutter and is separate from the mobile payment-sheet SDK.
 Never embed a server API key in a Flutter, browser, or other customer-facing app.
 
 ```shell
