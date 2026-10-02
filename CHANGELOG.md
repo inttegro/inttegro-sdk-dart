@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.2
+
+- Restored the broad Inttegro API description while retaining searchable
+  pub.dev topics.
+
 ## 0.6.1
 
 - Added pub.dev topics and clearer GHS checkout and Ghana Mobile Money
