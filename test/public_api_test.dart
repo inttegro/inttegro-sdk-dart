@@ -202,6 +202,11 @@ void main() {
       'created_at': '2026-09-09T12:00:00Z',
       'id': 'sale_123',
       'merchant': {'organization_name': 'Tea House Ltd'},
+      'presentation': {
+        'buy_page': {
+          'text': {'checkout_section_title': 'Support this cause'},
+        },
+      },
       'product': {
         'active': true,
         'created_at': '2026-09-09T11:00:00Z',
@@ -223,9 +228,54 @@ void main() {
     expect(intent.merchant?.organizationName, 'Tea House Ltd');
     expect(intent.product?.dimensions?.digital?.bytes, 1024);
     expect(intent.usage.order?.id, 'or_123');
+    expect(intent.presentation?.buyPage?.text?.checkoutSectionTitle,
+        'Support this cause');
     expect(intent.isActive, isTrue);
     expect(intent.isSingleUse, isTrue);
     expect(intent.usedOrderId, 'or_123');
+
+    final create = CreatePurchaseIntentRequest(
+      quantity: const CreatePurchaseIntentRequestQuantity(min: 1),
+      presentation: const PurchaseIntentPresentation(
+        buyPage: PurchaseIntentBuyPagePresentation(
+          text: PurchaseIntentBuyPageText(
+            amountFieldLabel: 'Your contribution',
+          ),
+        ),
+      ),
+    );
+    expect(
+      create.toJson()['presentation'],
+      {
+        'buy_page': {
+          'text': {'amount_field_label': 'Your contribution'},
+        },
+      },
+    );
+
+    final update = UpdatePurchaseIntentRequest(
+      id: 'sale_123',
+      presentation: const UpdatePurchaseIntentPresentation(
+        buyPage: UpdatePurchaseIntentBuyPagePresentation(
+          text: UpdatePurchaseIntentBuyPageText(
+            checkoutSectionTitle:
+                PurchaseIntentTextValueUpdate.set('Contribute now'),
+            amountFieldLabel: PurchaseIntentTextValueUpdate.clear(),
+          ),
+        ),
+      ),
+    );
+    expect(
+      update.toJson()['presentation'],
+      {
+        'buy_page': {
+          'text': {
+            'checkout_section_title': 'Contribute now',
+            'amount_field_label': null,
+          },
+        },
+      },
+    );
   });
 
   test('payout settings expose known destinations statically', () {

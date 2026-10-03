@@ -5110,6 +5110,156 @@ final class CreateProductRequest implements _InttegroValue {
       };
 }
 
+/// Merchant-authored copy shown on a hosted Buy page.
+final class PurchaseIntentBuyPageText implements _InttegroValue {
+  final String? checkoutSectionTitle;
+  final String? amountFieldLabel;
+  final String? primaryActionLabel;
+  const PurchaseIntentBuyPageText({
+    this.checkoutSectionTitle,
+    this.amountFieldLabel,
+    this.primaryActionLabel,
+  });
+  factory PurchaseIntentBuyPageText.fromJson(Map<String, Object?> json) =>
+      PurchaseIntentBuyPageText(
+        checkoutSectionTitle: json["checkout_section_title"] as String?,
+        amountFieldLabel: json["amount_field_label"] as String?,
+        primaryActionLabel: json["primary_action_label"] as String?,
+      );
+  @override
+  Map<String, Object?> toJson() => {
+        if (checkoutSectionTitle != null)
+          "checkout_section_title": _encodeValue(checkoutSectionTitle),
+        if (amountFieldLabel != null)
+          "amount_field_label": _encodeValue(amountFieldLabel),
+        if (primaryActionLabel != null)
+          "primary_action_label": _encodeValue(primaryActionLabel),
+      };
+}
+
+/// Presentation settings for the hosted Buy page.
+final class PurchaseIntentBuyPagePresentation implements _InttegroValue {
+  final PurchaseIntentBuyPageText? text;
+  const PurchaseIntentBuyPagePresentation({this.text});
+  factory PurchaseIntentBuyPagePresentation.fromJson(
+    Map<String, Object?> json,
+  ) =>
+      PurchaseIntentBuyPagePresentation(
+        text: json["text"] == null
+            ? null
+            : PurchaseIntentBuyPageText.fromJson(
+                (json["text"] as Map).cast<String, Object?>(),
+              ),
+      );
+  @override
+  Map<String, Object?> toJson() => {
+        if (text != null) "text": _encodeValue(text),
+      };
+}
+
+/// Customer-facing presentation settings for a purchase intent.
+final class PurchaseIntentPresentation implements _InttegroValue {
+  final PurchaseIntentBuyPagePresentation? buyPage;
+  const PurchaseIntentPresentation({this.buyPage});
+  factory PurchaseIntentPresentation.fromJson(Map<String, Object?> json) =>
+      PurchaseIntentPresentation(
+        buyPage: json["buy_page"] == null
+            ? null
+            : PurchaseIntentBuyPagePresentation.fromJson(
+                (json["buy_page"] as Map).cast<String, Object?>(),
+              ),
+      );
+  @override
+  Map<String, Object?> toJson() => {
+        if (buyPage != null) "buy_page": _encodeValue(buyPage),
+      };
+}
+
+/// One sparse text change for a hosted Buy page.
+final class PurchaseIntentTextValueUpdate implements _InttegroValue {
+  final String? value;
+  const PurchaseIntentTextValueUpdate.set(String this.value);
+  const PurchaseIntentTextValueUpdate.clear() : value = null;
+  factory PurchaseIntentTextValueUpdate.fromJson(Object? json) => json == null
+      ? const PurchaseIntentTextValueUpdate.clear()
+      : PurchaseIntentTextValueUpdate.set(json as String);
+  @override
+  Object? toJson() => value;
+}
+
+/// Sparse text update for a hosted Buy page.
+final class UpdatePurchaseIntentBuyPageText implements _InttegroValue {
+  final PurchaseIntentTextValueUpdate? checkoutSectionTitle;
+  final PurchaseIntentTextValueUpdate? amountFieldLabel;
+  final PurchaseIntentTextValueUpdate? primaryActionLabel;
+  const UpdatePurchaseIntentBuyPageText({
+    this.checkoutSectionTitle,
+    this.amountFieldLabel,
+    this.primaryActionLabel,
+  });
+  factory UpdatePurchaseIntentBuyPageText.fromJson(
+    Map<String, Object?> json,
+  ) =>
+      UpdatePurchaseIntentBuyPageText(
+        checkoutSectionTitle: json.containsKey("checkout_section_title")
+            ? PurchaseIntentTextValueUpdate.fromJson(
+                json["checkout_section_title"],
+              )
+            : null,
+        amountFieldLabel: json.containsKey("amount_field_label")
+            ? PurchaseIntentTextValueUpdate.fromJson(
+                json["amount_field_label"],
+              )
+            : null,
+        primaryActionLabel: json.containsKey("primary_action_label")
+            ? PurchaseIntentTextValueUpdate.fromJson(
+                json["primary_action_label"],
+              )
+            : null,
+      );
+  @override
+  Map<String, Object?> toJson() => {
+        if (checkoutSectionTitle != null)
+          "checkout_section_title": _encodeValue(checkoutSectionTitle),
+        if (amountFieldLabel != null)
+          "amount_field_label": _encodeValue(amountFieldLabel),
+        if (primaryActionLabel != null)
+          "primary_action_label": _encodeValue(primaryActionLabel),
+      };
+}
+
+/// Hosted Buy page presentation update for a purchase intent.
+final class UpdatePurchaseIntentBuyPagePresentation implements _InttegroValue {
+  final UpdatePurchaseIntentBuyPageText text;
+  const UpdatePurchaseIntentBuyPagePresentation({required this.text});
+  factory UpdatePurchaseIntentBuyPagePresentation.fromJson(
+    Map<String, Object?> json,
+  ) =>
+      UpdatePurchaseIntentBuyPagePresentation(
+        text: UpdatePurchaseIntentBuyPageText.fromJson(
+          (json["text"] as Map).cast<String, Object?>(),
+        ),
+      );
+  @override
+  Map<String, Object?> toJson() => {"text": _encodeValue(text)};
+}
+
+/// Customer-facing presentation update for a purchase intent.
+final class UpdatePurchaseIntentPresentation implements _InttegroValue {
+  final UpdatePurchaseIntentBuyPagePresentation buyPage;
+  const UpdatePurchaseIntentPresentation({required this.buyPage});
+  factory UpdatePurchaseIntentPresentation.fromJson(
+    Map<String, Object?> json,
+  ) =>
+      UpdatePurchaseIntentPresentation(
+        buyPage: UpdatePurchaseIntentBuyPagePresentation.fromJson(
+          (json["buy_page"] as Map).cast<String, Object?>(),
+        ),
+      );
+  @override
+  Map<String, Object?> toJson() => {"buy_page": _encodeValue(buyPage)};
+}
+
 /// Typed Inttegro request parameters.
 final class CreatePurchaseIntentRequest implements _InttegroValue {
   final CreatePurchaseIntentRequestProduct? product;
@@ -5118,6 +5268,7 @@ final class CreatePurchaseIntentRequest implements _InttegroValue {
   final String? priceId;
   final CreatePurchaseIntentRequestUsage? usage;
   final DateTime? expiresAt;
+  final PurchaseIntentPresentation? presentation;
   final CreatePurchaseIntentRequestQuantity quantity;
   const CreatePurchaseIntentRequest({
     this.product,
@@ -5126,6 +5277,7 @@ final class CreatePurchaseIntentRequest implements _InttegroValue {
     this.priceId,
     this.usage,
     this.expiresAt,
+    this.presentation,
     required this.quantity,
   });
   factory CreatePurchaseIntentRequest.fromJson(
@@ -5153,6 +5305,11 @@ final class CreatePurchaseIntentRequest implements _InttegroValue {
         expiresAt: json["expires_at"] == null
             ? null
             : _decodeDateTime(json["expires_at"]),
+        presentation: json["presentation"] == null
+            ? null
+            : PurchaseIntentPresentation.fromJson(
+                (json["presentation"] as Map).cast<String, Object?>(),
+              ),
         quantity: CreatePurchaseIntentRequestQuantity.fromJson(
           (json["quantity"] as Map).cast<String, Object?>(),
         ),
@@ -5165,6 +5322,7 @@ final class CreatePurchaseIntentRequest implements _InttegroValue {
         if (priceId != null) "price_id": _encodeValue(priceId),
         if (usage != null) "usage": _encodeValue(usage),
         if (expiresAt != null) "expires_at": _encodeValue(expiresAt),
+        if (presentation != null) "presentation": _encodeValue(presentation),
         "quantity": _encodeValue(quantity),
       };
 }
@@ -6879,6 +7037,7 @@ final class FinancialAccount implements _InttegroValue {
   final String currency;
   final CustomData? customData;
   final String? description;
+  final String? fingerprint;
   final String id;
   final FinancialInstitution? institution;
   final String? label;
@@ -6899,6 +7058,7 @@ final class FinancialAccount implements _InttegroValue {
     required this.currency,
     this.customData,
     this.description,
+    this.fingerprint,
     required this.id,
     this.institution,
     this.label,
@@ -6926,6 +7086,8 @@ final class FinancialAccount implements _InttegroValue {
             : CustomData.fromJson(json["custom_data"]),
         description:
             json["description"] == null ? null : json["description"] as String,
+        fingerprint:
+            json["fingerprint"] == null ? null : json["fingerprint"] as String,
         id: json["id"] as String,
         institution: json["institution"] == null
             ? null
@@ -6983,6 +7145,7 @@ final class FinancialAccount implements _InttegroValue {
         "currency": _encodeValue(currency),
         if (customData != null) "custom_data": _encodeValue(customData),
         if (description != null) "description": _encodeValue(description),
+        if (fingerprint != null) "fingerprint": _encodeValue(fingerprint),
         "id": _encodeValue(id),
         if (institution != null) "institution": _encodeValue(institution),
         if (label != null) "label": _encodeValue(label),
@@ -13408,6 +13571,7 @@ final class PurchaseIntent implements _InttegroValue {
   final DateTime? inactiveAt;
   final PurchaseIntentMerchant? merchant;
   final PurchaseIntentPrice? price;
+  final PurchaseIntentPresentation? presentation;
   final PurchaseIntentProduct? product;
   final PurchaseIntentQuantity quantity;
   final PurchaseIntentStatus status;
@@ -13422,6 +13586,7 @@ final class PurchaseIntent implements _InttegroValue {
     this.inactiveAt,
     this.merchant,
     this.price,
+    this.presentation,
     this.product,
     required this.quantity,
     required this.status,
@@ -13448,6 +13613,11 @@ final class PurchaseIntent implements _InttegroValue {
             ? null
             : PurchaseIntentPrice.fromJson(
                 (json["price"] as Map).cast<String, Object?>(),
+              ),
+        presentation: json["presentation"] == null
+            ? null
+            : PurchaseIntentPresentation.fromJson(
+                (json["presentation"] as Map).cast<String, Object?>(),
               ),
         product: json["product"] == null
             ? null
@@ -13479,6 +13649,7 @@ final class PurchaseIntent implements _InttegroValue {
         if (inactiveAt != null) "inactive_at": _encodeValue(inactiveAt),
         if (merchant != null) "merchant": _encodeValue(merchant),
         if (price != null) "price": _encodeValue(price),
+        if (presentation != null) "presentation": _encodeValue(presentation),
         if (product != null) "product": _encodeValue(product),
         "quantity": _encodeValue(quantity),
         "status": _encodeValue(status),
@@ -15818,12 +15989,14 @@ final class UpdatePurchaseIntentRequest implements _InttegroValue {
   final UpdatePurchaseIntentRequestQuantity? quantity;
   final String? purchaseIntentId;
   final bool? reactivate;
+  final UpdatePurchaseIntentPresentation? presentation;
   const UpdatePurchaseIntentRequest({
     this.expiresAt,
     this.id,
     this.quantity,
     this.purchaseIntentId,
     this.reactivate,
+    this.presentation,
   });
   factory UpdatePurchaseIntentRequest.fromJson(
     Map<String, Object?> json,
@@ -15843,6 +16016,11 @@ final class UpdatePurchaseIntentRequest implements _InttegroValue {
             : json["purchase_intent_id"] as String,
         reactivate:
             json["reactivate"] == null ? null : json["reactivate"] as bool,
+        presentation: json["presentation"] == null
+            ? null
+            : UpdatePurchaseIntentPresentation.fromJson(
+                (json["presentation"] as Map).cast<String, Object?>(),
+              ),
       );
   @override
   Map<String, Object?> toJson() => {
@@ -15852,6 +16030,7 @@ final class UpdatePurchaseIntentRequest implements _InttegroValue {
         if (purchaseIntentId != null)
           "purchase_intent_id": _encodeValue(purchaseIntentId),
         if (reactivate != null) "reactivate": _encodeValue(reactivate),
+        if (presentation != null) "presentation": _encodeValue(presentation),
       };
 }
 
