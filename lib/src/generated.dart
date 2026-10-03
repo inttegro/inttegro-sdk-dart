@@ -5322,8 +5322,7 @@ final class CreatePurchaseIntentRequest implements _InttegroValue {
         if (priceId != null) "price_id": _encodeValue(priceId),
         if (usage != null) "usage": _encodeValue(usage),
         if (expiresAt != null) "expires_at": _encodeValue(expiresAt),
-        if (presentation != null)
-          "presentation": _encodeValue(presentation),
+        if (presentation != null) "presentation": _encodeValue(presentation),
         "quantity": _encodeValue(quantity),
       };
 }
@@ -13650,8 +13649,7 @@ final class PurchaseIntent implements _InttegroValue {
         if (inactiveAt != null) "inactive_at": _encodeValue(inactiveAt),
         if (merchant != null) "merchant": _encodeValue(merchant),
         if (price != null) "price": _encodeValue(price),
-        if (presentation != null)
-          "presentation": _encodeValue(presentation),
+        if (presentation != null) "presentation": _encodeValue(presentation),
         if (product != null) "product": _encodeValue(product),
         "quantity": _encodeValue(quantity),
         "status": _encodeValue(status),
@@ -16032,8 +16030,7 @@ final class UpdatePurchaseIntentRequest implements _InttegroValue {
         if (purchaseIntentId != null)
           "purchase_intent_id": _encodeValue(purchaseIntentId),
         if (reactivate != null) "reactivate": _encodeValue(reactivate),
-        if (presentation != null)
-          "presentation": _encodeValue(presentation),
+        if (presentation != null) "presentation": _encodeValue(presentation),
       };
 }
 
