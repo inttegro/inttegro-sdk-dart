@@ -7037,7 +7037,7 @@ final class FinancialAccount implements _InttegroValue {
   final String currency;
   final CustomData? customData;
   final String? description;
-  final String? fingerprint;
+  final String fingerprint;
   final String id;
   final FinancialInstitution? institution;
   final String? label;
@@ -7058,7 +7058,7 @@ final class FinancialAccount implements _InttegroValue {
     required this.currency,
     this.customData,
     this.description,
-    this.fingerprint,
+    required this.fingerprint,
     required this.id,
     this.institution,
     this.label,
@@ -7086,8 +7086,7 @@ final class FinancialAccount implements _InttegroValue {
             : CustomData.fromJson(json["custom_data"]),
         description:
             json["description"] == null ? null : json["description"] as String,
-        fingerprint:
-            json["fingerprint"] == null ? null : json["fingerprint"] as String,
+        fingerprint: json["fingerprint"] as String,
         id: json["id"] as String,
         institution: json["institution"] == null
             ? null
@@ -7145,7 +7144,7 @@ final class FinancialAccount implements _InttegroValue {
         "currency": _encodeValue(currency),
         if (customData != null) "custom_data": _encodeValue(customData),
         if (description != null) "description": _encodeValue(description),
-        if (fingerprint != null) "fingerprint": _encodeValue(fingerprint),
+        "fingerprint": _encodeValue(fingerprint),
         "id": _encodeValue(id),
         if (institution != null) "institution": _encodeValue(institution),
         if (label != null) "label": _encodeValue(label),
