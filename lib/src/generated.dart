@@ -1005,13 +1005,35 @@ final class PayoutStatus implements _InttegroValue {
   static const processing = PayoutStatus("processing");
   static const executing = PayoutStatus("executing");
   static const succeeded = PayoutStatus("succeeded");
-  static const invalid = PayoutStatus("invalid");
+  static const failed = PayoutStatus("failed");
   static const canceled = PayoutStatus("canceled");
   @override
   String toJson() => value;
   @override
   bool operator ==(Object other) =>
       other is PayoutStatus && other.value == value;
+  @override
+  int get hashCode => value.hashCode;
+  @override
+  String toString() => value;
+}
+
+/// A typed `PayoutFailureReason` value used by the Inttegro API.
+final class PayoutFailureReason implements _InttegroValue {
+  final String value;
+  const PayoutFailureReason(this.value);
+  factory PayoutFailureReason.fromJson(Object? json) =>
+      PayoutFailureReason(json as String);
+  static const providerDeclined = PayoutFailureReason("provider_declined");
+  static const deliveryFailed = PayoutFailureReason("delivery_failed");
+  static const temporarilyUnavailable =
+      PayoutFailureReason("temporarily_unavailable");
+  static const unknown = PayoutFailureReason("unknown");
+  @override
+  String toJson() => value;
+  @override
+  bool operator ==(Object other) =>
+      other is PayoutFailureReason && other.value == value;
   @override
   int get hashCode => value.hashCode;
   @override
@@ -4196,6 +4218,29 @@ final class ChimeTransmission implements _InttegroValue {
         if (suppressedAt != null) "suppressed_at": _encodeValue(suppressedAt),
         if (suppressionReason != null)
           "suppression_reason": _encodeValue(suppressionReason),
+      };
+}
+
+/// Caller-safe information about a terminal payout failure.
+final class PayoutFailure implements _InttegroValue {
+  final String detail;
+  final PayoutFailureReason reason;
+  final bool retryable;
+  const PayoutFailure({
+    required this.detail,
+    required this.reason,
+    required this.retryable,
+  });
+  factory PayoutFailure.fromJson(Map<String, Object?> json) => PayoutFailure(
+        detail: json["detail"] as String,
+        reason: PayoutFailureReason.fromJson(json["reason"]),
+        retryable: json["retryable"] as bool,
+      );
+  @override
+  Map<String, Object?> toJson() => {
+        "detail": _encodeValue(detail),
+        "reason": _encodeValue(reason),
+        "retryable": _encodeValue(retryable),
       };
 }
 
@@ -12130,6 +12175,7 @@ final class Payout implements _InttegroValue {
   final String? executedBy;
   final DateTime? expectedAt;
   final DateTime? failedAt;
+  final PayoutFailure? failure;
   final String id;
   final DateTime initiatedAt;
   final String? initiatedBy;
@@ -12154,6 +12200,7 @@ final class Payout implements _InttegroValue {
     this.executedBy,
     this.expectedAt,
     this.failedAt,
+    this.failure,
     required this.id,
     required this.initiatedAt,
     this.initiatedBy,
@@ -12201,6 +12248,10 @@ final class Payout implements _InttegroValue {
         failedAt: json["failed_at"] == null
             ? null
             : _decodeDateTime(json["failed_at"]),
+        failure: json["failure"] == null
+            ? null
+            : PayoutFailure.fromJson(
+                (json["failure"] as Map).cast<String, Object?>()),
         id: json["id"] as String,
         initiatedAt: _decodeDateTime(json["initiated_at"]),
         initiatedBy: json["initiated_by"] == null
@@ -12243,6 +12294,7 @@ final class Payout implements _InttegroValue {
         if (executedBy != null) "executed_by": _encodeValue(executedBy),
         if (expectedAt != null) "expected_at": _encodeValue(expectedAt),
         if (failedAt != null) "failed_at": _encodeValue(failedAt),
+        if (failure != null) "failure": _encodeValue(failure),
         "id": _encodeValue(id),
         "initiated_at": _encodeValue(initiatedAt),
         if (initiatedBy != null) "initiated_by": _encodeValue(initiatedBy),
