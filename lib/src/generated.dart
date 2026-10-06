@@ -9931,6 +9931,55 @@ final class OrderDocumentFormat implements _InttegroValue {
   Map<String, Object?> toJson() => {"url": _encodeValue(url)};
 }
 
+/// Hosted document formats for a payment receipt.
+final class OrderReceiptFormat implements _InttegroValue {
+  final OrderDocumentFormat web;
+  final OrderDocumentFormat pdf;
+  const OrderReceiptFormat({required this.web, required this.pdf});
+  factory OrderReceiptFormat.fromJson(Map<String, Object?> json) =>
+      OrderReceiptFormat(
+        web: OrderDocumentFormat.fromJson(
+          (json["web"] as Map).cast<String, Object?>(),
+        ),
+        pdf: OrderDocumentFormat.fromJson(
+          (json["pdf"] as Map).cast<String, Object?>(),
+        ),
+      );
+  @override
+  Map<String, Object?> toJson() => {
+        "web": _encodeValue(web),
+        "pdf": _encodeValue(pdf),
+      };
+}
+
+/// Receipt issued for a paid order payment.
+final class OrderReceipt implements _InttegroValue {
+  final OrderReceiptFormat format;
+  final String? number;
+  final Map<String, Object?>? deliverySummary;
+  const OrderReceipt({
+    required this.format,
+    this.number,
+    this.deliverySummary,
+  });
+  factory OrderReceipt.fromJson(Map<String, Object?> json) => OrderReceipt(
+        format: OrderReceiptFormat.fromJson(
+          (json["format"] as Map).cast<String, Object?>(),
+        ),
+        number: json["number"] == null ? null : json["number"] as String,
+        deliverySummary: json["delivery_summary"] == null
+            ? null
+            : (json["delivery_summary"] as Map).cast<String, Object?>(),
+      );
+  @override
+  Map<String, Object?> toJson() => {
+        "format": _encodeValue(format),
+        if (number != null) "number": _encodeValue(number),
+        if (deliverySummary != null)
+          "delivery_summary": _encodeValue(deliverySummary),
+      };
+}
+
 /// Typed discount line item returned by an order.
 final class OrderDiscountLineItem implements _InttegroValue {
   final String type;
@@ -10035,11 +10084,9 @@ final class OrderInvoice implements _InttegroValue {
 final class OrderInvoiceFormat implements _InttegroValue {
   final OrderDocumentFormat web;
   final OrderDocumentFormat pdf;
-  final OrderDocumentFormat? receipt;
   const OrderInvoiceFormat({
     required this.web,
     required this.pdf,
-    this.receipt,
   });
   factory OrderInvoiceFormat.fromJson(Map<String, Object?> json) =>
       OrderInvoiceFormat(
@@ -10049,17 +10096,11 @@ final class OrderInvoiceFormat implements _InttegroValue {
         pdf: OrderDocumentFormat.fromJson(
           (json["pdf"] as Map).cast<String, Object?>(),
         ),
-        receipt: json["receipt"] == null
-            ? null
-            : OrderDocumentFormat.fromJson(
-                (json["receipt"] as Map).cast<String, Object?>(),
-              ),
       );
   @override
   Map<String, Object?> toJson() => {
         "web": _encodeValue(web),
         "pdf": _encodeValue(pdf),
-        if (receipt != null) "receipt": _encodeValue(receipt),
       };
 }
 
@@ -10688,6 +10729,7 @@ final class Payment implements _InttegroValue {
   final BalanceTransaction? balanceTransaction;
   final PaymentMethodSnapshot? paymentMethod;
   final PaymentCustomer? customer;
+  final OrderReceipt? receipt;
   final PaymentAttempt? latestAttempt;
   final PaymentNextAction? nextAction;
   final PaymentError? latestError;
@@ -10710,6 +10752,7 @@ final class Payment implements _InttegroValue {
     this.balanceTransaction,
     this.paymentMethod,
     this.customer,
+    this.receipt,
     this.latestAttempt,
     this.nextAction,
     this.latestError,
@@ -10749,6 +10792,11 @@ final class Payment implements _InttegroValue {
             ? null
             : PaymentCustomer.fromJson(
                 (json["customer"] as Map).cast<String, Object?>(),
+              ),
+        receipt: json["receipt"] == null
+            ? null
+            : OrderReceipt.fromJson(
+                (json["receipt"] as Map).cast<String, Object?>(),
               ),
         latestAttempt: json["latest_attempt"] == null
             ? null
@@ -10807,6 +10855,7 @@ final class Payment implements _InttegroValue {
         if (paymentMethod != null)
           "payment_method": _encodeValue(paymentMethod),
         if (customer != null) "customer": _encodeValue(customer),
+        if (receipt != null) "receipt": _encodeValue(receipt),
         if (latestAttempt != null)
           "latest_attempt": _encodeValue(latestAttempt),
         if (nextAction != null) "next_action": _encodeValue(nextAction),
