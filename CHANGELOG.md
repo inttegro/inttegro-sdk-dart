@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.9.1
 
 - Breaking: moved contract models into public resource libraries such as
   `package:inttegro/payment.dart` and
