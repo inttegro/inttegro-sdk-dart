@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0
+
+- Added typed payment receipt and hosted receipt-format models separately from
+  order invoices.
+- Split generated models into resource modules with one top-level type per
+  file. This changes source organization without changing runtime behavior.
+
 ## 0.8.0
 
 - Breaking: replaced the payout status `invalid` with `failed`.
