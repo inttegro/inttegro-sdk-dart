@@ -1,6 +1,6 @@
 part of '../inttegro.dart';
 
-final class ResourceSearchOperator implements _InttegroValue {
+final class ResourceSearchOperator implements InttegroValue {
   final String value;
   const ResourceSearchOperator(this.value);
   static const equal = ResourceSearchOperator('eq');
@@ -18,7 +18,7 @@ final class ResourceSearchOperator implements _InttegroValue {
   String toString() => value;
 }
 
-final class ResourceSearchSortField implements _InttegroValue {
+final class ResourceSearchSortField implements InttegroValue {
   final String value;
   const ResourceSearchSortField(this.value);
   static const relevance = ResourceSearchSortField('relevance');
@@ -37,7 +37,7 @@ final class ResourceSearchSortField implements _InttegroValue {
   String toString() => value;
 }
 
-final class ResourceSearchSortDirection implements _InttegroValue {
+final class ResourceSearchSortDirection implements InttegroValue {
   final String value;
   const ResourceSearchSortDirection(this.value);
   static const ascending = ResourceSearchSortDirection('asc');
@@ -55,7 +55,7 @@ final class ResourceSearchSortDirection implements _InttegroValue {
   String toString() => value;
 }
 
-final class ResourceSearchResourceType implements _InttegroValue {
+final class ResourceSearchResourceType implements InttegroValue {
   final String value;
   const ResourceSearchResourceType(this.value);
   static const customer = ResourceSearchResourceType('customer');
@@ -78,7 +78,7 @@ final class ResourceSearchResourceType implements _InttegroValue {
   String toString() => value;
 }
 
-final class ResourceSearchTotalRelation implements _InttegroValue {
+final class ResourceSearchTotalRelation implements InttegroValue {
   final String value;
   const ResourceSearchTotalRelation(this.value);
   static const exact = ResourceSearchTotalRelation('exact');
@@ -96,7 +96,7 @@ final class ResourceSearchTotalRelation implements _InttegroValue {
   String toString() => value;
 }
 
-final class ResourceSearchFreshnessState implements _InttegroValue {
+final class ResourceSearchFreshnessState implements InttegroValue {
   final String value;
   const ResourceSearchFreshnessState(this.value);
   static const current = ResourceSearchFreshnessState('current');
@@ -117,7 +117,7 @@ final class ResourceSearchFreshnessState implements _InttegroValue {
   String toString() => value;
 }
 
-final class ResourceSearchFilter implements _InttegroValue {
+final class ResourceSearchFilter implements InttegroValue {
   final String field;
   final ResourceSearchOperator operator;
   final List<String> values;
@@ -140,7 +140,7 @@ final class ResourceSearchFilter implements _InttegroValue {
       };
 }
 
-final class ResourceSearchFacet implements _InttegroValue {
+final class ResourceSearchFacet implements InttegroValue {
   final String field;
   final int? limit;
   const ResourceSearchFacet({required this.field, this.limit});
@@ -156,7 +156,7 @@ final class ResourceSearchFacet implements _InttegroValue {
       };
 }
 
-final class ResourceSearchSort implements _InttegroValue {
+final class ResourceSearchSort implements InttegroValue {
   final ResourceSearchSortField field;
   final ResourceSearchSortDirection direction;
   const ResourceSearchSort({required this.field, required this.direction});
@@ -172,7 +172,7 @@ final class ResourceSearchSort implements _InttegroValue {
       };
 }
 
-final class ResourceSearchRequest implements _InttegroValue {
+final class ResourceSearchRequest implements InttegroValue {
   final String? text;
   final List<ResourceSearchFilter>? filters;
   final List<ResourceSearchFacet>? facets;
@@ -190,8 +190,8 @@ final class ResourceSearchRequest implements _InttegroValue {
   @override
   Map<String, Object?> toJson() => {
         if (text != null) 'text': text,
-        if (filters != null) 'filters': _encodeValue(filters),
-        if (facets != null) 'facets': _encodeValue(facets),
+        if (filters != null) 'filters': encodeValue(filters),
+        if (facets != null) 'facets': encodeValue(facets),
         if (sort != null) 'sort': sort!.toJson(),
         if (pageSize != null) 'page_size': pageSize,
         if (cursor != null) 'cursor': cursor,
@@ -245,7 +245,7 @@ final class ResourceSearchResult {
   final String? summary;
   final String? status;
   final String? customerName;
-  final Amount? amount;
+  final inttegro_money.Amount? amount;
   final Uri? url;
   final DateTime updatedAt;
   const ResourceSearchResult({
@@ -269,9 +269,10 @@ final class ResourceSearchResult {
         customerName: json['customer_name'] as String?,
         amount: json['amount'] == null
             ? null
-            : Amount.fromJson((json['amount'] as Map).cast<String, Object?>()),
+            : inttegro_money.Amount.fromJson(
+                (json['amount'] as Map).cast<String, Object?>()),
         url: json['url'] == null ? null : Uri.parse(json['url'] as String),
-        updatedAt: _decodeDateTime(json['updated_at']),
+        updatedAt: decodeDateTime(json['updated_at']),
       );
 }
 
@@ -322,10 +323,10 @@ final class ResourceSearchResourceFreshness {
         state: ResourceSearchFreshnessState.fromJson(json['state']),
         observedAt: json['observed_at'] == null
             ? null
-            : _decodeDateTime(json['observed_at']),
+            : decodeDateTime(json['observed_at']),
         lastIndexedAt: json['last_indexed_at'] == null
             ? null
-            : _decodeDateTime(json['last_indexed_at']),
+            : decodeDateTime(json['last_indexed_at']),
       );
 }
 
@@ -343,7 +344,7 @@ final class ResourceSearchFreshness {
         state: ResourceSearchFreshnessState.fromJson(json['state']),
         observedAt: json['observed_at'] == null
             ? null
-            : _decodeDateTime(json['observed_at']),
+            : decodeDateTime(json['observed_at']),
         resources: (json['resources'] as List?)
             ?.map(
               (value) => ResourceSearchResourceFreshness.fromJson(

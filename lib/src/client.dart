@@ -508,7 +508,7 @@ final class Client {
       request.fields['title'] = title;
     }
     if (value.customData case final customData?) {
-      request.fields['custom_data'] = jsonEncode(_encodeValue(customData));
+      request.fields['custom_data'] = jsonEncode(encodeValue(customData));
     }
     _record(
       'inttegro.request.prepared',

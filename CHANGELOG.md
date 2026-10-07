@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Breaking: moved contract models into public resource libraries such as
+  `package:inttegro/payment.dart` and
+  `package:inttegro/financial_account.dart`, with concise resource-scoped type
+  names such as `payment.Status` and `financial_account.CreateRequest`.
+- Moved model sources from the internal `generated` namespace into first-class,
+  concise resource paths under `lib/src`; serialization and runtime behavior
+  are unchanged.
+
 ## 0.9.0
 
 - Added typed payment receipt and hosted receipt-format models separately from

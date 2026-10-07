@@ -3,9 +3,28 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:inttegro/inttegro.dart';
+import 'package:inttegro/balance_transaction.dart'
+    as inttegro_balance_transaction;
+import 'package:inttegro/customer.dart' as inttegro_customer;
+import 'package:inttegro/financial_account.dart' as financial_account;
+import 'package:inttegro/money.dart' as inttegro_money;
+import 'package:inttegro/otp.dart' as inttegro_otp;
+import 'package:inttegro/payment.dart' as inttegro_payment;
+import 'package:inttegro/payment_method.dart' as inttegro_payment_method;
+import 'package:inttegro/payout.dart' as inttegro_payout;
+import 'package:inttegro/product.dart' as inttegro_product;
+import 'package:inttegro/purchase_intent.dart' as inttegro_purchase_intent;
+import 'package:inttegro/refund.dart' as inttegro_refund;
 import 'package:test/test.dart';
 
 void main() {
+  test('resource libraries expose concise type names', () {
+    const financial_account.CreateRequest? request = null;
+
+    expect(request, isNull);
+    expect(inttegro_payment.Status.paid.toJson(), 'paid');
+  });
+
   test('customer fingerprint is required and round trips', () {
     final base = <String, Object?>{
       'balance': <String, Object?>{},
@@ -15,7 +34,7 @@ void main() {
       'id': 'cu_123',
       'name': 'Ama',
     };
-    final customer = Customer.fromJson(base);
+    final customer = inttegro_customer.Customer.fromJson(base);
     expect(customer.fingerprint, 'cfp_v1_app_buyer');
     expect(customer.toJson()['fingerprint'], 'cfp_v1_app_buyer');
   });
@@ -23,12 +42,16 @@ void main() {
   test('client exposes typed resources', () {
     final client = Client(apiKey: 'sk_test_example');
     expect(client.orders, isA<Orders>());
-    expect(const AmountParams(currency: Currency.ghs, value: 5000).value, 5000);
+    expect(
+        const inttegro_money.AmountParams(
+                currency: inttegro_money.Currency.ghs, value: 5000)
+            .value,
+        5000);
     client.close();
   });
 
   test('OTP purposes preserve closed wire values', () {
-    expect(OTPPurpose.signIn.toJson(), 'sign_in');
+    expect(inttegro_otp.Purpose.signIn.toJson(), 'sign_in');
   });
 
   test('wire envelopes are unwrapped into domain values', () async {
@@ -165,7 +188,8 @@ void main() {
   });
 
   test('balance transaction exposes all public allocations', () {
-    final transaction = BalanceTransaction.fromJson({
+    final transaction =
+        inttegro_balance_transaction.BalanceTransaction.fromJson({
       'id': 'bt_1',
       'type': 'payment',
       'payment_id': 'py_1',
@@ -192,12 +216,12 @@ void main() {
 
     expect(transaction.availableAmount?.value, 1500);
     expect(transaction.allocations?.single.type,
-        BalanceTransactionAllocationType.payout);
+        inttegro_balance_transaction.AllocationType.payout);
     expect(transaction.allocations?.single.payout?.id, 'po_1');
   });
 
   test('purchase intent exposes nested response types', () {
-    final intent = PurchaseIntent.fromJson({
+    final intent = inttegro_purchase_intent.PurchaseIntent.fromJson({
       'allow_variants': false,
       'created_at': '2026-09-09T12:00:00Z',
       'id': 'sale_123',
@@ -234,11 +258,11 @@ void main() {
     expect(intent.isSingleUse, isTrue);
     expect(intent.usedOrderId, 'or_123');
 
-    final create = CreatePurchaseIntentRequest(
-      quantity: const CreatePurchaseIntentRequestQuantity(min: 1),
-      presentation: const PurchaseIntentPresentation(
-        buyPage: PurchaseIntentBuyPagePresentation(
-          text: PurchaseIntentBuyPageText(
+    final create = inttegro_purchase_intent.CreateRequest(
+      quantity: const inttegro_purchase_intent.CreateRequestQuantity(min: 1),
+      presentation: const inttegro_purchase_intent.Presentation(
+        buyPage: inttegro_purchase_intent.BuyPagePresentation(
+          text: inttegro_purchase_intent.BuyPageText(
             amountFieldLabel: 'Your contribution',
           ),
         ),
@@ -253,14 +277,14 @@ void main() {
       },
     );
 
-    final update = UpdatePurchaseIntentRequest(
+    final update = inttegro_purchase_intent.UpdateRequest(
       id: 'sale_123',
-      presentation: const UpdatePurchaseIntentPresentation(
-        buyPage: UpdatePurchaseIntentBuyPagePresentation(
-          text: UpdatePurchaseIntentBuyPageText(
+      presentation: const inttegro_purchase_intent.UpdatePresentation(
+        buyPage: inttegro_purchase_intent.UpdateBuyPagePresentation(
+          text: inttegro_purchase_intent.UpdateBuyPageText(
             checkoutSectionTitle:
-                PurchaseIntentTextValueUpdate.set('Contribute now'),
-            amountFieldLabel: PurchaseIntentTextValueUpdate.clear(),
+                inttegro_purchase_intent.TextValueUpdate.set('Contribute now'),
+            amountFieldLabel: inttegro_purchase_intent.TextValueUpdate.clear(),
           ),
         ),
       ),
@@ -279,7 +303,7 @@ void main() {
   });
 
   test('payout settings expose known destinations statically', () {
-    final settings = PayoutSettingsMutation.fromJson({
+    final settings = inttegro_payout.SettingsMutation.fromJson({
       'destinations': {'ghs': 'fa_123'},
       'fx_enabled': true,
       'id': 'settings_123',
@@ -291,7 +315,7 @@ void main() {
   });
 
   test('refund settlement is discriminated and contains masked details', () {
-    final refund = Refund.fromJson({
+    final refund = inttegro_refund.Refund.fromJson({
       'created_at': '2026-09-09T12:00:00Z',
       'id': 'rf_123',
       'line_items': [
@@ -331,29 +355,30 @@ void main() {
       'total': {'currency': 'ghs', 'value': 100},
     });
 
-    final settlement = refund.settlement as RefundPaymentMethodSettlement;
-    final method =
-        settlement.paymentMethod as RefundSettlementBankAccountPaymentMethod;
+    final settlement =
+        refund.settlement as inttegro_refund.PaymentMethodSettlement;
+    final method = settlement.paymentMethod
+        as inttegro_refund.SettlementBankAccountPaymentMethod;
     expect(method.bankAccount.ghanaBankAccount.accountNumber, '****1234');
-    final lineItem =
-        refund.lineItems.single.orderLineItem as RefundOrderProductLineItem;
+    final lineItem = refund.lineItems.single.orderLineItem
+        as inttegro_refund.OrderProductLineItem;
     expect(lineItem.quantity, 2);
     expect(lineItem.product.id, 'prod_123');
     expect(
-      () => RefundSettlement.fromJson({
+      () => inttegro_refund.Settlement.fromJson({
         'type': 'offline',
         'payment_method': {'id': 'pm_123'},
       }),
       throwsFormatException,
     );
     expect(
-      () => RefundSettlement.fromJson({'type': 'payment_method'}),
+      () => inttegro_refund.Settlement.fromJson({'type': 'payment_method'}),
       throwsA(anything),
     );
   });
 
   test('resources answer protocol questions', () {
-    final payment = Payment.fromJson({
+    final payment = inttegro_payment.Payment.fromJson({
       'amount': {'currency': 'ghs', 'value': 1000},
       'id': 'py_123',
       'initiated_at': '2026-09-09T12:00:00Z',
@@ -363,9 +388,10 @@ void main() {
     });
     expect(payment.requiresAction, isTrue);
     expect(payment.isTerminal, isFalse);
-    expect(payment.requiredAction?.type, PaymentNextActionType.redirect);
+    expect(
+        payment.requiredAction?.type, inttegro_payment.NextActionType.redirect);
 
-    final product = Product.fromJson({
+    final product = inttegro_product.Product.fromJson({
       'active': true,
       'created_at': '2026-09-09T12:00:00Z',
       'id': 'prod_123',
@@ -376,7 +402,7 @@ void main() {
     expect(product.isPublished, isTrue);
     expect(product.wasEverPublished, isTrue);
 
-    final method = PaymentMethod.fromJson({
+    final method = inttegro_payment_method.PaymentMethod.fromJson({
       'active': true,
       'created_at': '2026-09-09T12:00:00Z',
       'customer_id': 'cu_123',

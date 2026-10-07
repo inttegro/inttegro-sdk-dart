@@ -6,8 +6,8 @@ final class Apps {
   const Apps._(this._client);
 
   /// Create an application
-  Future<Application> create(
-    CreateApplicationRequest request, {
+  Future<inttegro_app.Application> create(
+    inttegro_app.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -19,11 +19,12 @@ final class Apps {
       field: "app",
       authenticated: true,
     );
-    return Application.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_app.Application.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Retrieve the authenticated application
-  Future<Application> lookup({
+  Future<inttegro_app.Application> lookup({
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -35,12 +36,13 @@ final class Apps {
       field: "app",
       authenticated: true,
     );
-    return Application.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_app.Application.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update the authenticated application
-  Future<Application> update(
-    UpdateApplicationRequest request, {
+  Future<inttegro_app.Application> update(
+    inttegro_app.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -52,7 +54,8 @@ final class Apps {
       field: "app",
       authenticated: true,
     );
-    return Application.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_app.Application.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -62,8 +65,8 @@ final class BalanceTransactions {
   const BalanceTransactions._(this._client);
 
   /// Look up a balance transaction
-  Future<BalanceTransaction> lookup(
-    LookupBalanceTransactionRequest request, {
+  Future<inttegro_balance_transaction.BalanceTransaction> lookup(
+    inttegro_balance_transaction.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -75,12 +78,13 @@ final class BalanceTransactions {
       field: "transaction",
       authenticated: true,
     );
-    return BalanceTransaction.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_balance_transaction.BalanceTransaction.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page through balance transactions
-  Future<BalanceTransactionPage> page(
-    PageBalanceTransactionsRequest request, {
+  Future<inttegro_balance_transaction.Page> page(
+    inttegro_balance_transaction.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -92,7 +96,7 @@ final class BalanceTransactions {
       field: "page",
       authenticated: true,
     );
-    return BalanceTransactionPage.fromJson(
+    return inttegro_balance_transaction.Page.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
@@ -126,8 +130,8 @@ final class Broadcasts {
   const Broadcasts._(this._client);
 
   /// Look up a broadcast
-  Future<BroadcastDetail> lookup(
-    LookupBroadcastRequest request, {
+  Future<inttegro_broadcast.Detail> lookup(
+    inttegro_broadcast.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -139,12 +143,13 @@ final class Broadcasts {
       field: "broadcast",
       authenticated: true,
     );
-    return BroadcastDetail.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_broadcast.Detail.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Cancel a broadcast
-  Future<BroadcastDetail> cancel(
-    CancelBroadcastRequest request, {
+  Future<inttegro_broadcast.Detail> cancel(
+    inttegro_broadcast.CancelRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -156,7 +161,8 @@ final class Broadcasts {
       field: "broadcast",
       authenticated: true,
     );
-    return BroadcastDetail.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_broadcast.Detail.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -166,8 +172,8 @@ final class Chimes {
   const Chimes._(this._client);
 
   /// Send a Chime
-  Future<Chime> send(
-    SendChimeRequest request, {
+  Future<inttegro_chime.Chime> send(
+    inttegro_chime.SendRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -179,12 +185,13 @@ final class Chimes {
       field: "chime",
       authenticated: true,
     );
-    return Chime.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_chime.Chime.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Look up a Chime
-  Future<Chime> lookup(
-    LookupChimeRequest request, {
+  Future<inttegro_chime.Chime> lookup(
+    inttegro_chime.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -196,12 +203,13 @@ final class Chimes {
       field: "chime",
       authenticated: true,
     );
-    return Chime.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_chime.Chime.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page through Chimes
-  Future<ChimePage> page(
-    PageChimesRequest request, {
+  Future<inttegro_chime.Page> page(
+    inttegro_chime.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -213,12 +221,12 @@ final class Chimes {
       field: "page",
       authenticated: true,
     );
-    return ChimePage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_chime.Page.fromJson((value as Map).cast<String, Object?>());
   }
 
   /// Schedule Chimes
-  Future<ScheduleCreationDetail> schedule(
-    ScheduleChimeRequest request, {
+  Future<inttegro_chime.ScheduleCreationDetail> schedule(
+    inttegro_chime.ScheduleRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -230,14 +238,14 @@ final class Chimes {
       field: "scheduled_chime",
       authenticated: true,
     );
-    return ScheduleCreationDetail.fromJson(
+    return inttegro_chime.ScheduleCreationDetail.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
 
   /// Broadcast Chimes
-  Future<BroadcastCreationDetail> broadcast(
-    BroadcastRequest request, {
+  Future<inttegro_broadcast.CreationDetail> broadcast(
+    inttegro_broadcast.Request request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -249,7 +257,7 @@ final class Chimes {
       field: "broadcast",
       authenticated: true,
     );
-    return BroadcastCreationDetail.fromJson(
+    return inttegro_broadcast.CreationDetail.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
@@ -261,8 +269,8 @@ final class Customers {
   const Customers._(this._client);
 
   /// Create a customer
-  Future<Customer> create(
-    CreateCustomerRequest request, {
+  Future<inttegro_customer.Customer> create(
+    inttegro_customer.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -274,12 +282,13 @@ final class Customers {
       field: "customer",
       authenticated: true,
     );
-    return Customer.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_customer.Customer.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Look up a customer
-  Future<Customer> lookup(
-    LookupCustomerRequest request, {
+  Future<inttegro_customer.Customer> lookup(
+    inttegro_customer.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -291,12 +300,13 @@ final class Customers {
       field: "customer",
       authenticated: true,
     );
-    return Customer.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_customer.Customer.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update a customer
-  Future<Customer> update(
-    UpdateCustomerRequest request, {
+  Future<inttegro_customer.Customer> update(
+    inttegro_customer.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -308,12 +318,13 @@ final class Customers {
       field: "customer",
       authenticated: true,
     );
-    return Customer.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_customer.Customer.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page through customers
-  Future<CustomerPage> page(
-    PageCustomersRequest request, {
+  Future<inttegro_customer.Page> page(
+    inttegro_customer.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -325,7 +336,8 @@ final class Customers {
       field: "page",
       authenticated: true,
     );
-    return CustomerPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_customer.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Search customer profiles.
@@ -352,8 +364,8 @@ final class FileLinks {
   const FileLinks._(this._client);
 
   /// Create a file link
-  Future<FileLinkCreation> create(
-    CreateFileLinkRequest request, {
+  Future<inttegro_file_link.Creation> create(
+    inttegro_file_link.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -365,12 +377,13 @@ final class FileLinks {
       field: null,
       authenticated: true,
     );
-    return FileLinkCreation.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_file_link.Creation.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup a file link
-  Future<FileLink> lookup(
-    LookupFileLinkRequest request, {
+  Future<inttegro_file_link.FileLink> lookup(
+    inttegro_file_link.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -382,12 +395,13 @@ final class FileLinks {
       field: "file_link",
       authenticated: true,
     );
-    return FileLink.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_file_link.FileLink.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page file links
-  Future<FileLinkPage> page(
-    PageFileLinksRequest request, {
+  Future<inttegro_file_link.Page> page(
+    inttegro_file_link.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -399,12 +413,13 @@ final class FileLinks {
       field: "page",
       authenticated: true,
     );
-    return FileLinkPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_file_link.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Revoke a file link
-  Future<FileLink> revoke(
-    RevokeFileLinkRequest request, {
+  Future<inttegro_file_link.FileLink> revoke(
+    inttegro_file_link.RevokeRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -416,7 +431,8 @@ final class FileLinks {
       field: "file_link",
       authenticated: true,
     );
-    return FileLink.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_file_link.FileLink.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Open a public file link
@@ -430,8 +446,8 @@ final class FileReferences {
   const FileReferences._(this._client);
 
   /// Reconcile file references
-  Future<FileReferenceReconciliation> reconcile(
-    FileReferenceReconcileRequest request, {
+  Future<inttegro_file.ReferenceReconciliation> reconcile(
+    inttegro_file.ReferenceReconcileRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -443,7 +459,7 @@ final class FileReferences {
       field: null,
       authenticated: true,
     );
-    return FileReferenceReconciliation.fromJson(
+    return inttegro_file.ReferenceReconciliation.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
@@ -455,7 +471,7 @@ final class Files {
   const Files._(this._client);
 
   /// Create a file
-  Future<File> create(
+  Future<inttegro_file.File> create(
     CreateFileRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
@@ -466,12 +482,12 @@ final class Files {
       "files.create",
       field: 'file',
     );
-    return File.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_file.File.fromJson((value as Map).cast<String, Object?>());
   }
 
   /// Lookup a file
-  Future<File> lookup(
-    LookupFileRequest request, {
+  Future<inttegro_file.File> lookup(
+    inttegro_file.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -483,12 +499,12 @@ final class Files {
       field: "file",
       authenticated: true,
     );
-    return File.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_file.File.fromJson((value as Map).cast<String, Object?>());
   }
 
   /// Page files
-  Future<FilePage> page(
-    PageFilesRequest request, {
+  Future<inttegro_file.Page> page(
+    inttegro_file.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -500,12 +516,12 @@ final class Files {
       field: "page",
       authenticated: true,
     );
-    return FilePage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_file.Page.fromJson((value as Map).cast<String, Object?>());
   }
 
   /// Deliver file contents
   Future<FileDownload> contents(
-    FileContentsRequest request, {
+    inttegro_file.ContentsRequest request, {
     RequestOptions options = const RequestOptions(),
   }) =>
       _client._download(
@@ -518,8 +534,8 @@ final class Files {
       );
 
   /// Delete a file
-  Future<File> delete(
-    DeleteFileRequest request, {
+  Future<inttegro_file.File> delete(
+    inttegro_file.DeleteRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -531,7 +547,7 @@ final class Files {
       field: "file",
       authenticated: true,
     );
-    return File.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_file.File.fromJson((value as Map).cast<String, Object?>());
   }
 }
 
@@ -541,8 +557,8 @@ final class FinancialAccounts {
   const FinancialAccounts._(this._client);
 
   /// Create a financial account
-  Future<FinancialAccount> create(
-    FinancialAccountCreateRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> create(
+    inttegro_financial_account.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -554,12 +570,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup a financial account
-  Future<FinancialAccount> lookup(
-    FinancialAccountIDRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> lookup(
+    inttegro_financial_account.IDRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -571,12 +588,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page through financial accounts
-  Future<FinancialAccountPage> page(
-    FinancialAccountPageRequest request, {
+  Future<inttegro_financial_account.Page> page(
+    inttegro_financial_account.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -588,7 +606,7 @@ final class FinancialAccounts {
       field: "page",
       authenticated: true,
     );
-    return FinancialAccountPage.fromJson(
+    return inttegro_financial_account.Page.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
@@ -611,8 +629,8 @@ final class FinancialAccounts {
   }
 
   /// Connect a financial account
-  Future<FinancialAccount> connect(
-    FinancialAccountCreateRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> connect(
+    inttegro_financial_account.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -624,12 +642,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update a financial account
-  Future<FinancialAccount> update(
-    FinancialAccountUpdateRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> update(
+    inttegro_financial_account.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -641,12 +660,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Enable push capability
-  Future<FinancialAccount> enablePush(
-    FinancialAccountIDRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> enablePush(
+    inttegro_financial_account.IDRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -658,12 +678,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Disable push capability
-  Future<FinancialAccount> disablePush(
-    FinancialAccountDisableRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> disablePush(
+    inttegro_financial_account.DisableRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -675,12 +696,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Disconnect a financial account
-  Future<FinancialAccount> disconnect(
-    FinancialAccountDisableRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> disconnect(
+    inttegro_financial_account.DisableRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -692,12 +714,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Reconnect a financial account
-  Future<FinancialAccount> reconnect(
-    FinancialAccountIDRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> reconnect(
+    inttegro_financial_account.IDRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -709,12 +732,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Enable pull capability
-  Future<FinancialAccount> enablePull(
-    FinancialAccountEnablePullRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> enablePull(
+    inttegro_financial_account.EnablePullRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -726,12 +750,13 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Disable pull capability
-  Future<FinancialAccount> disablePull(
-    FinancialAccountIDRequest request, {
+  Future<inttegro_financial_account.FinancialAccount> disablePull(
+    inttegro_financial_account.IDRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -743,7 +768,8 @@ final class FinancialAccounts {
       field: "account",
       authenticated: true,
     );
-    return FinancialAccount.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_financial_account.FinancialAccount.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -753,8 +779,8 @@ final class Keys {
   const Keys._(this._client);
 
   /// Generate a secret key
-  Future<GeneratedSecretKey> generate(
-    GenerateSecretKeyRequest request, {
+  Future<inttegro_secret_key.Generated> generate(
+    inttegro_secret_key.GenerateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -766,12 +792,13 @@ final class Keys {
       field: "key",
       authenticated: true,
     );
-    return GeneratedSecretKey.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_secret_key.Generated.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page secret keys
-  Future<SecretKeyPage> page(
-    PageSecretKeysRequest request, {
+  Future<inttegro_secret_key.Page> page(
+    inttegro_secret_key.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -783,12 +810,13 @@ final class Keys {
       field: "page",
       authenticated: true,
     );
-    return SecretKeyPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_secret_key.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Retrieve a secret key
-  Future<SecretKey> lookup(
-    LookupSecretKeyRequest request, {
+  Future<inttegro_secret_key.SecretKey> lookup(
+    inttegro_secret_key.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -800,12 +828,13 @@ final class Keys {
       field: "key",
       authenticated: true,
     );
-    return SecretKey.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_secret_key.SecretKey.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update a secret key
-  Future<SecretKey> update(
-    UpdateSecretKeyRequest request, {
+  Future<inttegro_secret_key.SecretKey> update(
+    inttegro_secret_key.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -817,12 +846,13 @@ final class Keys {
       field: "key",
       authenticated: true,
     );
-    return SecretKey.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_secret_key.SecretKey.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Revoke a secret key
-  Future<SecretKey> destroy(
-    DestroySecretKeyRequest request, {
+  Future<inttegro_secret_key.SecretKey> destroy(
+    inttegro_secret_key.DestroyRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -834,12 +864,13 @@ final class Keys {
       field: "key",
       authenticated: true,
     );
-    return SecretKey.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_secret_key.SecretKey.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Retrieve secret key usage
-  Future<SecretKeyUsage> usage(
-    SecretKeyUsageRequest request, {
+  Future<inttegro_secret_key.Usage> usage(
+    inttegro_secret_key.UsageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -851,7 +882,8 @@ final class Keys {
       field: null,
       authenticated: true,
     );
-    return SecretKeyUsage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_secret_key.Usage.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -861,8 +893,8 @@ final class MessageTemplates {
   const MessageTemplates._(this._client);
 
   /// Create a message template
-  Future<MessageTemplate> create(
-    CreateMessageTemplateRequest request, {
+  Future<inttegro_message_template.MessageTemplate> create(
+    inttegro_message_template.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -874,12 +906,13 @@ final class MessageTemplates {
       field: "message_template",
       authenticated: true,
     );
-    return MessageTemplate.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_message_template.MessageTemplate.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update a message template
-  Future<MessageTemplate> update(
-    UpdateMessageTemplateRequest request, {
+  Future<inttegro_message_template.MessageTemplate> update(
+    inttegro_message_template.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -891,12 +924,13 @@ final class MessageTemplates {
       field: "message_template",
       authenticated: true,
     );
-    return MessageTemplate.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_message_template.MessageTemplate.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Publish a message template
-  Future<MessageTemplate> publish(
-    MessageTemplateIDRequest request, {
+  Future<inttegro_message_template.MessageTemplate> publish(
+    inttegro_message_template.IDRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -908,12 +942,13 @@ final class MessageTemplates {
       field: "message_template",
       authenticated: true,
     );
-    return MessageTemplate.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_message_template.MessageTemplate.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Archive a message template
-  Future<MessageTemplate> archive(
-    MessageTemplateIDRequest request, {
+  Future<inttegro_message_template.MessageTemplate> archive(
+    inttegro_message_template.IDRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -925,12 +960,13 @@ final class MessageTemplates {
       field: "message_template",
       authenticated: true,
     );
-    return MessageTemplate.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_message_template.MessageTemplate.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Look up a message template
-  Future<MessageTemplate> lookup(
-    MessageTemplateIDRequest request, {
+  Future<inttegro_message_template.MessageTemplate> lookup(
+    inttegro_message_template.IDRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -942,12 +978,13 @@ final class MessageTemplates {
       field: "message_template",
       authenticated: true,
     );
-    return MessageTemplate.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_message_template.MessageTemplate.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page message templates
-  Future<MessageTemplatesPage> page(
-    PageMessageTemplatesRequest request, {
+  Future<inttegro_message_template.Page> page(
+    inttegro_message_template.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -959,14 +996,14 @@ final class MessageTemplates {
       field: "page",
       authenticated: true,
     );
-    return MessageTemplatesPage.fromJson(
+    return inttegro_message_template.Page.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
 
   /// Render a message template preview
-  Future<MessageTemplatePreview> renderPreview(
-    RenderMessageTemplatePreviewRequest request, {
+  Future<inttegro_message_template.Preview> renderPreview(
+    inttegro_message_template.RenderPreviewRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -978,7 +1015,7 @@ final class MessageTemplates {
       field: null,
       authenticated: true,
     );
-    return MessageTemplatePreview.fromJson(
+    return inttegro_message_template.Preview.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
@@ -990,8 +1027,8 @@ final class Orders {
   const Orders._(this._client);
 
   /// Create a new order
-  Future<Order> create(
-    CreateOrderRequest request, {
+  Future<inttegro_order.Order> create(
+    inttegro_order.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1003,12 +1040,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup an order
-  Future<Order> lookup(
-    LookupOrderRequest request, {
+  Future<inttegro_order.Order> lookup(
+    inttegro_order.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1020,12 +1058,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update an order
-  Future<Order> update(
-    UpdateOrderRequest request, {
+  Future<inttegro_order.Order> update(
+    inttegro_order.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1037,12 +1076,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Pay for an order
-  Future<Order> pay(
-    PayOrderRequest request, {
+  Future<inttegro_order.Order> pay(
+    inttegro_order.PayRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1054,12 +1094,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Confirm payment with token
-  Future<Order> confirmPayment(
-    ConfirmPaymentRequest request, {
+  Future<inttegro_order.Order> confirmPayment(
+    inttegro_payment.ConfirmRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1071,12 +1112,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Request payment confirmation
-  Future<Order> requestConfirmation(
-    RequestConfirmationRequest request, {
+  Future<inttegro_order.Order> requestConfirmation(
+    inttegro_order.RequestConfirmationRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1088,12 +1130,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Cancel an order
-  Future<Order> cancel(
-    CancelOrderRequest request, {
+  Future<inttegro_order.Order> cancel(
+    inttegro_order.CancelRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1105,12 +1148,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Finalize an order
-  Future<Order> finalize(
-    FinalizeOrderRequest request, {
+  Future<inttegro_order.Order> finalize(
+    inttegro_order.FinalizeRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1122,12 +1166,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Complete an order
-  Future<Order> complete(
-    CompleteOrderRequest request, {
+  Future<inttegro_order.Order> complete(
+    inttegro_order.CompleteRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1139,12 +1184,13 @@ final class Orders {
       field: "order",
       authenticated: true,
     );
-    return Order.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Order.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Send an order invoice
-  Future<OrderDocumentDeliveryResult> sendInvoice(
-    OrderDocumentDeliveryRequest request, {
+  Future<inttegro_order.DocumentDeliveryResult> sendInvoice(
+    inttegro_order.DocumentDeliveryRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1156,14 +1202,14 @@ final class Orders {
       field: null,
       authenticated: true,
     );
-    return OrderDocumentDeliveryResult.fromJson(
+    return inttegro_order.DocumentDeliveryResult.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
 
   /// Send an order receipt
-  Future<OrderDocumentDeliveryResult> sendReceipt(
-    OrderDocumentDeliveryRequest request, {
+  Future<inttegro_order.DocumentDeliveryResult> sendReceipt(
+    inttegro_order.DocumentDeliveryRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1175,14 +1221,14 @@ final class Orders {
       field: null,
       authenticated: true,
     );
-    return OrderDocumentDeliveryResult.fromJson(
+    return inttegro_order.DocumentDeliveryResult.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
 
   /// Page through orders
-  Future<OrderPage> page(
-    PageOrdersRequest request, {
+  Future<inttegro_order.Page> page(
+    inttegro_order.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1194,7 +1240,7 @@ final class Orders {
       field: "page",
       authenticated: true,
     );
-    return OrderPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_order.Page.fromJson((value as Map).cast<String, Object?>());
   }
 
   /// Search orders.
@@ -1221,8 +1267,8 @@ final class Otp {
   const Otp._(this._client);
 
   /// Initiate OTP transaction
-  Future<OTPTransaction> initiate(
-    InitiateOTPRequest request, {
+  Future<inttegro_otp.Transaction> initiate(
+    inttegro_otp.InitiateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1234,12 +1280,13 @@ final class Otp {
       field: "transaction",
       authenticated: true,
     );
-    return OTPTransaction.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_otp.Transaction.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Verify OTP token
-  Future<OTPVerification> verify(
-    VerifyOTPRequest request, {
+  Future<inttegro_otp.Verification> verify(
+    inttegro_otp.VerifyRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1251,12 +1298,13 @@ final class Otp {
       field: null,
       authenticated: true,
     );
-    return OTPVerification.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_otp.Verification.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup OTP transaction
-  Future<OTPTransaction> lookup(
-    LookupOTPRequest request, {
+  Future<inttegro_otp.Transaction> lookup(
+    inttegro_otp.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1268,7 +1316,8 @@ final class Otp {
       field: "transaction",
       authenticated: true,
     );
-    return OTPTransaction.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_otp.Transaction.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -1278,8 +1327,8 @@ final class PaymentMethods {
   const PaymentMethods._(this._client);
 
   /// Tokenize a payment method
-  Future<PaymentMethod> tokenize(
-    TokenizeMobileMoneyPaymentMethodRequest request, {
+  Future<inttegro_payment_method.PaymentMethod> tokenize(
+    inttegro_payment_method.TokenizeMobileMoneyRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1291,12 +1340,13 @@ final class PaymentMethods {
       field: "payment_method",
       authenticated: true,
     );
-    return PaymentMethod.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payment_method.PaymentMethod.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup a payment method
-  Future<PaymentMethod> lookup(
-    LookupPaymentMethodRequest request, {
+  Future<inttegro_payment_method.PaymentMethod> lookup(
+    inttegro_payment_method.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1308,12 +1358,13 @@ final class PaymentMethods {
       field: "payment_method",
       authenticated: true,
     );
-    return PaymentMethod.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payment_method.PaymentMethod.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page payment methods
-  Future<PaymentMethodPage> page(
-    PaymentMethodPageRequest request, {
+  Future<inttegro_payment_method.Page> page(
+    inttegro_payment_method.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1325,12 +1376,13 @@ final class PaymentMethods {
       field: "page",
       authenticated: true,
     );
-    return PaymentMethodPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payment_method.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update a payment method
-  Future<PaymentMethod> update(
-    UpdatePaymentMethodRequest request, {
+  Future<inttegro_payment_method.PaymentMethod> update(
+    inttegro_payment_method.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1342,12 +1394,13 @@ final class PaymentMethods {
       field: "payment_method",
       authenticated: true,
     );
-    return PaymentMethod.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payment_method.PaymentMethod.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Activate a payment method
-  Future<PaymentMethod> activate(
-    ActivatePaymentMethodRequest request, {
+  Future<inttegro_payment_method.PaymentMethod> activate(
+    inttegro_payment_method.ActivateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1359,12 +1412,13 @@ final class PaymentMethods {
       field: "payment_method",
       authenticated: true,
     );
-    return PaymentMethod.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payment_method.PaymentMethod.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Deactivate a payment method
-  Future<PaymentMethod> deactivate(
-    DisactivatePaymentMethodRequest request, {
+  Future<inttegro_payment_method.PaymentMethod> deactivate(
+    inttegro_payment_method.DisactivateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1376,12 +1430,13 @@ final class PaymentMethods {
       field: "payment_method",
       authenticated: true,
     );
-    return PaymentMethod.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payment_method.PaymentMethod.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Archive a payment method
-  Future<PaymentMethod> archive(
-    ArchivePaymentMethodRequest request, {
+  Future<inttegro_payment_method.PaymentMethod> archive(
+    inttegro_payment_method.ArchiveRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1393,12 +1448,13 @@ final class PaymentMethods {
       field: "payment_method",
       authenticated: true,
     );
-    return PaymentMethod.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payment_method.PaymentMethod.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Unarchive a payment method
-  Future<PaymentMethod> unarchive(
-    UnarchivePaymentMethodRequest request, {
+  Future<inttegro_payment_method.PaymentMethod> unarchive(
+    inttegro_payment_method.UnarchiveRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1410,11 +1466,12 @@ final class PaymentMethods {
       field: "payment_method",
       authenticated: true,
     );
-    return PaymentMethod.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payment_method.PaymentMethod.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Get payment method settings
-  Future<PaymentMethodSettings> settings({
+  Future<inttegro_payment_method.Settings> settings({
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1426,7 +1483,7 @@ final class PaymentMethods {
       field: "settings",
       authenticated: true,
     );
-    return PaymentMethodSettings.fromJson(
+    return inttegro_payment_method.Settings.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
@@ -1438,8 +1495,8 @@ final class Payouts {
   const Payouts._(this._client);
 
   /// Schedule a payout
-  Future<Payout> schedule(
-    SchedulePayoutRequest request, {
+  Future<inttegro_payout.Payout> schedule(
+    inttegro_payout.ScheduleRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1451,12 +1508,13 @@ final class Payouts {
       field: "payout",
       authenticated: true,
     );
-    return Payout.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payout.Payout.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup a payout
-  Future<Payout> lookup(
-    LookupPayoutRequest request, {
+  Future<inttegro_payout.Payout> lookup(
+    inttegro_payout.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1468,12 +1526,13 @@ final class Payouts {
       field: "payout",
       authenticated: true,
     );
-    return Payout.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payout.Payout.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Set payout destinations
-  Future<PayoutSettingsMutation> setDestinations(
-    SetPayoutDestinationsRequest request, {
+  Future<inttegro_payout.SettingsMutation> setDestinations(
+    inttegro_payout.SetDestinationsRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1485,13 +1544,13 @@ final class Payouts {
       field: "settings",
       authenticated: true,
     );
-    return PayoutSettingsMutation.fromJson(
+    return inttegro_payout.SettingsMutation.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
 
   /// Get payout settings
-  Future<PayoutSettingsLookup> settings({
+  Future<inttegro_payout.SettingsLookup> settings({
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1503,13 +1562,13 @@ final class Payouts {
       field: "settings",
       authenticated: true,
     );
-    return PayoutSettingsLookup.fromJson(
+    return inttegro_payout.SettingsLookup.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
 
   /// Disable automatic payouts
-  Future<PayoutSettingsMutation> disable({
+  Future<inttegro_payout.SettingsMutation> disable({
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1521,13 +1580,13 @@ final class Payouts {
       field: "settings",
       authenticated: true,
     );
-    return PayoutSettingsMutation.fromJson(
+    return inttegro_payout.SettingsMutation.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
 
   /// Enable automatic payouts
-  Future<PayoutSettingsMutation> enable({
+  Future<inttegro_payout.SettingsMutation> enable({
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1539,14 +1598,14 @@ final class Payouts {
       field: "settings",
       authenticated: true,
     );
-    return PayoutSettingsMutation.fromJson(
+    return inttegro_payout.SettingsMutation.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
 
   /// Page through payouts
-  Future<PayoutPage> page(
-    PagePayoutsRequest request, {
+  Future<inttegro_payout.Page> page(
+    inttegro_payout.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1558,7 +1617,8 @@ final class Payouts {
       field: "page",
       authenticated: true,
     );
-    return PayoutPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payout.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Search payouts.
@@ -1579,8 +1639,8 @@ final class Payouts {
   }
 
   /// Cancel a scheduled payout
-  Future<Payout> cancel(
-    CancelPayoutRequest request, {
+  Future<inttegro_payout.Payout> cancel(
+    inttegro_payout.CancelRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1592,7 +1652,8 @@ final class Payouts {
       field: "payout",
       authenticated: true,
     );
-    return Payout.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_payout.Payout.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -1602,8 +1663,8 @@ final class Prices {
   const Prices._(this._client);
 
   /// Create a price
-  Future<CatalogPrice> create(
-    CatalogPriceParams request, {
+  Future<inttegro_price.Catalog> create(
+    inttegro_price.CatalogParams request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1615,12 +1676,13 @@ final class Prices {
       field: "price",
       authenticated: true,
     );
-    return CatalogPrice.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_price.Catalog.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup a price
-  Future<CatalogPrice> lookup(
-    LookupPriceRequest request, {
+  Future<inttegro_price.Catalog> lookup(
+    inttegro_price.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1632,12 +1694,13 @@ final class Prices {
       field: "price",
       authenticated: true,
     );
-    return CatalogPrice.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_price.Catalog.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page through prices
-  Future<PricePage> page(
-    PricePageRequest request, {
+  Future<inttegro_price.Page> page(
+    inttegro_price.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1649,12 +1712,12 @@ final class Prices {
       field: "page",
       authenticated: true,
     );
-    return PricePage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_price.Page.fromJson((value as Map).cast<String, Object?>());
   }
 
   /// Update a price
-  Future<CatalogPrice> update(
-    UpdatePriceRequest request, {
+  Future<inttegro_price.Catalog> update(
+    inttegro_price.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1666,12 +1729,13 @@ final class Prices {
       field: "price",
       authenticated: true,
     );
-    return CatalogPrice.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_price.Catalog.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Activate a price
-  Future<CatalogPrice> activate(
-    PriceActionRequest request, {
+  Future<inttegro_price.Catalog> activate(
+    inttegro_price.ActionRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1683,12 +1747,13 @@ final class Prices {
       field: "price",
       authenticated: true,
     );
-    return CatalogPrice.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_price.Catalog.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Deactivate a price
-  Future<CatalogPrice> deactivate(
-    PriceActionRequest request, {
+  Future<inttegro_price.Catalog> deactivate(
+    inttegro_price.ActionRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1700,12 +1765,13 @@ final class Prices {
       field: "price",
       authenticated: true,
     );
-    return CatalogPrice.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_price.Catalog.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Archive a price
-  Future<CatalogPrice> archive(
-    PriceActionRequest request, {
+  Future<inttegro_price.Catalog> archive(
+    inttegro_price.ActionRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1717,7 +1783,8 @@ final class Prices {
       field: "price",
       authenticated: true,
     );
-    return CatalogPrice.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_price.Catalog.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -1727,8 +1794,8 @@ final class Products {
   const Products._(this._client);
 
   /// Create a product
-  Future<Product> create(
-    CreateProductRequest request, {
+  Future<inttegro_product.Product> create(
+    inttegro_product.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1740,12 +1807,13 @@ final class Products {
       field: "product",
       authenticated: true,
     );
-    return Product.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_product.Product.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Add a price to a product
-  Future<CatalogPrice> addPrice(
-    AddProductPriceRequest request, {
+  Future<inttegro_price.Catalog> addPrice(
+    inttegro_product.AddPriceRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1757,12 +1825,13 @@ final class Products {
       field: "price",
       authenticated: true,
     );
-    return CatalogPrice.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_price.Catalog.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup a product
-  Future<Product> lookup(
-    LookupProductRequest request, {
+  Future<inttegro_product.Product> lookup(
+    inttegro_product.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1774,12 +1843,13 @@ final class Products {
       field: "product",
       authenticated: true,
     );
-    return Product.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_product.Product.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update a product
-  Future<Product> update(
-    UpdateProductRequest request, {
+  Future<inttegro_product.Product> update(
+    inttegro_product.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1791,12 +1861,13 @@ final class Products {
       field: "product",
       authenticated: true,
     );
-    return Product.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_product.Product.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Publish a product
-  Future<Product> publish(
-    ProductActionRequest request, {
+  Future<inttegro_product.Product> publish(
+    inttegro_product.ActionRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1808,12 +1879,13 @@ final class Products {
       field: "product",
       authenticated: true,
     );
-    return Product.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_product.Product.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Unpublish a product
-  Future<Product> unpublish(
-    ProductActionRequest request, {
+  Future<inttegro_product.Product> unpublish(
+    inttegro_product.ActionRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1825,12 +1897,13 @@ final class Products {
       field: "product",
       authenticated: true,
     );
-    return Product.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_product.Product.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Archive a product
-  Future<Product> archive(
-    ProductActionRequest request, {
+  Future<inttegro_product.Product> archive(
+    inttegro_product.ActionRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1842,12 +1915,13 @@ final class Products {
       field: "product",
       authenticated: true,
     );
-    return Product.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_product.Product.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page through products
-  Future<ProductPage> page(
-    PageProductsRequest request, {
+  Future<inttegro_product.Page> page(
+    inttegro_product.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1859,7 +1933,8 @@ final class Products {
       field: "page",
       authenticated: true,
     );
-    return ProductPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_product.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Search products.
@@ -1886,8 +1961,8 @@ final class PurchaseIntents {
   const PurchaseIntents._(this._client);
 
   /// Create a purchase intent
-  Future<PurchaseIntent> create(
-    CreatePurchaseIntentRequest request, {
+  Future<inttegro_purchase_intent.PurchaseIntent> create(
+    inttegro_purchase_intent.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1899,12 +1974,13 @@ final class PurchaseIntents {
       field: "purchase_intent",
       authenticated: true,
     );
-    return PurchaseIntent.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_purchase_intent.PurchaseIntent.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update a purchase intent
-  Future<PurchaseIntent> update(
-    UpdatePurchaseIntentRequest request, {
+  Future<inttegro_purchase_intent.PurchaseIntent> update(
+    inttegro_purchase_intent.UpdateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1916,12 +1992,13 @@ final class PurchaseIntents {
       field: "purchase_intent",
       authenticated: true,
     );
-    return PurchaseIntent.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_purchase_intent.PurchaseIntent.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Cancel a purchase intent
-  Future<PurchaseIntent> cancel(
-    CancelPurchaseIntentRequest request, {
+  Future<inttegro_purchase_intent.PurchaseIntent> cancel(
+    inttegro_purchase_intent.CancelRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1933,12 +2010,13 @@ final class PurchaseIntents {
       field: "purchase_intent",
       authenticated: true,
     );
-    return PurchaseIntent.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_purchase_intent.PurchaseIntent.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup a purchase intent
-  Future<PurchaseIntent> lookup(
-    LookupPurchaseIntentRequest request, {
+  Future<inttegro_purchase_intent.PurchaseIntent> lookup(
+    inttegro_purchase_intent.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1950,12 +2028,13 @@ final class PurchaseIntents {
       field: "purchase_intent",
       authenticated: true,
     );
-    return PurchaseIntent.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_purchase_intent.PurchaseIntent.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// List purchase intents
-  Future<PurchaseIntentPage> page(
-    PagePurchaseIntentsRequest request, {
+  Future<inttegro_purchase_intent.Page> page(
+    inttegro_purchase_intent.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1967,7 +2046,8 @@ final class PurchaseIntents {
       field: "page",
       authenticated: true,
     );
-    return PurchaseIntentPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_purchase_intent.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -1977,8 +2057,8 @@ final class Refunds {
   const Refunds._(this._client);
 
   /// Create a refund
-  Future<Refund> create(
-    CreateRefundRequest request, {
+  Future<inttegro_refund.Refund> create(
+    inttegro_refund.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -1990,12 +2070,13 @@ final class Refunds {
       field: "refund",
       authenticated: true,
     );
-    return Refund.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_refund.Refund.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Cancel a refund
-  Future<Refund> cancel(
-    CancelRefundRequest request, {
+  Future<inttegro_refund.Refund> cancel(
+    inttegro_refund.CancelRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2007,12 +2088,13 @@ final class Refunds {
       field: "refund",
       authenticated: true,
     );
-    return Refund.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_refund.Refund.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Look up a refund
-  Future<Refund> lookup(
-    LookupRefundRequest request, {
+  Future<inttegro_refund.Refund> lookup(
+    inttegro_refund.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2024,12 +2106,13 @@ final class Refunds {
       field: "refund",
       authenticated: true,
     );
-    return Refund.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_refund.Refund.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page through refunds
-  Future<RefundPage> page(
-    PageRefundsRequest request, {
+  Future<inttegro_refund.Page> page(
+    inttegro_refund.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2041,7 +2124,8 @@ final class Refunds {
       field: "page",
       authenticated: true,
     );
-    return RefundPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_refund.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }
 
@@ -2051,8 +2135,8 @@ final class Schedules {
   const Schedules._(this._client);
 
   /// Look up a scheduled Chime
-  Future<ScheduleDetail> lookup(
-    LookupScheduleRequest request, {
+  Future<inttegro_chime.ScheduleDetail> lookup(
+    inttegro_chime.LookupScheduleRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2064,12 +2148,13 @@ final class Schedules {
       field: "scheduled_chime",
       authenticated: true,
     );
-    return ScheduleDetail.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_chime.ScheduleDetail.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Cancel a scheduled Chime
-  Future<ScheduleCancelDetail> cancel(
-    CancelScheduleRequest request, {
+  Future<inttegro_chime.ScheduleCancelDetail> cancel(
+    inttegro_chime.CancelScheduleRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2081,7 +2166,7 @@ final class Schedules {
       field: "scheduled_chime",
       authenticated: true,
     );
-    return ScheduleCancelDetail.fromJson(
+    return inttegro_chime.ScheduleCancelDetail.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
@@ -2115,8 +2200,8 @@ final class UploadRequests {
   const UploadRequests._(this._client);
 
   /// Create an upload request
-  Future<UploadRequest> create(
-    CreateUploadRequestRequest request, {
+  Future<inttegro_upload_request.UploadRequest> create(
+    inttegro_upload_request.CreateRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2128,12 +2213,13 @@ final class UploadRequests {
       field: "upload_request",
       authenticated: true,
     );
-    return UploadRequest.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_upload_request.UploadRequest.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Lookup an upload request
-  Future<UploadRequest> lookup(
-    LookupUploadRequestRequest request, {
+  Future<inttegro_upload_request.UploadRequest> lookup(
+    inttegro_upload_request.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2145,12 +2231,13 @@ final class UploadRequests {
       field: "upload_request",
       authenticated: true,
     );
-    return UploadRequest.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_upload_request.UploadRequest.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Page upload requests
-  Future<UploadRequestPage> page(
-    PageUploadRequestsRequest request, {
+  Future<inttegro_upload_request.Page> page(
+    inttegro_upload_request.PageRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2162,12 +2249,13 @@ final class UploadRequests {
       field: "page",
       authenticated: true,
     );
-    return UploadRequestPage.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_upload_request.Page.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Cancel an upload request
-  Future<UploadRequest> cancel(
-    CancelUploadRequestRequest request, {
+  Future<inttegro_upload_request.UploadRequest> cancel(
+    inttegro_upload_request.CancelRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2179,12 +2267,13 @@ final class UploadRequests {
       field: "upload_request",
       authenticated: true,
     );
-    return UploadRequest.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_upload_request.UploadRequest.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Review an upload request attempt
-  Future<UploadRequest> review(
-    ReviewUploadRequestAttemptRequest request, {
+  Future<inttegro_upload_request.UploadRequest> review(
+    inttegro_upload_request.ReviewAttemptRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
     final value = await _client._request(
@@ -2196,11 +2285,12 @@ final class UploadRequests {
       field: "upload_request",
       authenticated: true,
     );
-    return UploadRequest.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_upload_request.UploadRequest.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Fulfill an upload request
-  Future<UploadFulfillment> fulfill(
+  Future<inttegro_upload_request.UploadFulfillment> fulfill(
     FulfillUploadRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
@@ -2210,6 +2300,7 @@ final class UploadRequests {
       options,
       "upload_requests.fulfill",
     );
-    return UploadFulfillment.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_upload_request.UploadFulfillment.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 }

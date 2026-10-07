@@ -1,38 +1,40 @@
 part of '../inttegro.dart';
 
 /// Deterministic questions about a payment response.
-extension PaymentSemantics on Payment {
-  bool get isPaid => status == PaymentStatus.paid;
+extension PaymentSemantics on inttegro_payment.Payment {
+  bool get isPaid => status == inttegro_payment.Status.paid;
 
-  bool get requiresAction => status == PaymentStatus.requiresAction;
+  bool get requiresAction => status == inttegro_payment.Status.requiresAction;
 
   bool get isTerminal =>
-      status == PaymentStatus.paid ||
-      status == PaymentStatus.canceled ||
-      status == PaymentStatus.expired ||
-      status == PaymentStatus.failed;
+      status == inttegro_payment.Status.paid ||
+      status == inttegro_payment.Status.canceled ||
+      status == inttegro_payment.Status.expired ||
+      status == inttegro_payment.Status.failed;
 
-  PaymentNextAction? get requiredAction => requiresAction ? nextAction : null;
+  inttegro_payment.NextAction? get requiredAction =>
+      requiresAction ? nextAction : null;
 }
 
 /// Deterministic questions about an order response.
-extension OrderSemantics on Order {
-  bool get isPaid => status == OrderStatus.paid || paidAt != null;
+extension OrderSemantics on inttegro_order.Order {
+  bool get isPaid => status == inttegro_order.Status.paid || paidAt != null;
 
-  bool get requiresPayment => status == OrderStatus.requiresPayment;
+  bool get requiresPayment => status == inttegro_order.Status.requiresPayment;
 
   bool get isTerminal =>
-      status == OrderStatus.paid ||
-      status == OrderStatus.completed ||
-      status == OrderStatus.canceled ||
-      status == OrderStatus.expired;
+      status == inttegro_order.Status.paid ||
+      status == inttegro_order.Status.completed ||
+      status == inttegro_order.Status.canceled ||
+      status == inttegro_order.Status.expired;
 
-  PaymentNextAction? get requiredPaymentAction => payment?.requiredAction;
+  inttegro_payment.NextAction? get requiredPaymentAction =>
+      payment?.requiredAction;
 }
 
 /// Deterministic questions about a purchase-intent response.
-extension PurchaseIntentSemantics on PurchaseIntent {
-  bool get isActive => status == PurchaseIntentStatus.active;
+extension PurchaseIntentSemantics on inttegro_purchase_intent.PurchaseIntent {
+  bool get isActive => status == inttegro_purchase_intent.Status.active;
 
   bool get isSingleUse => usage.singleUse == true;
 
@@ -43,7 +45,7 @@ extension PurchaseIntentSemantics on PurchaseIntent {
 }
 
 /// Deterministic questions about a product response.
-extension ProductSemantics on Product {
+extension ProductSemantics on inttegro_product.Product {
   bool get isArchived => archivedAt != null;
 
   bool get isPublished => active && !isArchived;
@@ -52,7 +54,7 @@ extension ProductSemantics on Product {
 }
 
 /// Deterministic questions about a payment-method response.
-extension PaymentMethodSemantics on PaymentMethod {
+extension PaymentMethodSemantics on inttegro_payment_method.PaymentMethod {
   bool get isArchived => archivedAt != null;
 
   bool get isVerified => verifiedAt != null;

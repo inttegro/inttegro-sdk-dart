@@ -7,7 +7,7 @@ const int _customDataMaxBytes = 25 * 1024;
 ///
 /// Use [set] and [remove] to derive an updated value. Keys and the encoded
 /// collection are validated before a value can reach the API.
-final class CustomData implements _InttegroValue {
+final class CustomData implements InttegroValue {
   final Map<String, String> _values;
 
   CustomData([Map<String, String> values = const {}])
@@ -38,7 +38,7 @@ final class CustomData implements _InttegroValue {
 }
 
 /// Immutable merchant-defined JSON values accepted by create operations.
-final class CustomDataInput implements _InttegroValue {
+final class CustomDataInput implements InttegroValue {
   final Map<String, Object?> _values;
 
   CustomDataInput([Map<String, Object?> values = const {}])
@@ -63,7 +63,7 @@ final class CustomDataInput implements _InttegroValue {
 }
 
 /// A custom-data update. A `null` value explicitly removes the corresponding key.
-final class CustomDataPatch implements _InttegroValue {
+final class CustomDataPatch implements InttegroValue {
   final Map<String, Object?> _changes;
 
   CustomDataPatch([Map<String, Object?> changes = const {}])
@@ -90,7 +90,7 @@ final class CustomDataPatch implements _InttegroValue {
 }
 
 /// An intentionally open JSON object whose schema belongs to an external system.
-final class JsonData implements _InttegroValue {
+final class JsonData implements InttegroValue {
   final Map<String, Object?> _values;
 
   JsonData([Map<String, Object?> values = const {}])
@@ -114,7 +114,7 @@ final class JsonData implements _InttegroValue {
 }
 
 /// Immutable metadata attached to a file or upload request.
-final class FileMetadata implements _InttegroValue {
+final class FileMetadata implements InttegroValue {
   final Map<String, String> _values;
 
   FileMetadata([Map<String, String> values = const {}])
@@ -141,7 +141,7 @@ final class FileMetadata implements _InttegroValue {
 }
 
 /// Financial accounts configured to receive payouts in supported currencies.
-final class PayoutDestinations implements _InttegroValue {
+final class PayoutDestinations implements InttegroValue {
   /// Financial account that receives Ghana cedi payouts.
   final String? ghs;
 
@@ -159,7 +159,7 @@ final class PayoutDestinations implements _InttegroValue {
 }
 
 /// Immutable message headers keyed by header name.
-final class MessageHeaders implements _InttegroValue {
+final class MessageHeaders implements InttegroValue {
   final Map<String, String> _values;
   MessageHeaders([Map<String, String> values = const {}])
       : _values = Map.unmodifiable(values);
@@ -182,7 +182,7 @@ final class MessageHeaders implements _InttegroValue {
 }
 
 /// Immutable custom product-dimension details.
-final class ProductDimensionDetails implements _InttegroValue {
+final class ProductDimensionDetails implements InttegroValue {
   final Map<String, String> _values;
   ProductDimensionDetails([Map<String, String> values = const {}])
       : _values = Map.unmodifiable(values);
@@ -206,7 +206,7 @@ final class ProductDimensionDetails implements _InttegroValue {
 }
 
 /// Immutable selected variant values keyed by attribute name.
-final class VariantValues implements _InttegroValue {
+final class VariantValues implements InttegroValue {
   final Map<String, String> _values;
   VariantValues([Map<String, String> values = const {}])
       : _values = Map.unmodifiable(values);
@@ -229,49 +229,55 @@ final class VariantValues implements _InttegroValue {
 }
 
 /// Customer balances keyed by currency.
-final class CustomerBalance implements _InttegroValue {
-  final Map<String, CustomerBalanceValue> _values;
-  CustomerBalance([Map<String, CustomerBalanceValue> values = const {}])
+final class CustomerBalance implements InttegroValue {
+  final Map<String, inttegro_customer.BalanceValue> _values;
+  CustomerBalance(
+      [Map<String, inttegro_customer.BalanceValue> values = const {}])
       : _values = Map.unmodifiable(values);
   factory CustomerBalance.fromJson(Object? json) => CustomerBalance(
         (json as Map).cast<String, Object?>().map(
               (key, value) => MapEntry(
                 key,
-                CustomerBalanceValue.fromJson(
+                inttegro_customer.BalanceValue.fromJson(
                     (value as Map).cast<String, Object?>()),
               ),
             ),
       );
-  Map<String, CustomerBalanceValue> get values => Map.unmodifiable(_values);
-  CustomerBalanceValue? operator [](String currency) => _values[currency];
+  Map<String, inttegro_customer.BalanceValue> get values =>
+      Map.unmodifiable(_values);
+  inttegro_customer.BalanceValue? operator [](String currency) =>
+      _values[currency];
   @override
   Map<String, Object?> toJson() =>
-      _values.map((key, value) => MapEntry(key, _encodeValue(value)));
+      _values.map((key, value) => MapEntry(key, encodeValue(value)));
 }
 
 /// Country capabilities keyed by lowercase country code.
-final class CountrySpecifications implements _InttegroValue {
-  final Map<String, CountrySpecification> _values;
-  CountrySpecifications([Map<String, CountrySpecification> values = const {}])
+final class CountrySpecifications implements InttegroValue {
+  final Map<String, inttegro_country.Specification> _values;
+  CountrySpecifications(
+      [Map<String, inttegro_country.Specification> values = const {}])
       : _values = Map.unmodifiable(values);
   factory CountrySpecifications.fromJson(Object? json) => CountrySpecifications(
         (json as Map).cast<String, Object?>().map(
               (key, value) => MapEntry(
                 key,
-                CountrySpecification.fromJson(
+                inttegro_country.Specification.fromJson(
                     (value as Map).cast<String, Object?>()),
               ),
             ),
       );
-  Map<String, CountrySpecification> get values => Map.unmodifiable(_values);
-  CountrySpecification? operator [](String countryCode) => _values[countryCode];
+  Map<String, inttegro_country.Specification> get values =>
+      Map.unmodifiable(_values);
+  inttegro_country.Specification? operator [](String countryCode) =>
+      _values[countryCode];
   @override
   Map<String, Object?> toJson() =>
-      _values.map((key, value) => MapEntry(key, _encodeValue(value)));
+      _values.map((key, value) => MapEntry(key, encodeValue(value)));
 }
 
 /// A Dosh financial account. The object is intentionally empty in API v1.
-final class DoshAccount implements _InttegroValue {
+final class DoshAccount implements InttegroValue {
   const DoshAccount();
   factory DoshAccount.fromJson(Object? json) => const DoshAccount();
   @override
@@ -279,7 +285,7 @@ final class DoshAccount implements _InttegroValue {
 }
 
 /// The request recorded for a financial-account verification.
-final class FinancialAccountVerificationRequest implements _InttegroValue {
+final class FinancialAccountVerificationRequest implements InttegroValue {
   final String? id;
   final String? mechanism;
   final String? type;
@@ -305,7 +311,7 @@ final class FinancialAccountVerificationRequest implements _InttegroValue {
 }
 
 /// Verification state attached to a financial account.
-final class FinancialAccountVerification implements _InttegroValue {
+final class FinancialAccountVerification implements InttegroValue {
   final DateTime initiatedAt;
   final DateTime? completedAt;
   final FinancialAccountVerificationRequest request;
@@ -317,23 +323,23 @@ final class FinancialAccountVerification implements _InttegroValue {
   factory FinancialAccountVerification.fromJson(Object? value) {
     final json = (value as Map).cast<String, Object?>();
     return FinancialAccountVerification(
-      initiatedAt: _decodeDateTime(json['initiated_at']),
+      initiatedAt: decodeDateTime(json['initiated_at']),
       completedAt: json['completed_at'] == null
           ? null
-          : _decodeDateTime(json['completed_at']),
+          : decodeDateTime(json['completed_at']),
       request: FinancialAccountVerificationRequest.fromJson(json['request']),
     );
   }
   @override
   Map<String, Object?> toJson() => {
-        'initiated_at': _encodeValue(initiatedAt),
-        if (completedAt != null) 'completed_at': _encodeValue(completedAt),
-        'request': _encodeValue(request),
+        'initiated_at': encodeValue(initiatedAt),
+        if (completedAt != null) 'completed_at': encodeValue(completedAt),
+        'request': encodeValue(request),
       };
 }
 
 /// An order's payout destination.
-final class OrderPayoutDestination implements _InttegroValue {
+final class OrderPayoutDestination implements InttegroValue {
   final String financialAccountId;
   const OrderPayoutDestination({required this.financialAccountId});
   factory OrderPayoutDestination.fromJson(Object? value) {
@@ -347,7 +353,7 @@ final class OrderPayoutDestination implements _InttegroValue {
 }
 
 /// Payout settings captured on an order.
-final class OrderPayoutSettings implements _InttegroValue {
+final class OrderPayoutSettings implements InttegroValue {
   final OrderPayoutDestination? destination;
   final bool? enableFx;
   const OrderPayoutSettings({this.destination, this.enableFx});
@@ -362,13 +368,13 @@ final class OrderPayoutSettings implements _InttegroValue {
   }
   @override
   Map<String, Object?> toJson() => {
-        if (destination != null) 'destination': _encodeValue(destination),
+        if (destination != null) 'destination': encodeValue(destination),
         if (enableFx != null) 'enable_fx': enableFx,
       };
 }
 
 /// A delivery address captured on an order.
-final class Address implements _InttegroValue {
+final class Address implements InttegroValue {
   final String name;
   final String phoneNumber;
   final String line1;
@@ -418,7 +424,7 @@ final class Address implements _InttegroValue {
 }
 
 /// Shipping details captured on an order.
-final class Shipping implements _InttegroValue {
+final class Shipping implements InttegroValue {
   final Address address;
   const Shipping({required this.address});
   factory Shipping.fromJson(Object? value) {
@@ -426,7 +432,7 @@ final class Shipping implements _InttegroValue {
     return Shipping(address: Address.fromJson(json['address']));
   }
   @override
-  Map<String, Object?> toJson() => {'address': _encodeValue(address)};
+  Map<String, Object?> toJson() => {'address': encodeValue(address)};
 }
 
 Map<String, String> _validatedCustomData(Map<String, String> values) {
@@ -469,7 +475,7 @@ Object? _normalizeJsonValue(Object? value) {
   if (value == null || value is String || value is bool || value is num) {
     return value;
   }
-  if (value is _InttegroValue) {
+  if (value is InttegroValue) {
     return _normalizeJsonValue(value.toJson());
   }
   if (value is List) {
