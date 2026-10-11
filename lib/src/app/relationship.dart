@@ -1,72 +1,58 @@
 part of '../../app.dart';
 
-/// An application relationship, its participants, policy, and current state.
-///
-/// Exposes [id], [kind], [policyVersion], and [status], among other contract
-/// fields.
+/// A direct placement relationship for a child application.
 final class Relationship implements InttegroValue {
   final String id;
   final RelationshipKind kind;
-  final String policyVersion;
+  final RelationshipParent parent;
   final RelationshipStatus status;
-  final String actorAppId;
-  final String creatorAppId;
-  final String placementParentAppId;
-  final String subjectAppId;
-  final String childAppId;
-  final String childStanding;
-  final RelationshipPolicy relationshipPolicy;
-  final bool retainedCreatorAuthorityExists;
   final DateTime createdAt;
   const Relationship({
     required this.id,
     required this.kind,
-    required this.policyVersion,
+    required this.parent,
     required this.status,
-    required this.actorAppId,
-    required this.creatorAppId,
-    required this.placementParentAppId,
-    required this.subjectAppId,
-    required this.childAppId,
-    required this.childStanding,
-    required this.relationshipPolicy,
-    required this.retainedCreatorAuthorityExists,
     required this.createdAt,
   });
   factory Relationship.fromJson(Map<String, Object?> json) => Relationship(
         id: json["id"] as String,
         kind: RelationshipKind.fromJson(json["kind"]),
-        policyVersion: json["policy_version"] as String,
-        status: RelationshipStatus.fromJson(json["status"]),
-        actorAppId: json["actor_app_id"] as String,
-        creatorAppId: json["creator_app_id"] as String,
-        placementParentAppId: json["placement_parent_app_id"] as String,
-        subjectAppId: json["subject_app_id"] as String,
-        childAppId: json["child_app_id"] as String,
-        childStanding: json["child_standing"] as String,
-        relationshipPolicy: RelationshipPolicy.fromJson(
-          (json["relationship_policy"] as Map).cast<String, Object?>(),
+        parent: RelationshipParent.fromJson(
+          (json["parent"] as Map).cast<String, Object?>(),
         ),
-        retainedCreatorAuthorityExists:
-            json["retained_creator_authority_exists"] as bool,
+        status: RelationshipStatus.fromJson(json["status"]),
         createdAt: decodeDateTime(json["created_at"]),
       );
   @override
   Map<String, Object?> toJson() => {
         "id": encodeValue(id),
         "kind": encodeValue(kind),
-        "policy_version": encodeValue(policyVersion),
+        "parent": encodeValue(parent),
         "status": encodeValue(status),
-        "actor_app_id": encodeValue(actorAppId),
-        "creator_app_id": encodeValue(creatorAppId),
-        "placement_parent_app_id": encodeValue(placementParentAppId),
-        "subject_app_id": encodeValue(subjectAppId),
-        "child_app_id": encodeValue(childAppId),
-        "child_standing": encodeValue(childStanding),
-        "relationship_policy": encodeValue(relationshipPolicy),
-        "retained_creator_authority_exists": encodeValue(
-          retainedCreatorAuthorityExists,
-        ),
         "created_at": encodeValue(createdAt),
+      };
+}
+
+/// Public identity of the application that directly contains another app.
+final class RelationshipParent implements InttegroValue {
+  final String id;
+  final String name;
+  final String? alias;
+  const RelationshipParent({
+    required this.id,
+    required this.name,
+    this.alias,
+  });
+  factory RelationshipParent.fromJson(Map<String, Object?> json) =>
+      RelationshipParent(
+        id: json["id"] as String,
+        name: json["name"] as String,
+        alias: json["alias"] == null ? null : json["alias"] as String,
+      );
+  @override
+  Map<String, Object?> toJson() => {
+        "id": encodeValue(id),
+        "name": encodeValue(name),
+        if (alias != null) "alias": encodeValue(alias),
       };
 }

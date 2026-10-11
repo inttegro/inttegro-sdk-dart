@@ -64,6 +64,7 @@ void main() {
             'id': 'app_test',
             'name': 'Test',
             'created_at': '2026-09-07T00:00:00Z',
+            'capabilities': {},
           },
         }),
         200,

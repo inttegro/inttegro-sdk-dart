@@ -12,6 +12,7 @@ final class Application implements InttegroValue {
   final DateTime createdAt;
   final DateTime? updatedAt;
   final DateTime? archivedAt;
+  final Map<String, Object?> capabilities;
   final SecretKey? secretKey;
   final Relationship? relationship;
   const Application({
@@ -22,6 +23,7 @@ final class Application implements InttegroValue {
     required this.createdAt,
     this.updatedAt,
     this.archivedAt,
+    required this.capabilities,
     this.secretKey,
     this.relationship,
   });
@@ -38,6 +40,8 @@ final class Application implements InttegroValue {
         archivedAt: json["archived_at"] == null
             ? null
             : decodeDateTime(json["archived_at"]),
+        capabilities:
+            (json["capabilities"] as Map).cast<String, Object?>(),
         secretKey: json["secret_key"] == null
             ? null
             : SecretKey.fromJson(
@@ -58,6 +62,7 @@ final class Application implements InttegroValue {
         "created_at": encodeValue(createdAt),
         if (updatedAt != null) "updated_at": encodeValue(updatedAt),
         if (archivedAt != null) "archived_at": encodeValue(archivedAt),
+        "capabilities": encodeValue(capabilities),
         if (secretKey != null) "secret_key": encodeValue(secretKey),
         if (relationship != null) "relationship": encodeValue(relationship),
       };
