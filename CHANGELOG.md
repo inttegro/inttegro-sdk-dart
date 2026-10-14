@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0
+
+- Breaking: replaced the legacy flat payout minimum with typed
+  `limits.amount.min` and `limits.amount.max` values.
+- Breaking: reshaped application placement relationships around a typed parent
+  identity.
+- Added typed payment and payout capability lookup for the authenticated app.
+
 ## 0.9.1
 
 - Breaking: moved contract models into public resource libraries such as

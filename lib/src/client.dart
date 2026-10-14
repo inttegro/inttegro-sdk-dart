@@ -1,6 +1,6 @@
 part of '../inttegro.dart';
 
-const inttegroSdkVersion = '0.1.2';
+const inttegroSdkVersion = '0.10.0';
 
 final class RequestOptions {
   final String? idempotencyKey;
