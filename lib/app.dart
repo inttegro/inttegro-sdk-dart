@@ -13,6 +13,7 @@ part 'src/app/credential_owner.dart';
 part 'src/app/management_role.dart';
 part 'src/app/relationship.dart';
 part 'src/app/relationship_kind.dart';
+part 'src/app/relationship_parent.dart';
 part 'src/app/relationship_policy.dart';
 part 'src/app/relationship_status.dart';
 part 'src/app/secret_key.dart';
