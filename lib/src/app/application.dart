@@ -40,8 +40,7 @@ final class Application implements InttegroValue {
         archivedAt: json["archived_at"] == null
             ? null
             : decodeDateTime(json["archived_at"]),
-        capabilities:
-            (json["capabilities"] as Map).cast<String, Object?>(),
+        capabilities: (json["capabilities"] as Map).cast<String, Object?>(),
         secretKey: json["secret_key"] == null
             ? null
             : SecretKey.fromJson(

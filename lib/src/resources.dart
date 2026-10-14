@@ -53,7 +53,8 @@ final class Apps {
       field: "capabilities",
       authenticated: true,
     );
-    return inttegro_app.Capabilities.fromJson((value as Map).cast<String, Object?>());
+    return inttegro_app.Capabilities.fromJson(
+        (value as Map).cast<String, Object?>());
   }
 
   /// Update the authenticated application

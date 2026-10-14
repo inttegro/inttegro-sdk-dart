@@ -4,14 +4,16 @@ part of '../../app.dart';
 final class CapabilityStatus implements InttegroValue {
   final String value;
   const CapabilityStatus(this.value);
-  factory CapabilityStatus.fromJson(Object? json) => CapabilityStatus(json as String);
+  factory CapabilityStatus.fromJson(Object? json) =>
+      CapabilityStatus(json as String);
   static const enabled = CapabilityStatus('enabled');
   static const restricted = CapabilityStatus('restricted');
   static const pendingReview = CapabilityStatus('pending_review');
   @override
   String toJson() => value;
   @override
-  bool operator ==(Object other) => other is CapabilityStatus && other.value == value;
+  bool operator ==(Object other) =>
+      other is CapabilityStatus && other.value == value;
   @override
   int get hashCode => value.hashCode;
 }
@@ -20,15 +22,18 @@ final class CapabilityStatus implements InttegroValue {
 final class CapabilityStatusReason implements InttegroValue {
   final String value;
   const CapabilityStatusReason(this.value);
-  factory CapabilityStatusReason.fromJson(Object? json) => CapabilityStatusReason(json as String);
+  factory CapabilityStatusReason.fromJson(Object? json) =>
+      CapabilityStatusReason(json as String);
   static const setupIncomplete = CapabilityStatusReason('setup_incomplete');
-  static const accountUnderReview = CapabilityStatusReason('account_under_review');
+  static const accountUnderReview =
+      CapabilityStatusReason('account_under_review');
   static const accountRestricted = CapabilityStatusReason('account_restricted');
   static const accountInactive = CapabilityStatusReason('account_inactive');
   @override
   String toJson() => value;
   @override
-  bool operator ==(Object other) => other is CapabilityStatusReason && other.value == value;
+  bool operator ==(Object other) =>
+      other is CapabilityStatusReason && other.value == value;
   @override
   int get hashCode => value.hashCode;
 }
@@ -38,8 +43,10 @@ final class CapabilityRequirement implements InttegroValue {
   final String code;
   final String description;
   final DateTime? dueAt;
-  const CapabilityRequirement({required this.code, required this.description, this.dueAt});
-  factory CapabilityRequirement.fromJson(Map<String, Object?> json) => CapabilityRequirement(
+  const CapabilityRequirement(
+      {required this.code, required this.description, this.dueAt});
+  factory CapabilityRequirement.fromJson(Map<String, Object?> json) =>
+      CapabilityRequirement(
         code: json['code'] as String,
         description: json['description'] as String,
         dueAt: json['due_at'] == null ? null : decodeDateTime(json['due_at']),
@@ -56,9 +63,11 @@ final class CapabilityRequirement implements InttegroValue {
 final class CapabilityRequirements implements InttegroValue {
   final List<CapabilityRequirement> currentlyDue;
   const CapabilityRequirements({required this.currentlyDue});
-  factory CapabilityRequirements.fromJson(Map<String, Object?> json) => CapabilityRequirements(
+  factory CapabilityRequirements.fromJson(Map<String, Object?> json) =>
+      CapabilityRequirements(
         currentlyDue: (json['currently_due'] as List)
-            .map((value) => CapabilityRequirement.fromJson((value as Map).cast<String, Object?>()))
+            .map((value) => CapabilityRequirement.fromJson(
+                (value as Map).cast<String, Object?>()))
             .toList(growable: false),
       );
   @override
@@ -80,10 +89,13 @@ final class Capability implements InttegroValue {
   factory Capability.fromJson(Map<String, Object?> json) => Capability(
         status: CapabilityStatus.fromJson(json['status']),
         statusChangedAt: decodeDateTime(json['status_changed_at']),
-        statusReason: json['status_reason'] == null ? null : CapabilityStatusReason.fromJson(json['status_reason']),
+        statusReason: json['status_reason'] == null
+            ? null
+            : CapabilityStatusReason.fromJson(json['status_reason']),
         requirements: json['requirements'] == null
             ? null
-            : CapabilityRequirements.fromJson((json['requirements'] as Map).cast<String, Object?>()),
+            : CapabilityRequirements.fromJson(
+                (json['requirements'] as Map).cast<String, Object?>()),
       );
   @override
   Map<String, Object?> toJson() => {
@@ -100,9 +112,12 @@ final class Capabilities implements InttegroValue {
   final Capability payouts;
   const Capabilities({required this.payments, required this.payouts});
   factory Capabilities.fromJson(Map<String, Object?> json) => Capabilities(
-        payments: Capability.fromJson((json['payments'] as Map).cast<String, Object?>()),
-        payouts: Capability.fromJson((json['payouts'] as Map).cast<String, Object?>()),
+        payments: Capability.fromJson(
+            (json['payments'] as Map).cast<String, Object?>()),
+        payouts: Capability.fromJson(
+            (json['payouts'] as Map).cast<String, Object?>()),
       );
   @override
-  Map<String, Object?> toJson() => {'payments': encodeValue(payments), 'payouts': encodeValue(payouts)};
+  Map<String, Object?> toJson() =>
+      {'payments': encodeValue(payments), 'payouts': encodeValue(payouts)};
 }
