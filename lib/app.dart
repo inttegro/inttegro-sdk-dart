@@ -6,6 +6,7 @@ library;
 import 'src/serialization.dart';
 
 part 'src/app/application.dart';
+part 'src/app/capabilities.dart';
 part 'src/app/create_request.dart';
 part 'src/app/create_request_relationship_policy.dart';
 part 'src/app/credential_owner.dart';

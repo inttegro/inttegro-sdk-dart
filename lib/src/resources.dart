@@ -40,6 +40,22 @@ final class Apps {
         (value as Map).cast<String, Object?>());
   }
 
+  /// Retrieve the authenticated application's payment and payout capabilities
+  Future<inttegro_app.Capabilities> capabilities({
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/apps/capabilities",
+      const <String, Object?>{},
+      options,
+      "apps.capabilities",
+      field: "capabilities",
+      authenticated: true,
+    );
+    return inttegro_app.Capabilities.fromJson((value as Map).cast<String, Object?>());
+  }
+
   /// Update the authenticated application
   Future<inttegro_app.Application> update(
     inttegro_app.UpdateRequest request, {
