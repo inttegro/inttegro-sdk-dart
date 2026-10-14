@@ -308,10 +308,18 @@ void main() {
       'destinations': {'ghs': 'fa_123'},
       'fx_enabled': true,
       'id': 'settings_123',
+      'limits': {
+        'amount': {
+          'min': {'currency': 'ghs', 'value': 25000},
+          'max': {'currency': 'ghs', 'value': 9999999},
+        },
+      },
     });
 
     expect(settings.destinations?.ghs, 'fa_123');
     expect(settings.fxEnabled, isTrue);
+    expect(settings.limits.amount.min.value, 25000);
+    expect(settings.limits.amount.max.value, 9999999);
     expect(settings.toJson()['destinations'], {'ghs': 'fa_123'});
   });
 
