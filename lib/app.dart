@@ -7,6 +7,11 @@ import 'src/serialization.dart';
 
 part 'src/app/application.dart';
 part 'src/app/capabilities.dart';
+part 'src/app/capability.dart';
+part 'src/app/capability_requirement.dart';
+part 'src/app/capability_requirements.dart';
+part 'src/app/capability_status.dart';
+part 'src/app/capability_status_reason.dart';
 part 'src/app/create_request.dart';
 part 'src/app/create_request_relationship_policy.dart';
 part 'src/app/credential_owner.dart';
