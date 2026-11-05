@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1
+
+- Corrected release formatting for the 0.11 release line.
+
 ## 0.11.0
 
 - Added typed private-beta children-policy lookup and operating-policy create,

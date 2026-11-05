@@ -196,9 +196,14 @@ void main() {
     );
 
     expect(childrenPolicy, isA<inttegro_children_policy.ChildrenPolicy>());
-    expect(childrenPolicy.capabilities.payouts!.btAgingSpec!.single.tPlus, '0h');
-    expect(created.capabilities.payouts!.btAgingSpec!.publicId,
-        'bt_aging_spec_immediate');
+    expect(
+      childrenPolicy.capabilities.payouts!.btAgingSpec!.single.tPlus,
+      '0h',
+    );
+    expect(
+      created.capabilities.payouts!.btAgingSpec!.publicId,
+      'bt_aging_spec_immediate',
+    );
     expect(paths, [
       '/children_policies/lookup',
       '/operating_policies/create',
