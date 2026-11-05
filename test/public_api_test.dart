@@ -122,7 +122,6 @@ void main() {
           ? {
               'children_policy': {
                 'id': 'cp_1',
-                'owner_application_id': 'app_1',
                 'version': 1,
                 'active_version': 1,
                 'name': 'Default',

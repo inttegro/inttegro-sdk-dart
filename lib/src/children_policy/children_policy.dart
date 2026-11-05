@@ -3,7 +3,6 @@ part of '../../children_policy.dart';
 /// Latest active children policy assigned to an application.
 final class ChildrenPolicy implements InttegroValue {
   final String id;
-  final String ownerApplicationId;
   final int version;
   final int activeVersion;
   final String name;
@@ -14,7 +13,6 @@ final class ChildrenPolicy implements InttegroValue {
   final DateTime versionCreatedAt;
   const ChildrenPolicy({
     required this.id,
-    required this.ownerApplicationId,
     required this.version,
     required this.activeVersion,
     required this.name,
@@ -26,7 +24,6 @@ final class ChildrenPolicy implements InttegroValue {
   });
   factory ChildrenPolicy.fromJson(Map<String, Object?> json) => ChildrenPolicy(
         id: json['id'] as String,
-        ownerApplicationId: json['owner_application_id'] as String,
         version: json['version'] as int,
         activeVersion: json['active_version'] as int,
         name: json['name'] as String,
@@ -41,7 +38,6 @@ final class ChildrenPolicy implements InttegroValue {
   @override
   Map<String, Object?> toJson() => {
         'id': id,
-        'owner_application_id': ownerApplicationId,
         'version': version,
         'active_version': activeVersion,
         'name': name,
