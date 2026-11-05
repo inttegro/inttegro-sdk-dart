@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:inttegro/inttegro.dart';
+import 'package:inttegro/app.dart' as inttegro_app;
 import 'package:inttegro/balance_transaction.dart'
     as inttegro_balance_transaction;
 import 'package:inttegro/customer.dart' as inttegro_customer;
+import 'package:inttegro/children_policy.dart' as inttegro_children_policy;
 import 'package:inttegro/financial_account.dart' as financial_account;
 import 'package:inttegro/money.dart' as inttegro_money;
 import 'package:inttegro/otp.dart' as inttegro_otp;
+import 'package:inttegro/operating_policy.dart' as inttegro_operating_policy;
 import 'package:inttegro/payment.dart' as inttegro_payment;
 import 'package:inttegro/payment_method.dart' as inttegro_payment_method;
 import 'package:inttegro/payout.dart' as inttegro_payout;
@@ -42,12 +45,46 @@ void main() {
   test('client exposes typed resources', () {
     final client = Client(apiKey: 'sk_test_example');
     expect(client.orders, isA<Orders>());
+    expect(client.childrenPolicies, isA<ChildrenPolicies>());
+    expect(client.operatingPolicies, isA<OperatingPolicies>());
     expect(
         const inttegro_money.AmountParams(
                 currency: inttegro_money.Currency.ghs, value: 5000)
             .value,
         5000);
     client.close();
+  });
+
+  test('app requests accept named and inline operating policies', () {
+    const named = inttegro_app.CreateRequest(
+      name: 'Child',
+      operatingPolicy: inttegro_operating_policy.Selection.byId('op_1'),
+    );
+    const inline = inttegro_app.UpdateRequest(
+      operatingPolicy: inttegro_operating_policy.Selection.inline(
+        inttegro_operating_policy.CapabilitiesInput(
+          payouts: inttegro_operating_policy.PayoutsCapabilitiesInput(
+            enabled: false,
+            btAgingSpec: inttegro_operating_policy.BTAgingSpecReference(
+              id: 'bt_aging_spec_immediate',
+            ),
+          ),
+        ),
+      ),
+    );
+
+    expect(named.toJson()['operating_policy'], {'id': 'op_1'});
+    expect(
+      inline.toJson()['operating_policy'],
+      {
+        'capabilities': {
+          'payouts': {
+            'enabled': false,
+            'bt_aging_spec': {'id': 'bt_aging_spec_immediate'},
+          },
+        },
+      },
+    );
   });
 
   test('OTP purposes preserve closed wire values', () {
@@ -74,6 +111,100 @@ void main() {
     final client = Client(apiKey: 'sk_test_example', httpClient: httpClient);
     final app = await client.apps.lookup();
     expect(app.id, 'app_test');
+    client.close();
+  });
+
+  test('policy resources expose typed requests and responses', () async {
+    final paths = <String>[];
+    final httpClient = MockClient((request) async {
+      paths.add(request.url.path);
+      final body = request.url.path == '/children_policies/lookup'
+          ? {
+              'children_policy': {
+                'id': 'cp_1',
+                'owner_application_id': 'app_1',
+                'version': 1,
+                'active_version': 1,
+                'name': 'Default',
+                'capabilities': {
+                  'payouts': {
+                    'enabled': [false],
+                    'bt_aging_spec': [
+                      {
+                        'public_id': 'bt_aging_spec_immediate',
+                        't_plus': '0h',
+                      }
+                    ],
+                  },
+                },
+                'created_at': '2026-11-05T10:00:00Z',
+                'updated_at': '2026-11-05T10:00:00Z',
+                'version_created_at': '2026-11-05T10:00:00Z',
+              },
+            }
+          : {
+              'operating_policy': {
+                'id': 'op_1',
+                'version': 1,
+                'active_version': 1,
+                'name': 'Retail',
+                'capabilities': {
+                  'payouts': {
+                    'enabled': false,
+                    'bt_aging_spec': {
+                      'public_id': 'bt_aging_spec_immediate',
+                      't_plus': '0h',
+                    },
+                  },
+                },
+                'children_policy_id': 'cp_1',
+                'children_policy_version': 1,
+                'created_at': '2026-11-05T10:00:00Z',
+                'updated_at': '2026-11-05T10:00:00Z',
+                'version_created_at': '2026-11-05T10:00:00Z',
+              },
+            };
+      return http.Response(jsonEncode(body), 200);
+    });
+    final client = Client(apiKey: 'sk_test_example', httpClient: httpClient);
+    final childrenPolicy = await client.childrenPolicies.lookup();
+    final capabilities = inttegro_operating_policy.CapabilitiesInput(
+      payouts: const inttegro_operating_policy.PayoutsCapabilitiesInput(
+        enabled: false,
+        btAgingSpec: inttegro_operating_policy.BTAgingSpecReference(
+          id: 'bt_aging_spec_immediate',
+        ),
+      ),
+    );
+    final created = await client.operatingPolicies.create(
+      inttegro_operating_policy.CreateRequest(
+        name: 'Retail',
+        capabilities: capabilities,
+      ),
+    );
+    await client.operatingPolicies.lookup(
+      const inttegro_operating_policy.LookupRequest(
+        operatingPolicyId: 'op_1',
+      ),
+    );
+    await client.operatingPolicies.update(
+      inttegro_operating_policy.UpdateRequest(
+        operatingPolicyId: 'op_1',
+        expectedVersion: 1,
+        capabilities: capabilities,
+      ),
+    );
+
+    expect(childrenPolicy, isA<inttegro_children_policy.ChildrenPolicy>());
+    expect(childrenPolicy.capabilities.payouts!.btAgingSpec!.single.tPlus, '0h');
+    expect(created.capabilities.payouts!.btAgingSpec!.publicId,
+        'bt_aging_spec_immediate');
+    expect(paths, [
+      '/children_policies/lookup',
+      '/operating_policies/create',
+      '/operating_policies/lookup',
+      '/operating_policies/update',
+    ]);
     client.close();
   });
 

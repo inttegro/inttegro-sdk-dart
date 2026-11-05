@@ -4,6 +4,7 @@
 library;
 
 import 'src/serialization.dart';
+import 'operating_policy.dart' as operating_policy;
 
 part 'src/app/application.dart';
 part 'src/app/capabilities.dart';

@@ -1,6 +1,6 @@
 part of '../inttegro.dart';
 
-const inttegroSdkVersion = '0.10.0';
+const inttegroSdkVersion = '0.11.0';
 
 final class RequestOptions {
   final String? idempotencyKey;
@@ -240,6 +240,7 @@ final class Client {
   late final Broadcasts broadcasts = Broadcasts._(this);
   late final Chimes chimes = Chimes._(this);
   late final Customers customers = Customers._(this);
+  late final ChildrenPolicies childrenPolicies = ChildrenPolicies._(this);
   late final FileLinks fileLinks = FileLinks._(this);
   late final FileReferences fileReferences = FileReferences._(this);
   late final Files files = Files._(this);
@@ -247,6 +248,7 @@ final class Client {
   late final Keys keys = Keys._(this);
   late final MessageTemplates messageTemplates = MessageTemplates._(this);
   late final Orders orders = Orders._(this);
+  late final OperatingPolicies operatingPolicies = OperatingPolicies._(this);
   late final Otp otp = Otp._(this);
   late final PaymentMethods paymentMethods = PaymentMethods._(this);
   late final Payouts payouts = Payouts._(this);

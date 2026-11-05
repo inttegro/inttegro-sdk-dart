@@ -10,6 +10,7 @@ final class CreateRequest implements InttegroValue {
   final String? legalEntityType;
   final String? placementParentApplicationId;
   final CreateRequestRelationshipPolicy? relationshipPolicy;
+  final operating_policy.Selection? operatingPolicy;
   final String name;
   const CreateRequest({
     this.alias,
@@ -17,6 +18,7 @@ final class CreateRequest implements InttegroValue {
     this.legalEntityType,
     this.placementParentApplicationId,
     this.relationshipPolicy,
+    this.operatingPolicy,
     required this.name,
   });
   factory CreateRequest.fromJson(Map<String, Object?> json) => CreateRequest(
@@ -35,6 +37,11 @@ final class CreateRequest implements InttegroValue {
             : CreateRequestRelationshipPolicy.fromJson(
                 (json["relationship_policy"] as Map).cast<String, Object?>(),
               ),
+        operatingPolicy: json["operating_policy"] == null
+            ? null
+            : operating_policy.Selection.fromJson(
+                (json["operating_policy"] as Map).cast<String, Object?>(),
+              ),
         name: json["name"] as String,
       );
   @override
@@ -49,6 +56,8 @@ final class CreateRequest implements InttegroValue {
           ),
         if (relationshipPolicy != null)
           "relationship_policy": encodeValue(relationshipPolicy),
+        if (operatingPolicy != null)
+          "operating_policy": encodeValue(operatingPolicy),
         "name": encodeValue(name),
       };
 }

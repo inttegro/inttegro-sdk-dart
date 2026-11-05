@@ -15,6 +15,7 @@ final class Application implements InttegroValue {
   final Map<String, Object?> capabilities;
   final SecretKey? secretKey;
   final Relationship? relationship;
+  final operating_policy.ApplicationPolicy? operatingPolicy;
   const Application({
     required this.id,
     required this.name,
@@ -26,6 +27,7 @@ final class Application implements InttegroValue {
     required this.capabilities,
     this.secretKey,
     this.relationship,
+    this.operatingPolicy,
   });
   factory Application.fromJson(Map<String, Object?> json) => Application(
         id: json["id"] as String,
@@ -51,6 +53,11 @@ final class Application implements InttegroValue {
             : Relationship.fromJson(
                 (json["relationship"] as Map).cast<String, Object?>(),
               ),
+        operatingPolicy: json["operating_policy"] == null
+            ? null
+            : operating_policy.ApplicationPolicy.fromJson(
+                (json["operating_policy"] as Map).cast<String, Object?>(),
+              ),
       );
   @override
   Map<String, Object?> toJson() => {
@@ -64,5 +71,7 @@ final class Application implements InttegroValue {
         "capabilities": encodeValue(capabilities),
         if (secretKey != null) "secret_key": encodeValue(secretKey),
         if (relationship != null) "relationship": encodeValue(relationship),
+        if (operatingPolicy != null)
+          "operating_policy": encodeValue(operatingPolicy),
       };
 }

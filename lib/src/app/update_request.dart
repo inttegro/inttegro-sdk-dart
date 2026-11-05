@@ -8,11 +8,13 @@ final class UpdateRequest implements InttegroValue {
   final String? alias;
   final String? description;
   final String? legalEntityType;
+  final operating_policy.Selection? operatingPolicy;
   const UpdateRequest({
     this.name,
     this.alias,
     this.description,
     this.legalEntityType,
+    this.operatingPolicy,
   });
   factory UpdateRequest.fromJson(Map<String, Object?> json) => UpdateRequest(
         name: json["name"] == null ? null : json["name"] as String,
@@ -22,6 +24,11 @@ final class UpdateRequest implements InttegroValue {
         legalEntityType: json["legal_entity_type"] == null
             ? null
             : json["legal_entity_type"] as String,
+        operatingPolicy: json["operating_policy"] == null
+            ? null
+            : operating_policy.Selection.fromJson(
+                (json["operating_policy"] as Map).cast<String, Object?>(),
+              ),
       );
   @override
   Map<String, Object?> toJson() => {
@@ -30,5 +37,7 @@ final class UpdateRequest implements InttegroValue {
         if (description != null) "description": encodeValue(description),
         if (legalEntityType != null)
           "legal_entity_type": encodeValue(legalEntityType),
+        if (operatingPolicy != null)
+          "operating_policy": encodeValue(operatingPolicy),
       };
 }

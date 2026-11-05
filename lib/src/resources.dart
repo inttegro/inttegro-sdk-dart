@@ -76,6 +76,93 @@ final class Apps {
   }
 }
 
+/// Operations for active children policies.
+final class ChildrenPolicies {
+  final Client _client;
+  const ChildrenPolicies._(this._client);
+
+  /// Retrieve the authenticated application's latest active children policy.
+  Future<inttegro_children_policy.ChildrenPolicy> lookup({
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/children_policies/lookup",
+      const <String, Object?>{},
+      options,
+      "children_policies.lookup",
+      field: "children_policy",
+      authenticated: true,
+    );
+    return inttegro_children_policy.ChildrenPolicy.fromJson(
+      (value as Map).cast<String, Object?>(),
+    );
+  }
+}
+
+/// Operations for reusable operating policies.
+final class OperatingPolicies {
+  final Client _client;
+  const OperatingPolicies._(this._client);
+
+  /// Create the first immutable operating-policy version.
+  Future<inttegro_operating_policy.OperatingPolicy> create(
+    inttegro_operating_policy.CreateRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/operating_policies/create",
+      request.toJson(),
+      options,
+      "operating_policies.create",
+      field: "operating_policy",
+      authenticated: true,
+    );
+    return inttegro_operating_policy.OperatingPolicy.fromJson(
+      (value as Map).cast<String, Object?>(),
+    );
+  }
+
+  /// Retrieve the latest active operating-policy version.
+  Future<inttegro_operating_policy.OperatingPolicy> lookup(
+    inttegro_operating_policy.LookupRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/operating_policies/lookup",
+      request.toJson(),
+      options,
+      "operating_policies.lookup",
+      field: "operating_policy",
+      authenticated: true,
+    );
+    return inttegro_operating_policy.OperatingPolicy.fromJson(
+      (value as Map).cast<String, Object?>(),
+    );
+  }
+
+  /// Create and activate a new immutable operating-policy version.
+  Future<inttegro_operating_policy.OperatingPolicy> update(
+    inttegro_operating_policy.UpdateRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/operating_policies/update",
+      request.toJson(),
+      options,
+      "operating_policies.update",
+      field: "operating_policy",
+      authenticated: true,
+    );
+    return inttegro_operating_policy.OperatingPolicy.fromJson(
+      (value as Map).cast<String, Object?>(),
+    );
+  }
+}
+
 /// Operations for Inttegro balance transactions.
 final class BalanceTransactions {
   final Client _client;
