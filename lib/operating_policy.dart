@@ -21,4 +21,6 @@ part 'src/operating_policy/application_policy.dart';
 part 'src/operating_policy/operating_policy.dart';
 part 'src/operating_policy/create_request.dart';
 part 'src/operating_policy/lookup_request.dart';
+part 'src/operating_policy/page_request.dart';
+part 'src/operating_policy/page.dart';
 part 'src/operating_policy/update_request.dart';

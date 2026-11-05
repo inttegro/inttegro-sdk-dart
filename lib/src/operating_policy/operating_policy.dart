@@ -1,6 +1,6 @@
 part of '../../operating_policy.dart';
 
-/// Latest active immutable version of a reusable operating policy.
+/// One immutable version of a reusable operating policy.
 final class OperatingPolicy implements InttegroValue {
   final String id;
   final int version;

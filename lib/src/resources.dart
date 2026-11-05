@@ -81,20 +81,43 @@ final class ChildrenPolicies {
   final Client _client;
   const ChildrenPolicies._(this._client);
 
-  /// Retrieve the authenticated application's latest active children policy.
+  /// Retrieve the latest or an exact children-policy version.
   Future<inttegro_children_policy.ChildrenPolicy> lookup({
+    int? version,
     RequestOptions options = const RequestOptions(),
   }) async {
+    if (version != null && version < 1) {
+      throw ArgumentError.value(version, 'version', 'must be at least 1');
+    }
     final value = await _client._request(
       "POST",
       "/children_policies/lookup",
-      const <String, Object?>{},
+      <String, Object?>{if (version != null) 'version': version},
       options,
       "children_policies.lookup",
       field: "children_policy",
       authenticated: true,
     );
     return inttegro_children_policy.ChildrenPolicy.fromJson(
+      (value as Map).cast<String, Object?>(),
+    );
+  }
+
+  /// List immutable children-policy versions, newest first.
+  Future<inttegro_children_policy.Page> page(
+    inttegro_children_policy.PageRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/children_policies/page",
+      request.toJson(),
+      options,
+      "children_policies.page",
+      field: "page",
+      authenticated: true,
+    );
+    return inttegro_children_policy.Page.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }
@@ -124,11 +147,21 @@ final class OperatingPolicies {
     );
   }
 
-  /// Retrieve the latest active operating-policy version.
+  /// Retrieve the latest or an exact operating-policy version.
   Future<inttegro_operating_policy.OperatingPolicy> lookup(
     inttegro_operating_policy.LookupRequest request, {
     RequestOptions options = const RequestOptions(),
   }) async {
+    if (request.operatingPolicyId.trim().isEmpty) {
+      throw ArgumentError.value(
+        request.operatingPolicyId,
+        'operatingPolicyId',
+        'must not be empty',
+      );
+    }
+    if (request.version != null && request.version! < 1) {
+      throw ArgumentError.value(request.version, 'version', 'must be at least 1');
+    }
     final value = await _client._request(
       "POST",
       "/operating_policies/lookup",
@@ -139,6 +172,32 @@ final class OperatingPolicies {
       authenticated: true,
     );
     return inttegro_operating_policy.OperatingPolicy.fromJson(
+      (value as Map).cast<String, Object?>(),
+    );
+  }
+
+  /// List immutable versions of one operating policy, newest first.
+  Future<inttegro_operating_policy.Page> page(
+    inttegro_operating_policy.PageRequest request, {
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    if (request.operatingPolicyId.trim().isEmpty) {
+      throw ArgumentError.value(
+        request.operatingPolicyId,
+        'operatingPolicyId',
+        'must not be empty',
+      );
+    }
+    final value = await _client._request(
+      "POST",
+      "/operating_policies/page",
+      request.toJson(),
+      options,
+      "operating_policies.page",
+      field: "page",
+      authenticated: true,
+    );
+    return inttegro_operating_policy.Page.fromJson(
       (value as Map).cast<String, Object?>(),
     );
   }

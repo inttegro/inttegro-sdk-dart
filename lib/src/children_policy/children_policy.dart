@@ -1,6 +1,6 @@
 part of '../../children_policy.dart';
 
-/// Latest active children policy assigned to an application.
+/// One immutable children-policy version assigned to an application.
 final class ChildrenPolicy implements InttegroValue {
   final String id;
   final int version;
