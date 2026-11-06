@@ -10,10 +10,10 @@ import 'package:test/test.dart';
 void main() {
   test('policy lookup omits or sends exact version and pages decode', () async {
     final bodies = <String, List<Map<String, Object?>>>{};
-    final httpClient = MockClient((request) async {
-      bodies.putIfAbsent(request.url.path, () => []).add(
-        (jsonDecode(request.body) as Map).cast<String, Object?>(),
-      );
+      final httpClient = MockClient((request) async {
+        bodies.putIfAbsent(request.url.path, () => []).add(
+            (jsonDecode(request.body) as Map).cast<String, Object?>(),
+          );
       final page = request.url.path.endsWith('/page');
       final children = request.url.path.startsWith('/children_policies');
       final policy = children ? childrenPolicy(2) : operatingPolicy(2);

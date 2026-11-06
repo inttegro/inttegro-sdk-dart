@@ -160,7 +160,8 @@ final class OperatingPolicies {
       );
     }
     if (request.version != null && request.version! < 1) {
-      throw ArgumentError.value(request.version, 'version', 'must be at least 1');
+      throw ArgumentError.value(
+          request.version, 'version', 'must be at least 1');
     }
     final value = await _client._request(
       "POST",
