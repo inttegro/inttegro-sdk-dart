@@ -8,6 +8,7 @@ import 'inttegro.dart' as core;
 import 'money.dart' as inttegro_money;
 
 part 'src/payout/balance_transaction.dart';
+part 'src/payout/balance_transaction_status.dart';
 part 'src/payout/amount_limits.dart';
 part 'src/payout/cancel_request.dart';
 part 'src/payout/disable_automatic_request.dart';

@@ -2,13 +2,13 @@ part of '../../children_policy.dart';
 
 /// Platform-owned balance-transaction aging option.
 final class BTAgingSpec implements InttegroValue {
-  final String publicId;
+  final String id;
   final String tPlus;
-  const BTAgingSpec({required this.publicId, required this.tPlus});
+  const BTAgingSpec({required this.id, required this.tPlus});
   factory BTAgingSpec.fromJson(Map<String, Object?> json) => BTAgingSpec(
-        publicId: json['public_id'] as String,
+        id: json['id'] as String,
         tPlus: json['t_plus'] as String,
       );
   @override
-  Map<String, Object?> toJson() => {'public_id': publicId, 't_plus': tPlus};
+  Map<String, Object?> toJson() => {'id': id, 't_plus': tPlus};
 }

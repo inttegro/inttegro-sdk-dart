@@ -13,6 +13,7 @@ final class Application implements InttegroValue {
   final DateTime? updatedAt;
   final DateTime? archivedAt;
   final Map<String, Object?> capabilities;
+  final children_policy.ChildrenPolicy? childrenPolicy;
   final SecretKey? secretKey;
   final Relationship? relationship;
   final operating_policy.ApplicationPolicy? operatingPolicy;
@@ -25,6 +26,7 @@ final class Application implements InttegroValue {
     this.updatedAt,
     this.archivedAt,
     required this.capabilities,
+    this.childrenPolicy,
     this.secretKey,
     this.relationship,
     this.operatingPolicy,
@@ -43,6 +45,11 @@ final class Application implements InttegroValue {
             ? null
             : decodeDateTime(json["archived_at"]),
         capabilities: (json["capabilities"] as Map).cast<String, Object?>(),
+        childrenPolicy: json["children_policy"] == null
+            ? null
+            : children_policy.ChildrenPolicy.fromJson(
+                (json["children_policy"] as Map).cast<String, Object?>(),
+              ),
         secretKey: json["secret_key"] == null
             ? null
             : SecretKey.fromJson(
@@ -69,6 +76,8 @@ final class Application implements InttegroValue {
         if (updatedAt != null) "updated_at": encodeValue(updatedAt),
         if (archivedAt != null) "archived_at": encodeValue(archivedAt),
         "capabilities": encodeValue(capabilities),
+        if (childrenPolicy != null)
+          "children_policy": encodeValue(childrenPolicy),
         if (secretKey != null) "secret_key": encodeValue(secretKey),
         if (relationship != null) "relationship": encodeValue(relationship),
         if (operatingPolicy != null)

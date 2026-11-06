@@ -91,6 +91,21 @@ void main() {
     expect(inttegro_otp.Purpose.signIn.toJson(), 'sign_in');
   });
 
+  test('payout contributions expose their typed allocation status', () {
+    final contribution = inttegro_payout.BalanceTransaction.fromJson({
+      'allocated_amount': {'currency': 'ghs', 'value': 12500},
+      'amount': {'currency': 'ghs', 'value': 20000},
+      'id': 'bt_123',
+      'status': 'reserved',
+    });
+
+    expect(
+      contribution.status,
+      inttegro_payout.BalanceTransactionStatus.reserved,
+    );
+    expect(contribution.toJson()['status'], 'reserved');
+  });
+
   test('wire envelopes are unwrapped into domain values', () async {
     final httpClient = MockClient((request) async {
       expect(request.url.path, '/apps/lookup');
@@ -130,7 +145,7 @@ void main() {
                     'enabled': [false],
                     'bt_aging_spec': [
                       {
-                        'public_id': 'bt_aging_spec_immediate',
+                        'id': 'bt_aging_spec_immediate',
                         't_plus': '0h',
                       }
                     ],
@@ -151,7 +166,7 @@ void main() {
                   'payouts': {
                     'enabled': false,
                     'bt_aging_spec': {
-                      'public_id': 'bt_aging_spec_immediate',
+                      'id': 'bt_aging_spec_immediate',
                       't_plus': '0h',
                     },
                   },
@@ -200,7 +215,7 @@ void main() {
       '0h',
     );
     expect(
-      created.capabilities.payouts!.btAgingSpec!.publicId,
+      created.capabilities.payouts!.btAgingSpec!.id,
       'bt_aging_spec_immediate',
     );
     expect(paths, [
