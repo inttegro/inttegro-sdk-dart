@@ -8,7 +8,7 @@ final class Catalog implements InttegroValue {
   final String? label;
   final String? about;
   final bool active;
-  final inttegro_money.Amount nominal;
+  final inttegro_money.Amount fixedAmount;
   final String? productId;
   final EmbeddedProduct? product;
   final DateTime createdAt;
@@ -19,7 +19,7 @@ final class Catalog implements InttegroValue {
     this.label,
     this.about,
     required this.active,
-    required this.nominal,
+    required this.fixedAmount,
     this.productId,
     this.product,
     required this.createdAt,
@@ -31,8 +31,8 @@ final class Catalog implements InttegroValue {
         label: json["label"] == null ? null : json["label"] as String,
         about: json["about"] == null ? null : json["about"] as String,
         active: json["active"] as bool,
-        nominal: inttegro_money.Amount.fromJson(
-            (json["nominal"] as Map).cast<String, Object?>()),
+        fixedAmount: inttegro_money.Amount.fromJson(
+            (json["fixed_amount"] as Map).cast<String, Object?>()),
         productId:
             json["product_id"] == null ? null : json["product_id"] as String,
         product: json["product"] == null
@@ -54,7 +54,7 @@ final class Catalog implements InttegroValue {
         if (label != null) "label": encodeValue(label),
         if (about != null) "about": encodeValue(about),
         "active": encodeValue(active),
-        "nominal": encodeValue(nominal),
+        "fixed_amount": encodeValue(fixedAmount),
         if (productId != null) "product_id": encodeValue(productId),
         if (product != null) "product": encodeValue(product),
         "created_at": encodeValue(createdAt),
