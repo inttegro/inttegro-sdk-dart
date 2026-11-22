@@ -12,7 +12,7 @@ final class Application implements InttegroValue {
   final DateTime createdAt;
   final DateTime? updatedAt;
   final DateTime? archivedAt;
-  final Map<String, Object?> capabilities;
+  final CapabilityProjection capabilities;
   final children_policy.ChildrenPolicy? childrenPolicy;
   final SecretKey? secretKey;
   final Relationship? relationship;
@@ -44,7 +44,9 @@ final class Application implements InttegroValue {
         archivedAt: json["archived_at"] == null
             ? null
             : decodeDateTime(json["archived_at"]),
-        capabilities: (json["capabilities"] as Map).cast<String, Object?>(),
+        capabilities: CapabilityProjection.fromJson(
+          (json["capabilities"] as Map).cast<String, Object?>(),
+        ),
         childrenPolicy: json["children_policy"] == null
             ? null
             : children_policy.ChildrenPolicy.fromJson(

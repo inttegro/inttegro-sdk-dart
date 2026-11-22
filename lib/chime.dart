@@ -11,7 +11,6 @@ import 'shared.dart' as inttegro_shared;
 part 'src/chime/cancel_schedule_request.dart';
 part 'src/chime/chime.dart';
 part 'src/chime/email_address_input.dart';
-part 'src/chime/email_event.dart';
 part 'src/chime/email_mailbox.dart';
 part 'src/chime/email_mailbox_input.dart';
 part 'src/chime/email_message.dart';
