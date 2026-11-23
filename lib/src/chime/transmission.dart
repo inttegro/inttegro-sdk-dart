@@ -39,9 +39,8 @@ final class Transmission implements InttegroValue {
             : decodeDateTime(json['failed_at']),
         initializedAt: decodeDateTime(json['initialized_at']),
         mechanism: Transport.fromJson(json['mechanism']),
-        sentAt: json['sent_at'] == null
-            ? null
-            : decodeDateTime(json['sent_at']),
+        sentAt:
+            json['sent_at'] == null ? null : decodeDateTime(json['sent_at']),
         sentVia: json['sent_via'] == null
             ? null
             : Transport.fromJson(json['sent_via']),
