@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.13.0
+
+- Breaking: removed provider-specific Chime delivery-event fields and the
+  internal email-event ingestion model from the public SDK.
+- Breaking: removed legacy OTP gateway selection and private document-delivery
+  failure details.
+- Replaced known dynamic response shapes with typed application capability,
+  document-delivery, and financial-account models.
+- Removed the nominal `price` response field where the API does not return it.
+- Added typed lookup of effective, non-secret Chime delivery settings.
+
 ## 0.12.0
 
 - Breaking: renamed the children-policy and operating-policy balance-transaction

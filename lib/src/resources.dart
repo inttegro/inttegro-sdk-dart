@@ -388,6 +388,24 @@ final class Chimes {
     return inttegro_chime.Page.fromJson((value as Map).cast<String, Object?>());
   }
 
+  /// Retrieve the effective non-secret SMS and email delivery defaults.
+  Future<inttegro_chime.Settings> settings({
+    RequestOptions options = const RequestOptions(),
+  }) async {
+    final value = await _client._request(
+      "POST",
+      "/chimes/settings",
+      const <String, Object?>{},
+      options,
+      "chimes.settings",
+      field: "settings",
+      authenticated: true,
+    );
+    return inttegro_chime.Settings.fromJson(
+      (value as Map).cast<String, Object?>(),
+    );
+  }
+
   /// Schedule Chimes
   Future<inttegro_chime.ScheduleCreationDetail> schedule(
     inttegro_chime.ScheduleRequest request, {

@@ -50,5 +50,6 @@ part 'src/chime/send_request.dart';
 part 'src/chime/send_request_recipient.dart';
 part 'src/chime/send_request_request_meta.dart';
 part 'src/chime/send_saved_customer_recipient.dart';
+part 'src/chime/settings.dart';
 part 'src/chime/transmission.dart';
 part 'src/chime/transport.dart';
