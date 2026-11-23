@@ -10,6 +10,7 @@ import 'operating_policy.dart' as operating_policy;
 part 'src/app/application.dart';
 part 'src/app/capabilities.dart';
 part 'src/app/capability.dart';
+part 'src/app/capability_projection.dart';
 part 'src/app/capability_requirement.dart';
 part 'src/app/capability_requirements.dart';
 part 'src/app/capability_status.dart';
